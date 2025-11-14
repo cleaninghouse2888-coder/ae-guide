@@ -1,0 +1,2685 @@
+{
+  "library": [
+    {
+      "name_en": "Text Glitch Effect",
+      "name_ua": "Ефект глічу тексту",
+      "category_en": "Text Animation",
+      "category_ua": "Анімація тексту",
+      "icon": "🔠",
+      "description_ua": "Створює ефект глічу в реальному часі, випадково змінюючи символи тексту кожен кадр",
+      "purpose_ua": "Для створення кіберпанк-типології, хакингових заголовків або глітч-ефектів",
+      "use_cases_ua": [
+        "🎬 Назви фільмів у стилі кіберпанк",
+        "💻 Імітація зламаного дисплея або хакерської атаки",
+        "🎮 Глітч-ефекти для ігрових відео",
+        "📱 Модерні текстові переходи"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Створіть два слайдери: 'Speed' та 'Corruption'\n3. Налаштуйте швидкість та інтенсивність глічу",
+      "target_properties": ["text"],
+      "expression_template": "// Apply to Source Text\noriginalText = text.sourceText;\nglitchSpeed = effect(\"Speed\")(\"Slider\");\ncorruption = effect(\"Corruption\")(\"Slider\");\ncorruptionLevel = corruption / 100;\nglitchChars = \"!@#$%^&*()_+-=[]{}|;':\\\"<>?,./~`\";\nunicodeGlitch = \"▓▒░█▄▀■□▪▫◘◙☼♠♣♥♦\";\nresult = \"\";\nseedRandom(Math.floor(time * glitchSpeed * 10), true);\nfor (i = 0; i < originalText.length; i++) {\nchar = originalText.charAt(i);\nif (char == \" \") {\nresult += \" \";\n}\nelse if (random() < corruptionLevel) {\ncorruptionType = Math.floor(random(4));\nswitch (corruptionType) {\ncase 0:\nresult += glitchChars.charAt(Math.floor(random(glitchChars.length)));\nbreak;\ncase 1:\nresult += unicodeGlitch.charAt(Math.floor(random(unicodeGlitch.length)));\nbreak;\ncase 2:\nresult += char + char;\nbreak;\ncase 3:\nresult += (random() > 0.5) ? char.toUpperCase() : char.toLowerCase();\nbreak;\n}}\nelse {\nresult += char;\n}}\nresult;"
+    },
+    {
+      "name_en": "Animated 2D DNA Helix",
+      "name_ua": "Анімована 2D ДНК спіраль",
+      "category_en": "Shape Animation",
+      "category_ua": "Анімація фігур",
+      "icon": "🧬",
+      "description_ua": "Створює анімовану спіраль ДНК з контролем висоти, витків та радіусу",
+      "purpose_ua": "Для наукових анімацій, медичних візуалізацій та освітніх матеріалів",
+      "use_cases_ua": [
+        "🔬 Наукові пояснювальні відео",
+        "🏥 Медичні презентації та візуалізації",
+        "📚 Освітні матеріали з біології",
+        "🎨 Абстрактні моушн-графіки"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Path' форми\n2. Створіть слайдери: Helix Height, Turns, Radius, Depth, Offset, Speed, Segments\n3. Для подвійної спіралі - дублюйте шар та встановіть Offset на 180",
+      "target_properties": ["path"],
+      "expression_template": "// DNA Helix – Apply to Path\nhelixHeight = effect(\"Helix Height\")(\"Slider\");\nturns = effect(\"Turns\")(\"Slider\");\noffset = effect(\"Offset\")(\"Slider\") * Math.PI / 180;\nspeed = effect(\"Speed\")(\"Slider\") * Math.PI / 180;\nradius = effect(\"Radius\")(\"Slider\");\ndepth = effect(\"Depth\")(\"Slider\");\nsegments = effect(\"Segments\")(\"Slider\");\npts = [];\ninT = [];\noutT = [];\nfor (i = 0; i <= segments; i++) {\nt = i / segments;\nangle = t * turns * 2 * Math.PI + offset + time * speed;\nx = Math.cos(angle) * radius;\ny = -helixHeight/2 + t * helixHeight;\nz = Math.sin(angle) * radius;\npts.push([x + z * depth, y]);\nnextAngle = angle + (2 * Math.PI / segments);\ntx = Math.cos(nextAngle) * radius;\nty = helixHeight / segments * 0.5;\ninT.push([-tx, -ty]);\noutT.push([tx, ty]);\n}\ncreatePath(pts, inT, outT, false);"
+    },
+    {
+      "name_en": "Procedural Spiral Path",
+      "name_ua": "Процедурна спіральна траєкторія",
+      "category_en": "Shape Generation",
+      "category_ua": "Генерація фігур",
+      "icon": "🌀",
+      "description_ua": "Генерує спіральну траєкторію з контролем радіусу, витків та кількості точок",
+      "purpose_ua": "Для створення гіпнотичних анімацій, дата-візуалізацій та динамічних фонів",
+      "use_cases_ua": [
+        "📊 Візуалізація даних у формі спіралі",
+        "🎨 Гіпнотичні фони для музичних відео",
+        "⚡ Енергетичні ефекти та переходи",
+        "🔍 Лупи та зум-ефекти"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Path' форми\n2. Створіть слайдери: Turns, Radius, Points\n3. Налаштуйте кількість витків та розмір спіралі",
+      "target_properties": ["path"],
+      "expression_template": "// Apply to Path\nturns = effect(\"Turns\")(\"Slider\");\nrad = effect(\"Radius\")(\"Slider\");\npnts = effect(\"Points\")(\"Slider\");\npts = [];\nfor (i = 0; i <= pnts; i++){\nt = i / pnts;\nangle = t * Math.PI * 2 * turns;\nr = t * rad;\nx = Math.cos(angle) * r;\ny = Math.sin(angle) * r;\npts.push([x, y]);\n}\ncreatePath(pts, [], [], false);"
+    },
+    {
+      "name_en": "Procedural Gear Path",
+      "name_ua": "Процедурна шестерня",
+      "category_en": "Shape Generation",
+      "category_ua": "Генерація фігур",
+      "icon": "⚙️",
+      "description_ua": "Генерує форму шестерні з контролем кількості зубців, радіусу та висоти зубців",
+      "purpose_ua": "Для технічних анімацій, інфографіки та механічних візуалізацій",
+      "use_cases_ua": [
+        "🏭 Технічні пояснювальні відео",
+        "📈 Інфографіка з механічними елементами",
+        "🎮 Ігрові інтерфейси та анімації",
+        "⚙️ Анімації механізмів та передач"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Path' форми\n2. Створіть слайдери: Tooth Count, Gear Radius, Tooth Height\n3. Налаштуйте розмір шестерні та кількість зубців",
+      "target_properties": ["path"],
+      "expression_template": "// Apply to Path\ntoothCount = Math.floor(effect(\"Tooth Count\")(\"Slider\"));\ngearRadius = effect(\"Gear Radius\")(\"Slider\");\ntoothHeight = effect(\"Tooth Height\")(\"Slider\");\npts = [];\ninTangents = [];\noutTangents = [];\nfor (i = 0; i < toothCount * 4; i++) {\nangle = (i / (toothCount * 4)) * Math.PI * 2;\nphase = i % 4;\nradius = gearRadius;\nswitch (phase) {\ncase 0:\nradius = gearRadius * 0.85;\nbreak;\ncase 1:\ncase 2:\nradius = gearRadius + toothHeight;\nbreak;\ncase 3:\nradius = gearRadius * 0.85;\nbreak;\n}\nx = Math.cos(angle) * radius;\ny = Math.sin(angle) * radius;\npts.push([x, y]);\ninTangents.push([0, 0]);\noutTangents.push([0, 0]);\n}\ncreatePath(pts, inTangents, outTangents, true);"
+    },
+    {
+      "name_en": "Show Layer Count",
+      "name_ua": "Показати кількість шарів",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "📊",
+      "description_ua": "Відображає загальну кількість шарів у композиції",
+      "purpose_ua": "Для автоматизації шаблонів, налагодження проектів та відстеження складності сцени",
+      "use_cases_ua": [
+        "🐛 Налагодження складних композицій",
+        "📝 Автоматизовані шаблони з динамічною інформацією",
+        "👨‍💼 Презентації структури проекту",
+        "⚡ Швидка перевірка складності сцени"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text' текстового шару\n2. Вираз автоматично покаже кількість шарів\n3. Число оновлюється при додаванні/видаленні шарів",
+      "target_properties": ["text"],
+      "expression_template": "thisComp.numLayers;"
+    },
+    {
+      "name_en": "Show Aspect Ratio",
+      "name_ua": "Показати співвідношення сторін",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "📐",
+      "description_ua": "Обчислює та відображає співвідношення сторін композиції (наприклад, 16:9, 1:1, 9:16)",
+      "purpose_ua": "Для роботи з різними форматами доставки та підтвердження правильних пропорцій",
+      "use_cases_ua": [
+        "🎬 Перевірка формату для різних платформ",
+        "📱 Адаптивні шаблони для соціальних мереж",
+        "🔄 Автоматизація рендеру для різних співвідношень",
+        "📊 Технічні накладення для клієнтів"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text' текстового шару\n2. Вираз автоматично розрахує співвідношення сторін\n3. Формат оновлюється при зміні розміру композиції",
+      "target_properties": ["text"],
+      "expression_template": "w = thisComp.width;\nh = thisComp.height;\nfunction gcd(a, b) {\nreturn (b == 0) ? a : gcd(b, a % b);\n}\ng = gcd(w, h);\n(w / g) + \":\" + (h / g);"
+    },
+    {
+      "name_en": "Show Resolution",
+      "name_ua": "Показати роздільну здатність",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "🖥️",
+      "description_ua": "Відображає роздільну здатність композиції у форматі '1920×1080'",
+      "purpose_ua": "Для додавання метаданих, управління мульти-роздільними проєктами та налагодження",
+      "use_cases_ua": [
+        "📝 Метадані для експорту",
+        "🔧 Налагодження адаптивної графіки",
+        "👨‍💼 Презентації технічних специфікацій",
+        "🔄 Шаблони для різних роздільних здатностей"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text' текстового шару\n2. Роздільна здатність відображається автоматично\n3. Оновлюється при зміні розміру композиції",
+      "target_properties": ["text"],
+      "expression_template": "thisComp.width + \"x\" + thisComp.height;"
+    },
+    {
+      "name_en": "Show Frame Rate",
+      "name_ua": "Показати частоту кадрів",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "🎞️",
+      "description_ua": "Відображає частоту кадрів композиції (FPS) у цілих або дробових значеннях",
+      "purpose_ua": "Для відображення метаданих, налагодження та роботи з різними стандартами FPS",
+      "use_cases_ua": [
+        "🎬 Технічні накладення для відео",
+        "🔧 Налагодження таймінгу анімацій",
+        "📊 Презентації налаштувань проекту",
+        "🔄 Автоматизовані шаблони"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text' текстового шару\n2. FPS відображається автоматично\n3. Підтримує 23.976, 24, 29.97, 30, 60 та інші стандарти",
+      "target_properties": ["text"],
+      "expression_template": "fps = 1 / thisComp.frameDuration;\nfps % 1 === 0 ? fps.toFixed(0) : fps.toFixed(2);"
+    },
+    {
+      "name_en": "Show Composition Duration",
+      "name_ua": "Показати тривалість композиції",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "⏱️",
+      "description_ua": "Відображає загальну тривалість композиції у форматі хвилини:секунди:кадри",
+      "purpose_ua": "Для швидкого перегляду тривалості відео без відкриття налаштувань композиції",
+      "use_cases_ua": [
+        "📝 Метадані для прев'ю",
+        "⏰ Контроль тривалості проєктів",
+        "👨‍💼 Демонстрації клієнтам",
+        "🔄 Шаблони з динамічною інформацією"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text' текстового шару\n2. Тривалість відображається у читабельному форматі\n3. Автоматично оновлюється при зміні тривалості композиції",
+      "target_properties": ["text"],
+      "expression_template": "d = thisComp.duration;\nmin = Math.floor(d / 60);\nsec = Math.floor(d % 60);\nfr = Math.floor((d % 1) / thisComp.frameDuration);\n(min < 10 ? \"0\" : \"\") + min + \":\" + (sec < 10 ? \"0\" : \"\") + sec + \":\" + (fr < 10 ? \"0\" : \"\") + fr;"
+    },
+    {
+      "name_en": "Show Composition Info",
+      "name_ua": "Показати інформацію про композицію",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "ℹ️",
+      "description_ua": "Відображає комплексну інформацію про композицію з можливістю вибору параметрів",
+      "purpose_ua": "Для повного огляду метаданих композиції та валідації шаблонів",
+      "use_cases_ua": [
+        "📊 Комплексні технічні накладення",
+        "🔧 Налагодження складних проєктів",
+        "👨‍💼 Професійні презентації",
+        "🔄 Універсальні шаблони з вибором інформації"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Створіть чекбокси для кожної властивості: Show Duration, Show Frame Rate, Show Resolution, Show Layer Count, Show Current Time\n3. Вибирайте яку інформацію відображати",
+      "target_properties": ["text"],
+      "expression_template": "try { showDuration = effect(\"Show Duration\")(\"Checkbox\").value; } catch(e) { showDuration = 1; }\ntry { showFrameRate = effect(\"Show Frame Rate\")(\"Checkbox\").value; } catch(e) { showFrameRate = 1; }\ntry { showResolution = effect(\"Show Resolution\")(\"Checkbox\").value; } catch(e) { showResolution = 1; }\ntry { showLayerCount = effect(\"Show Layer Count\")(\"Checkbox\").value; } catch(e) { showLayerCount = 1; }\ntry { showCurrentTime = effect(\"Show Current Time\")(\"Checkbox\").value; } catch(e) { showCurrentTime = 1; }\nstats = \"\";\nif (showDuration == 1) {\nd = thisComp.duration;\nmin = Math.floor(d / 60);\nsec = Math.floor(d % 60);\nfr = Math.floor((d % 1) / thisComp.frameDuration);\nstats += \"Duration: \" + (min < 10 ? \"0\" : \"\") + min + \":\" + (sec < 10 ? \"0\" : \"\") + sec + \":\" + (fr < 10 ? \"0\" : \"\") + fr + \"\\n\";\n}\nif (showFrameRate == 1) {\nfps = 1 / thisComp.frameDuration;\nframeDisplay = (fps % 1 === 0) ? fps.toFixed(0) : fps.toFixed(2);\nstats += \"Frame Rate: \" + frameDisplay + \" fps\\n\";\n}\nif (showResolution == 1) {\nstats += \"Resolution: \" + thisComp.width + \"x\" + thisComp.height + \"\\n\";\n}\nif (showLayerCount == 1){\nstats += \"Layers: \" + thisComp.numLayers + \"\\n\";\n}\nif (showCurrentTime == 1){\nt = time;\ntmin = Math.floor(t / 60);\ntsec = Math.floor(t % 60);\ntfr = Math.floor((t % 1) / thisComp.frameDuration);\nstats += \"Time: \" + (tmin < 10 ? \"0\" : \"\") + tmin + \":\" + (tsec < 10 ? \"0\" : \"\") + tsec + \":\" + (tfr < 10 ? \"0\" : \"\") + tfr;\n}\nstats;"
+    },
+    {
+      "name_en": "Procedural Zig-Zag Line",
+      "name_ua": "Процедурна зигзаг лінія",
+      "category_en": "Shape Generation",
+      "category_ua": "Генерація фігур",
+      "icon": "⚡",
+      "description_ua": "Створює зигзаг лінію з рівномірно розташованими точками, що чергуються вгору-вниз",
+      "purpose_ua": "Для швидкого створення роздільників, енергетичних ліній та динамічних елементів",
+      "use_cases_ua": [
+        "📏 Декоративні роздільники",
+        "⚡ Енергетичні лінії для HUD-інтерфейсів",
+        "🎨 Абстрактні моушн-графіки",
+        "📊 Візуалізація даних у формі зигзагу"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Path' форми\n2. Створіть слайдери: Vertices, Length, Amplitude\n3. Налаштуйте кількість точок, довжину та висоту зигзагу",
+      "target_properties": ["path"],
+      "expression_template": "verts = Math.max(2, Math.floor(effect(\"Vertices\")(\"Slider\")));\nl = effect(\"Length\")(\"Slider\");\namplitude = effect(\"Amplitude\")(\"Slider\");\nseg = l / (verts - 1);\nhalf = l / 2;\npts = [];\ninT = [];\noutT = [];\nfor (i = 0; i < verts; i++) {\nx = -half + seg * i;\ny = (i % 2 === 0) ? amplitude : -amplitude;\npts.push([x, y]);\ninT.push([0, 0]);\noutT.push([0, 0]);\n}\ncreatePath(pts, inT, outT, false);"
+    },
+    {
+      "name_en": "Tapered Wave Line",
+      "name_ua": "Конусна хвильова лінія",
+      "category_en": "Shape Generation",
+      "category_ua": "Генерація фігур",
+      "icon": "🌊",
+      "description_ua": "Створює синусоїдну хвилю, що плавно зменшується з одного боку на основі зсуву",
+      "purpose_ua": "Для стилізованих слідів, звукових хвиль та анімацій з плавним затуханням",
+      "use_cases_ua": [
+        "🎵 Візуалізація звуку з затуханням",
+        "🌀 Енергетичні сліди рухомих об'єктів",
+        "🎨 Абстрактні фонові патерни",
+        "📈 Дані, що зменшуються з часом"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Path' форми\n2. Створіть слайдери: Amplitude, Wavelength, Length, Bias\n3. Налаштуйте зсув (-100 = зліва, 0 = центр, 100 = справа)",
+      "target_properties": ["path"],
+      "expression_template": "amp = effect(\"Amplitude\")(\"Slider\");\nwavelength = effect(\"Wavelength\")(\"Slider\");\nl = effect(\"Length\")(\"Slider\");\nbiasS = effect(\"Bias\")(\"Slider\");\nptsCount = 200;\ncycles = l / wavelength;\nb = clamp((biasS + 100) / 200, 0, 1);\npts = [];\nfor (i = 0; i < ptsCount; i++) {\nt = i / (ptsCount - 1);\nx = t * l - l / 2;\nif (b <= 0) falloff = 1 - t;\nelse if (b >= 1) falloff = t;\nelse {\nm = Math.max(b, 1 - b);\nfalloff = clamp(1 - Math.abs(t - b) / m, 0, 1);\n}\ny = amp * falloff * Math.sin(t * cycles * 2 * Math.PI);\npts.push([x, y]);\n}\ncreatePath(pts, [], [], false);"
+    },
+    {
+      "name_en": "Procedural Sine Wave Line",
+      "name_ua": "Процедурна синусоїдна хвиля",
+      "category_en": "Shape Generation",
+      "category_ua": "Генерація фігур",
+      "icon": "〰️",
+      "description_ua": "Генерує плавну синусоїдну хвилю з контролем висоти, довжини хвилі та загальної довжини",
+      "purpose_ua": "Для швидкого створення хвилястих ліній для фонів, аудіо-візуалізаторів та декоративних елементів",
+      "use_cases_ua": [
+        "🎵 Візуалізатори звукових хвиль",
+        "🌊 Фонові хвилясті патерни",
+        "🎨 Декоративні моушн-елементи",
+        "📊 Плавні графіки даних"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Path' форми\n2. Створіть слайдери: Amplitude, Wavelength, Length\n3. Налаштуйте висоту хвилі та довжину для потрібного ефекту",
+      "target_properties": ["path"],
+      "expression_template": "amp = effect(\"Amplitude\")(\"Slider\");\nwavelength = effect(\"Wavelength\")(\"Slider\");\nl = effect(\"Length\")(\"Slider\");\nptsCount = 200;\npts = [];\ncycles = l / wavelength;\nfor (i = 0; i < ptsCount; i++) {\nt = i / (ptsCount - 1);\nx = t * l - l / 2;\ny = amp * Math.sin(t * cycles * 2 * Math.PI);\npts.push([x, y]);\n}\ncreatePath(pts, [], [], false);"
+    },
+    {
+      "name_en": "Physics-Based Gravity Bounce",
+      "name_ua": "Фізичний відскок з гравітацією",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🏀",
+      "description_ua": "Імітує реалістичну фізику падіння, відскоку та тертя без ключових кадрів",
+      "purpose_ua": "Для створення природного руху об'єктів, що падають, відскакують та ковзають",
+      "use_cases_ua": [
+        "🎾 Спортивні анімації (м'ячі, снаряди)",
+        "🎮 Ігрові елементи з фізикою",
+        "📱 UI-елементи, що відскакують",
+        "🎬 Реалістичні падіння об'єктів"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Створіть слайдери: Initial Velocity Y/X, Gravity, Bounce %, Air Drag %, Ground Friction %, Floor Y\n3. Налаштуйте початкову швидкість та фізичні параметри",
+      "target_properties": ["position"],
+      "expression_template": "vel0Y = effect(\"Initial Velocity Y\")(\"Slider\");\nvel0X = effect(\"Initial Velocity X\")(\"Slider\");\ng_m = effect(\"Gravity\")(\"Slider\");\ng = g_m * 100;\nbounce = effect(\"Bounce %\")(\"Slider\") / 100;\ndrag = effect(\"Air Drag %\")(\"Slider\") / 100;\nfric = effect(\"Ground Friction %\")(\"Slider\") / 100;\nfloorY = effect(\"Floor Y\")(\"Slider\");\nstartPos = position.valueAtTime(inPoint);\nt = time - inPoint;\ndt = thisComp.frameDuration;\nsteps = Math.floor(t / dt);\nvx = vel0X;\nvy = vel0Y;\nx = startPos[0];\ny = startPos[1];\nfor (i = 0; i < steps; i++) {\nvy += g * dt;\nvx *= 1 - drag * dt;\nvy *= 1 - drag * dt;\nx += vx * dt;\ny += vy * dt;\nif (y >= floorY) {\nover = y - floorY;\ny = floorY - over;\nvy = -vy * bounce;\nvx *= 1 - fric;\n}\n}\n[x, y]"
+    },
+    {
+      "name_en": "Distance Between Two Layers",
+      "name_ua": "Відстань між двома шарами",
+      "category_en": "Layer Interaction",
+      "category_ua": "Взаємодія шарів",
+      "icon": "📏",
+      "description_ua": "Обчислює пряму відстань у пікселях між поточним шаром та цільовим шаром",
+      "purpose_ua": "Для створення реактивних ефектів, що залежать від відстані між об'єктами",
+      "use_cases_ua": [
+        "🎯 HUD-інтерфейси з динамічними ефектами",
+        "🔗 Ефекти зв'язку між об'єктами",
+        "📊 Інфографіка з відстанями",
+        "⚡ Реактивні частинки та системи"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості (наприклад, Slider Control)\n2. Змініть 'Target Layer' на назву вашого цільового шару\n3. Використовуйте значення відстані для керування іншими ефектами",
+      "target_properties": ["slider"],
+      "expression_template": "target = thisComp.layer(\"Target Layer\");\np1 = position;\np2 = target.position;\nlength(p1, p2);"
+    },
+    {
+      "name_en": "Single Corner Radius",
+      "name_ua": "Окремі радіуси кутів",
+      "category_en": "Shape Generation", 
+      "category_ua": "Генерація фігур",
+      "icon": "🔲",
+      "description_ua": "Дозволяє окремо налаштовувати радіус закруглення для кожного кута прямокутника",
+      "purpose_ua": "Для створення складних форм з різними закругленнями без додаткових шарів",
+      "use_cases_ua": [
+        "📱 UI-елементи з різними закругленнями",
+        "🎨 Дизайнерські форми для брендингу",
+        "📊 Кастомні рамки та контейнери",
+        "🔲 Модерні геометричні композиції"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Path' форми прямокутника\n2. Створіть слайдери: Width, Height, Top Left Roundness, Top Right Roundness, Bottom Right Roundness, Bottom Left Roundness\n3. Налаштуйте окремі радіуси для кожного кута",
+      "target_properties": ["path"],
+      "expression_template": "w = effect(\"Width\")(\"Slider\");\nh = effect(\"Height\")(\"Slider\");\nrTL = effect(\"Top Left Roundness\")(\"Slider\");\nrTR = effect(\"Top Right Roundness\")(\"Slider\");\nrBR = effect(\"Bottom Right Roundness\")(\"Slider\");\nrBL = effect(\"Bottom Left Roundness\")(\"Slider\");\nrTL = Math.max(0, Math.min(rTL, Math.min(w, h) / 2));\nrTR = Math.max(0, Math.min(rTR, Math.min(w, h) / 2));\nrBR = Math.max(0, Math.min(rBR, Math.min(w, h) / 2));\nrBL = Math.max(0, Math.min(rBL, Math.min(w, h) / 2));\nctrlTL = rTL * 0.55228475;\nctrlTR = rTR * 0.55228475;\nctrlBR = rBR * 0.55228475;\nctrlBL = rBL * 0.55228475;\npts = [];\ninTan = [];\noutTan = [];\nfunction add(p, inT, outT) {\npts.push(p);\ninTan.push(inT);\noutTan.push(outT);\n}\nif (rTL > 0) {\nadd([rTL, 0], [0, 0], [-ctrlTL, 0]);\nadd([0, rTL], [0, -ctrlTL], [0, 0]);\n} else {\nadd([0, 0], [0, 0], [0, 0]);\n}\nif (rBL == 0) { add([0, h], [0, 0], [0, 0]); }\nif (rBL > 0) {\nadd([0, h - rBL], [0, 0], [0, ctrlBL]);\nadd([rBL, h], [-ctrlBL, 0], [0, 0]);\n}\nif (rBR == 0) { add([w, h], [0, 0], [0, 0]); }\nif (rBR > 0) {\nadd([w - rBR, h], [0, 0], [ctrlBR, 0]);\nadd([w, h - rBR], [0, ctrlBR], [0, 0]);\n}\nif (rTR == 0) { add([w, 0], [0, 0], [0, 0]); }\nif (rTR > 0) {\nadd([w, rTR], [0, 0], [0, -ctrlTR]);\nadd([w - rTR, 0], [ctrlTR, 0], [0, 0]);\n}\ncreatePath(pts, inTan, outTan, true);"
+    },
+    {
+      "name_en": "Layer Visibility Based on Day of the Week",
+      "name_ua": "Видимість шару за днем тижня",
+      "category_en": "Automation",
+      "category_ua": "Автоматизація",
+      "icon": "📅",
+      "description_ua": "Автоматично показує або ховає шар залежно від поточного дня тижня",
+      "purpose_ua": "Для автоматизації щоденних промо, соціальних мереж та шаблонів з часовою прив'язкою",
+      "use_cases_ua": [
+        "📱 Щоденні сторис для соціальних мереж",
+        "🎬 Телевізійні промо з денним розкладом",
+        "🔄 Автоматизовані шаблони контенту",
+        "📊 Дані, що змінюються за днями тижня"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity'\n2. Змініть 'targetDay' на потрібний день тижня (наприклад, 'Monday')\n3. Шар буде видимий тільки у вказаний день",
+      "target_properties": ["opacity"],
+      "expression_template": "days = [\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"];\ntargetDay = \"Tuesday\";\ntoday = days[(new Date(Date.now())).getDay()];\ntoday == targetDay ? 100 : 0;"
+    },
+    {
+      "name_en": "Text Change Based on Layer Position", 
+      "name_ua": "Зміна тексту за позицією шару",
+      "category_en": "Interactive Text",
+      "category_ua": "Інтерактивний текст",
+      "icon": "🎯",
+      "description_ua": "Змінює текст залежно від того, в якій частині екрану знаходиться шар",
+      "purpose_ua": "Для інтерактивних демонстрацій, навчальних матеріалів та креативних анімацій",
+      "use_cases_ua": [
+        "🎓 Навчальні матеріали з інтерактивними підписами",
+        "🎮 Ігрові інтерфейси з динамічним текстом",
+        "📊 Демонстрації розташування елементів",
+        "🎨 Креативні текстові анімації"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Переміщуйте шар по композиції\n3. Текст автоматично змінюється на 'Top Left', 'Top Right', 'Bottom Left' або 'Bottom Right'",
+      "target_properties": ["text"],
+      "expression_template": "if (position[0] < thisComp.width / 2 && position[1] < thisComp.height / 2) {\n\"Top Left\";\n} else if (position[0] > thisComp.width / 2 && position[1] < thisComp.height / 2) {\n\"Top Right\";\n} else if (position[0] < thisComp.width / 2) {\n\"Bottom Left\";\n} else {\n\"Bottom Right\";\n}"
+    },
+    {
+      "name_en": "Text Scramble Reveal Animation",
+      "name_ua": "Анімація розкриття тексту з скремблюванням",
+      "category_en": "Text Animation",
+      "category_ua": "Анімація тексту",
+      "icon": "🔣",
+      "description_ua": "Поступово розкриває текст, замінюючи випадкові символи на цільовий текст",
+      "purpose_ua": "Для науково-фантастичних заголовків, глітч-ефектів та динамічного розкриття інформації",
+      "use_cases_ua": [
+        "🎬 Науково-фантастичні титри",
+        "💻 Хакерські та кіберпанк-ефекти",
+        "📊 Інфографіка з поступовим розкриттям",
+        "🎮 Ігрові інтерфейси з скремблюванням"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Змініть 'text' на ваш цільовий текст\n3. Текст буде поступово розкриватися з випадковими символами",
+      "target_properties": ["text"],
+      "expression_template": "text = \"HELLO WORLD\";\nseedRandom(time*10, true);\nrevealProgress = linear(time - inPoint, 0, 1, 0, text.length);\npartial = \"\";\ncharset = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890\";\nfor (i = 0; i < text.length; i++) {\nif (i < revealProgress) partial += text[i];\nelse partial += charset[Math.floor(random(charset.length))];\n}\npartial;"
+    },
+    {
+      "name_en": "Dynamic Anchor Point Lock",
+      "name_ua": "Динамічна фіксація точки прив'язки",
+      "category_en": "Layer Positioning",
+      "category_ua": "Позиціювання шарів",
+      "icon": "📍",
+      "description_ua": "Фіксує точку прив'язки до одного з 9 положень відносно меж шару (кути, краї, центр)",
+      "purpose_ua": "Для швидкого позиціювання точок прив'язки без ручного перетягування",
+      "use_cases_ua": [
+        "📝 Нижні третини та текстові блоки",
+        "🎯 Точне позиціювання UI-елементів",
+        "🔧 Шаблони з автоматичним вирівнюванням",
+        "📊 Інфографіка з чіткими прив'язками"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Anchor Point'\n2. Створіть 'Dropdown Menu Control' з 9 опціями\n3. Виберіть потрібне положення точки прив'язки",
+      "target_properties": ["anchor_point"],
+      "expression_template": "anchorOption = effect(\"Dropdown Menu Control\")(\"Menu\");\nrect = sourceRectAtTime((inPoint+outPoint)/2, false);\ntop = rect.top;\nleft = rect.left;\nw = rect.width;\nh = rect.height;\nx = 0;\ny = 0;\nif (anchorOption == 1) {\nx = left + w/2;\ny = top + h/2;\n} else if (anchorOption == 2) {\nx = left;\ny = top;\n} else if (anchorOption == 3) {\nx = left + w/2;\ny = top;\n} else if (anchorOption == 4) {\nx = left + w;\ny = top;\n} else if (anchorOption == 5) {\nx = left + w;\ny = top + h/2;\n} else if (anchorOption == 6) {\nx = left + w;\ny = top + h;\n} else if (anchorOption == 7) {\nx = left + w/2;\ny = top + h;\n} else if (anchorOption == 8) {\nx = left;\ny = top + h;\n} else if (anchorOption == 9) {\nx = left;\ny = top + h/2;\n}\n[x, y];"
+    },
+    {
+      "name_en": "Inherit Rotation from Nearest Layer",
+      "name_ua": "Успадкування обертання від найближчого шару",
+      "category_en": "Layer Interaction",
+      "category_ua": "Взаємодія шарів", 
+      "icon": "🔄",
+      "description_ua": "Знаходить найближчий шар у композиції та копіює його обертання в реальному часі",
+      "purpose_ua": "Для системних анімацій, з'єднаних елементів та автоматичного вирівнювання",
+      "use_cases_ua": [
+        "🐝 Ройові анімації (зграї, стада)",
+        "🔗 З'єднані елементи, що обертаються разом",
+        "🏷️ Автоматичні підписи, що повертаються до цілі",
+        "🎯 Системи з орієнтацією на сусідів"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Rotation'\n2. Розташуйте кілька шарів у композиції\n3. Кожен шар буде обертатися як найближчий до нього",
+      "target_properties": ["rotation"],
+      "expression_template": "minDist = 1e6;\nclosestRot = 0;\nfor (i = 1; i <= thisComp.numLayers; i++)\n{\nif (i != index)\n{\nd = length(position, thisComp.layer(i).position);\nif (d < minDist)\n{\nminDist = d;\nclosestRot = thisComp.layer(i).rotation;\n}}}\nclosestRot;"
+    },
+    {
+      "name_en": "Wiggle Based on Speed",
+      "name_ua": "Коливання залежно від швидкості",
+      "category_en": "Dynamic Animation",
+      "category_ua": "Динамічна анімація",
+      "icon": "🎚️",
+      "description_ua": "Додає коливання, інтенсивність якого залежить від швидкості руху шару",
+      "purpose_ua": "Для динамічних частинок, слідів та елементів, що трясуться лише в русі",
+      "use_cases_ua": [
+        "⚡ Частинки, що тремтять при русі",
+        "🎬 Сліди рухомих об'єктів з вібрацією",
+        "📱 UI-елементи, що реагують на рух",
+        "🌪️ Ефекти турбулентності для швидких об'єктів"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості (Position, Scale, Rotation)\n2. Налаштуйте 'sensitivity' та 'maxAmount' у коді\n3. Коливання збільшуватимуться зі зростанням швидкості",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "sensitivity = 50;\nmaxAmount = 20;\nspeedValue = transform.position.speed;\namt = clamp(speedValue / sensitivity, 0, maxAmount);\nwiggle(10, amt);"
+    },
+    {
+      "name_en": "Animated Responsive Text Box",
+      "name_ua": "Анімований адаптивний текстовий блок",
+      "category_en": "Responsive Design",
+      "category_ua": "Адаптивний дизайн",
+      "icon": "📦",
+      "description_ua": "Анімує ширину форми, щоб відповідати ширині текстового шару з плавним переходом",
+      "purpose_ua": "Для нижніх третин, міток та кнопок, що розширюються під текст",
+      "use_cases_ua": [
+        "📺 Нижні третини, що розширюються під текст",
+        "🏷️ Адаптивні мітки та банери",
+        "🔘 Кнопки, що змінюють розмір під текст",
+        "📊 Текстові контейнери з плавною анімацією"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Size' форми\n2. Створіть текстовий шар з назвою 'TEXT'\n3. Встановіть два ключові кадри для ширини - вираз зробить плавний перехід",
+      "target_properties": ["scale"],
+      "expression_template": "subText = thisComp.layer(\"TEXT\");\ntextWidth = subText.sourceRectAtTime(time, false).width + 70;\ntextHeight = subText.sourceRectAtTime(time, false).height + 70;\nprop = thisProperty;\nfirstValue = prop.key(1).value[0];\nlastValue = prop.key(2).value[0];\nnewWidth = textWidth;\nanimatedWidth = linear(value[0], firstValue, lastValue, firstValue, newWidth);\n[animatedWidth, textHeight];"
+    },
+    {
+      "name_en": "Font Size Based on Character Count",
+      "name_ua": "Розмір шрифту за кількістю символів",
+      "category_en": "Responsive Text",
+      "category_ua": "Адаптивний текст",
+      "icon": "🔤",
+      "description_ua": "Автоматично зменшує розмір шрифту при збільшенні кількості символів",
+      "purpose_ua": "Для запобігання переповненню тексту у шаблонах зі змінним вмістом",
+      "use_cases_ua": [
+        "📝 Шаблони з динамічними іменами та назвами",
+        "🏷️ Мітки, що адаптуються до довжини тексту",
+        "📱 UI-елементи з обмеженим простором",
+        "🎬 Титри, що підлаштовуються під різну довжину"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Налаштуйте 'startSize', 'step', 'minFontSize', 'charThreshold' у коді\n3. Шрифт автоматично зменшуватиметься при перевищенні порогу символів",
+      "target_properties": ["text"],
+      "expression_template": "startSize = 60;\nstep = 10;\nminFontSize = 30;\ncharThreshold = 90;\ncharCount = text.sourceText.length;\nstepsToShrink = Math.floor(charCount / charThreshold);\nnewSize = Math.max(minFontSize, startSize - (stepsToShrink * step));\ntext.sourceText.style.setFontSize(newSize);"
+    },
+    {
+      "name_en": "Scale from Start to End of Composition",
+      "name_ua": "Масштабування від початку до кінця композиції",
+      "category_en": "Auto Animation",
+      "category_ua": "Автоматична анімація",
+      "icon": "📈",
+      "description_ua": "Поступово збільшує або зменшує масштаб протягом всієї тривалості композиції",
+      "purpose_ua": "Для циклічних анімацій, повільних зум-ефектів та фонових трансформацій",
+      "use_cases_ua": [
+        "🔄 Циклічні фонові анімації",
+        "🎬 Повільні зум-ефекти для кінематографії",
+        "📊 Поступова трансформація елементів",
+        "🌅 Фони, що плавно масштабуються"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Змініть 'startScale' та 'endScale' на потрібні значення\n3. Масштаб автоматично змінюватиметься від початку до кінця композиції",
+      "target_properties": ["scale"],
+      "expression_template": "startScale = 100;\nendScale = 120;\nstartTime = 0;\nendTime = thisComp.duration;\nprogress = linear(time, startTime, endTime, startScale, endScale);\n[progress, progress];"
+    },
+    {
+      "name_en": "Pulse Scale Animation",
+      "name_ua": "Пульсуюча анімація масштабу",
+      "category_en": "Auto Animation",
+      "category_ua": "Автоматична анімація",
+      "icon": "💓",
+      "description_ua": "Створює плавну пульсуючу анімацію масштабу за допомогою синусоїди",
+      "purpose_ua": "Для кнопок, викликів та елементів, що потребують тонкої уваги",
+      "use_cases_ua": [
+        "🔘 Анімації кнопок та інтерактивних елементів",
+        "🎯 Виклики до дії (call-to-action)",
+        "💫 Фонові елементи з пульсацією",
+        "📱 Мобільні інтерфейси з живою анімацією"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Налаштуйте 'freq' (частота пульсацій) та 'amp' (інтенсивність)\n3. Елемент буде плавно пульсувати автоматично",
+      "target_properties": ["scale"],
+      "expression_template": "freq = 1;\namp = 5;\nbase = 100;\npulse = Math.sin(time * freq * Math.PI * 2) * amp;\n[base + pulse, base + pulse];"
+    },
+    {
+      "name_en": "Responsive Text Layout Based on Composition Width",
+      "name_ua": "Адаптивний текст за шириною композиції",
+      "category_en": "Responsive Design",
+      "category_ua": "Адаптивний дизайн",
+      "icon": "📱",
+      "description_ua": "Автоматично адаптує розмір текстового блоку до ширини композиції",
+      "purpose_ua": "Для відео-шаблонів та автоматизації з різними співвідношеннями сторін",
+      "use_cases_ua": [
+        "🎬 Відео-шаблони для різних платформ",
+        "📊 Адаптивна інфографіка",
+        "🔄 Автоматизація рендеру для різних роздільних здатностей",
+        "🌐 Універсальні моушн-шаблони"
+      ],
+      "how_to_use_ua": "1. Додайте першу частину до 'Source Text'\n2. Додайте другу частину до 'Scale'\n3. Текст автоматично адаптується до ширини композиції",
+      "target_properties": ["text", "scale"],
+      "expression_template": "// Add to Source Text\ntextSize = 50;\ntextLeading = 1;\noriginalBoxWidth = 1920;\ntargetWidth = thisComp.width;\nboxScale = targetWidth / originalBoxWidth;\ntext.sourceText.style.setFontSize(textSize / boxScale).setLeading(textSize * textLeading / boxScale);\n\n// Add to Scale\ntargetWidth = thisComp.width;\noriginalBoxWidth = 1920;\nboxScale = targetWidth / originalBoxWidth;\nvalue * boxScale;"
+    },
+    {
+      "name_en": "Responsive Text Layout (with Slider Controls)",
+      "name_ua": "Адаптивний текст з контролем слайдерами",
+      "category_en": "Responsive Design",
+      "category_ua": "Адаптивний дизайн",
+      "icon": "🎚️",
+      "description_ua": "Імітує адаптивні текстові блоки як у Figma з контролем ширини, розміру шрифту та інтервалів",
+      "purpose_ua": "Для динамічних заголовків, написів та UI-макетів з ручним контролем розміру контейнера",
+      "use_cases_ua": [
+        "📝 Регульовані нижні третини",
+        "🎨 Гнучкі текстові макети",
+        "📱 UI-прототипування в After Effects",
+        "🔄 Шаблони з контрольованими текстовими областями"
+      ],
+      "how_to_use_ua": "1. Додайте першу частину до 'Source Text'\n2. Додайте другу частину до 'Scale'\n3. Створіть слайдери: Font Size, Text Box Width, Leading",
+      "target_properties": ["text", "scale"],
+      "expression_template": "// Add to Source Text\ntextSize = effect(\"Font Size\")(\"Slider\");\ntargetWidth = effect(\"Text Box Width\")(\"Slider\");\ntextLeading = effect(\"Leading\")(\"Slider\");\noriginalBoxWidth = 1920;\nboxScale = targetWidth / originalBoxWidth;\ntext.sourceText.style.setFontSize(textSize / boxScale).setLeading(textSize * textLeading / boxScale);\n\n// Add to Scale\ntargetWidth = effect(\"Text Box Width\")(\"Slider\");\noriginalBoxWidth = 1920;\nboxScale = targetWidth / originalBoxWidth;\nvalue * boxScale;"
+    },
+    {
+      "name_en": "Responsive Rectangle Based on Comp Size",
+      "name_ua": "Адаптивний прямокутник за розміром композиції",
+      "category_en": "Responsive Design",
+      "category_ua": "Адаптивний дизайн",
+      "icon": "🔲",
+      "description_ua": "Автоматично встановлює розмір прямокутника рівним розмірам композиції",
+      "purpose_ua": "Для повноекранних фонів, безпечних зон та адаптивних накладань",
+      "use_cases_ua": [
+        "🎭 Повноекранні фони",
+        "📏 Безпечні зони для телебачення",
+        "🔄 Адаптивні накладання",
+        "🎨 Макетні елементи, що заповнюють весь екран"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Size' форми прямокутника\n2. Прямокутник автоматично розтягнеться на всю композицію\n3. Ідеально для створення фонів та масок",
+      "target_properties": ["scale"],
+      "expression_template": "var c = thisComp;\n[c.width, c.height]"
+    },
+    {
+      "name_en": "Automatic Fade In and Out with Sliders and Checkboxes",
+      "name_ua": "Автоматичне зникнення та поява з слайдерами та чекбоксами",
+      "category_en": "Auto Animation",
+      "category_ua": "Автоматична анімація",
+      "icon": "🎛️",
+      "description_ua": "Створює автоматичні анімації зникнення/появи з повним контролем через UI-елементи",
+      "purpose_ua": "Для MOGRT, шаблонів та автоматизованих сцен з повним контролем анімацій",
+      "use_cases_ua": [
+        "🎬 MOGRT-шаблони для редакторів",
+        "🔄 Автоматизовані сцени з контролем прозорості",
+        "📝 Шаблони з вибором типу анімації",
+        "🎮 Інтерактивні пресети анімацій"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості (Opacity, Scale, тощо)\n2. Створіть слайдери: Fade Duration, Zero Value, Final Value\n3. Створіть чекбокси: Enable Fade In, Enable Fade Out\n4. Налаштуйте тривалість та значення анімації",
+      "target_properties": ["opacity", "scale"],
+      "expression_template": "fadeDuration = effect(\"Fade Duration\")(\"Slider\");\nzeroValue = effect(\"Zero Value\")(\"Slider\");\nfinalValue = effect(\"Final Value\")(\"Slider\");\nenableFadeIn = effect(\"Enable Fade In\")(\"Checkbox\") == 1;\nenableFadeOut = effect(\"Enable Fade Out\")(\"Checkbox\") == 1;\ncurrentTime = time - inPoint;\nlayerOut = inPoint + thisLayer.outPoint - thisLayer.inPoint;\ntimeToEnd = layerOut - time;\nif (enableFadeIn && currentTime < fadeDuration) {\nt = currentTime / fadeDuration;\nfadeValue = ease(t, 0, 1, zeroValue, finalValue);\n}\nelse if (enableFadeOut && timeToEnd < fadeDuration) {\nt = (fadeDuration - timeToEnd) / fadeDuration;\nfadeValue = ease(t, 0, 1, finalValue, zeroValue);\n}\nelse if (enableFadeIn || enableFadeOut){\nfadeValue = finalValue;\n}\nelse {\nfadeValue = finalValue;\n}\nfadeValue;"
+    },
+    {
+      "name_en": "Get Comp Name as Text",
+      "name_ua": "Отримати назву композиції як текст",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "🏷️",
+      "description_ua": "Виводить назву поточної композиції у текстовому шарі",
+      "purpose_ua": "Для системи маркування шаблонів, версійних табличок та організації проектів",
+      "use_cases_ua": [
+        "📝 Маркування шаблонів та пресетів",
+        "🔄 Версійні таблички для рендеру",
+        "🗂️ Організація складних проектів",
+        "🎬 Заповнювачі для клієнтських презентацій"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text' текстового шару\n2. Назва композиції відобразиться автоматично\n3. Оновлюється при зміні назви композиції",
+      "target_properties": ["text"],
+      "expression_template": "thisComp.name;"
+    },
+    {
+      "name_en": "Responsive Text Box for Two Text Layers",
+      "name_ua": "Адаптивний текстовий блок для двох текстових шарів",
+      "category_en": "Responsive Design",
+      "category_ua": "Адаптивний дизайн",
+      "icon": "📄",
+      "description_ua": "Автоматично регулює розмір фоного прямокутника для двох текстових шарів, що розташовані один під одним",
+      "purpose_ua": "Для автоматичного розміру контейнерів нижніх третин, двострочних заголовків та панелей з написами",
+      "use_cases_ua": [
+        "📺 Нижні третини з двома рядками тексту",
+        "🏷️ Подвійні заголовки та підзаголовки",
+        "📊 Інфографіка з декількома текстовими блоками",
+        "🎬 Текстові панелі з автоматичним розміром"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Size' форми\n2. Створіть текстові шари з назвами 'text1' та 'text2'\n3. Налаштуйте 'padding' для відступів\n4. Форма автоматично підлаштується під текст",
+      "target_properties": ["scale"],
+      "expression_template": "txt1 = thisComp.layer(\"text1\");\ntxt2 = thisComp.layer(\"text2\");\nrect1 = txt1.sourceRectAtTime(time);\nrect2 = txt2.sourceRectAtTime(time);\npos1 = txt1.toComp([rect1.left + rect1.width / 2, rect1.top]);\npos2 = txt2.toComp([rect2.left + rect2.width / 2, rect2.top + rect2.height]);\nheight = Math.abs(pos2[1] - pos1[1]);\nwidth = Math.max(rect1.width, rect2.width);\npadding = 100;\n[width + padding, height + padding]"
+    },
+    {
+      "name_en": "Expose Layer Speed Expression",
+      "name_ua": "Відображення швидкості шару",
+      "category_en": "Motion Analysis",
+      "category_ua": "Аналіз руху",
+      "icon": "⚡",
+      "description_ua": "Відображає швидкість руху шару для керування ефектами масштабу, обертання чи розмиття",
+      "purpose_ua": "Для додавання motion blur, пружних ефектів та реактивних анімацій, прив'язаних до руху",
+      "use_cases_ua": [
+        "🎬 Динамічне розмиття руху",
+        "🔄 Пружні ефекти, що залежать від швидкості",
+        "📱 Реактивні анімації UI-елементів",
+        "⚡ Частинки, що реагують на швидкість"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості (Slider Control)\n2. Використовуйте значення швидкості для керування іншими ефектами\n3. Швидкість оновлюється в реальному часі",
+      "target_properties": ["slider"],
+      "expression_template": "transform.position.speed"
+    },
+    {
+      "name_en": "Expose Layer Velocity Expression",
+      "name_ua": "Відображення вектора швидкості шару",
+      "category_en": "Motion Analysis",
+      "category_ua": "Аналіз руху",
+      "icon": "🎯",
+      "description_ua": "Відображає вектор швидкості шару (зміна позиції з часом)",
+      "purpose_ua": "Для активації ефектів на основі швидкості руху об'єкта",
+      "use_cases_ua": [
+        "🎮 Фізичні анімації з залежністю від швидкості",
+        "📊 Візуалізації швидкості руху",
+        "⚡ Ефекти, що активуються при швидкому русі",
+        "🎬 Кінематографічні переходи на основі руху"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Slider Control'\n2. Вираз повертає вектор швидкості [x, y]\n3. Використовуйте для умовних ефектів",
+      "target_properties": ["slider"],
+      "expression_template": "transform.position.velocity"
+    },
+    {
+      "name_en": "Copy Text and Style from Another Layer",
+      "name_ua": "Копіювання тексту та стилю з іншого шару",
+      "category_en": "Text Automation",
+      "category_ua": "Автоматизація тексту",
+      "icon": "📋",
+      "description_ua": "Дублює вміст тексту та стиль з основного текстового шару",
+      "purpose_ua": "Для автоматичного віддзеркалення тексту та стилю з основного шару",
+      "use_cases_ua": [
+        "🎬 Субтитри та переклади",
+        "🔄 Синхронізовані дизайн-системи",
+        "📝 Дубльовані текстові блоки",
+        "🌐 Багатомовні шаблони"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Змініть 'text1' на назву вашого основного текстового шару\n3. Текст та стиль автоматично копіюватимуться",
+      "target_properties": ["text"],
+      "expression_template": "const mainTextLayer = thisComp.layer(\"text1\");\nconst mainTextStyle = mainTextLayer.text.sourceText.getStyleAt(0);\nmainTextStyle.setText(mainTextLayer.text.sourceText.value);"
+    },
+    {
+      "name_en": "Matrix-Style Random Letters Animation",
+      "name_ua": "Анімація випадкових літер у стилі Матриці",
+      "category_en": "Text Animation",
+      "category_ua": "Анімація тексту",
+      "icon": "🔠",
+      "description_ua": "Генерує анімовані сітки випадкових літер A-Z з динамічним контролем швидкості та макету",
+      "purpose_ua": "Для кіберпанк HUD-інтерфейсів, абстрактних візуалізацій даних та експериментів з анімацією типографіки",
+      "use_cases_ua": [
+        "💻 Кіберпанк HUD-інтерфейси",
+        "📊 Абстрактні візуалізації даних",
+        "🎨 Експериментальна типографіка",
+        "🎬 Науково-фантастичні інтро"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Налаштуйте 'numRows', 'numCols', 'freq' у коді\n3. Сітка випадкових літер буде анімуватися автоматично",
+      "target_properties": ["text"],
+      "expression_template": "numRows = 10;\nnumCols = 10;\nfreq = 10;\noutput = \"\";\nseedRandom(index + Math.floor(time * freq), true);\nfor (r = 0; r < numRows; r++) {\nline = \"\";\nfor (c = 0; c < numCols; c++) {\ncharCode = Math.floor(random(65, 91));\nline += String.fromCharCode(charCode) + \" \";\n}\noutput += line + \"\\r\";\n}\noutput;"
+    },
+    {
+      "name_en": "Matrix-Style Binary Numbers Animation",
+      "name_ua": "Анімація бінарних чисел у стилі Матриці",
+      "category_en": "Text Animation",
+      "category_ua": "Анімація тексту",
+      "icon": "🔢",
+      "description_ua": "Динамічно створює вертикальну сітку змінних 0 та 1",
+      "purpose_ua": "Для моушн-дизайну в хакерському стилі, науково-фантастичних інтро та ефектів цифрового дощу",
+      "use_cases_ua": [
+        "💾 Хакерські теми для моушн-дизайну",
+        "🎬 Науково-фантастичні інтро",
+        "🌧️ Ефекти цифрового дощу"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Налаштуйте 'numRows', 'numCols', 'freq' у коді\n3. Сітка 0 та 1 буде анімуватися автоматично",
+      "target_properties": ["text"],
+      "expression_template": "numRows = 10;\nnumCols = 10;\nfreq = 10;\noutput = \"\";\nseedRandom(index + Math.floor(time * freq), true);\nfor (r = 0; r < numRows; r++) {\nline = \"\";\nfor (c = 0; c < numCols; c++) {\nline += Math.floor(random(2)).toString() + \" \";\n}\noutput += line + \"\\r\";\n}\noutput;"
+    },
+    {
+      "name_en": "Auto Grid Layout Expression",
+      "name_ua": "Автоматичне сіткове розташування",
+      "category_en": "Layout Automation",
+      "category_ua": "Автоматизація макету",
+      "icon": "🔳",
+      "description_ua": "Автоматично розташовує шари форми/тексту у адаптивній сітці з використанням контрольного шару",
+      "purpose_ua": "Для створення галерей зображень, інфографічних макетів або сіткових анімацій",
+      "use_cases_ua": [
+        "🖼️ Сіткові галереї зображень",
+        "📊 Інфографічні макети",
+        "🎬 Анімації на основі сітки",
+        "📱 Адаптивні UI-компонування"
+      ],
+      "how_to_use_ua": "1. Створіть контрольний шар 'Controller' зі слайдером 'Columns'\n2. Додайте першу частину до 'Position'\n3. Додайте другу частину до 'Scale'\n4. Шари автоматично розташуються у сітці",
+      "target_properties": ["position", "scale"],
+      "expression_template": "// For Position\nvar control = thisComp.layer(\"Controller\");\nvar numCols = Math.floor(control.effect(\"Columns\")(\"Slider\"));\nvar tileIndex = index - control.index - 1;\nvar col = tileIndex % numCols;\nvar row = Math.floor(tileIndex / numCols);\nvar colW = thisComp.width / numCols;\nvar firstTile = thisComp.layer(control.index + 1);\nvar rowH = firstTile.height / firstTile.width * colW;\nvar x = colW * (col + 0.5);\nvar y = rowH * (row + 0.5);\n[x, y];\n\n// For Scale\nvar control = thisComp.layer(\"Controller\");\nvar numCols = Math.floor(control.effect(\"Columns\")(\"Slider\"));\nvar colW = thisComp.width / numCols;\nvar scale = colW / width * 100;\n[scale, scale];"
+    },
+    {
+      "name_en": "Random Flicker Animation",
+      "name_ua": "Випадкова анімація мерехтіння",
+      "category_en": "Light Animation",
+      "category_ua": "Анімація світла",
+      "icon": "💡",
+      "description_ua": "Створює ефект мерехтіння на основі випадкових інтервалів та тривалостей",
+      "purpose_ua": "Для мерехтливих неонових вивісок, горор-переходів або імітації несправних екранів",
+      "use_cases_ua": [
+        "🏙️ Мерехтливі неонові вивіски",
+        "🎃 Горор-переходи та ефекти",
+        "📺 Імітація несправних екранів",
+        "⚡ Ефекти статичної електрики"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity' або 'Brightness'\n2. Налаштуйте 'minInterval', 'maxInterval', 'minFlicker', 'maxFlicker'\n3. Ефект мерехтіння буде працювати автоматично",
+      "target_properties": ["opacity"],
+      "expression_template": "minInterval = 1.5;\nmaxInterval = 2.5;\nminFlicker = 0.5;\nmaxFlicker = 1;\nsegIndex = Math.floor(time / maxInterval);\nseedRandom(segIndex, true);\nsegStart = segIndex * maxInterval;\nsegEnd = segStart + random(minInterval, maxInterval);\nflickerTime = random(minFlicker, maxFlicker);\nseedRandom(1, false);\n(time > segEnd - flickerTime) ? random(0, 100) : 100;"
+    },
+    {
+      "name_en": "Flicker Effect on Layer In Point",
+      "name_ua": "Ефект мерехтіння на початку шару",
+      "category_en": "Reveal Animation",
+      "category_ua": "Анімація розкриття",
+      "icon": "✨",
+      "description_ua": "Додає ефект мерехтіння на початку появи шару, плавно з'являючись з випадковою інтенсивністю",
+      "purpose_ua": "Для глітч-титрів, розкриття логотипів або імітації цифрового запуску",
+      "use_cases_ua": [
+        "🎬 Глітч-титри та інтро",
+        "🏢 Розкриття логотипів з ефектом",
+        "💻 Імітація цифрового запуску систем",
+        "📱 Анімації завантаження"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity'\n2. Ефект автоматично активується на початку шару\n3. Тривалість мерехтіння - 1 секунда (можна змінити)",
+      "target_properties": ["opacity"],
+      "expression_template": "if (time - inPoint < 1){\nMath.min(random(0, time - inPoint) * 100, value);\n}\nelse {\nvalue;\n}"
+    },
+    {
+      "name_en": "Dynamic Drop Shadow Based on Light Source",
+      "name_ua": "Динамічна тінь на основі джерела світла",
+      "category_en": "Lighting Effects",
+      "category_ua": "Ефекти освітлення",
+      "icon": "💡",
+      "description_ua": "Керує напрямком, відстанню та м'якістю тіні на основі позиції джерела світла",
+      "purpose_ua": "Для моушн-дизайну з реалістичним освітленням, що динамічно рухається з джерелами світла",
+      "use_cases_ua": [
+        "🎬 Реалістичне освітлення в моушн-дизайні",
+        "🏠 Архітектурні візуалізації",
+        "🎮 Ігрові інтерфейси з динамічними тінями",
+        "📊 Інфографіка з освітленням"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'Light Source'\n2. Додайте першу частину до 'Direction' ефекту Drop Shadow\n3. Додайте другу частину до 'Distance'\n4. Додайте третю частину до 'Softness'",
+      "target_properties": ["effect"],
+      "expression_template": "// Apply this to the Direction property of the Drop Shadow effect\nlight = thisComp.layer(\"Light Source\").position;\nobj = thisLayer.position;\nangle = radiansToDegrees(Math.atan2(obj[0] - light[0], light[1] - obj[1]));\nangle;\n\n// Apply this to the Distance property of the Drop Shadow effect\nlight = thisComp.layer(\"Light Source\").position;\nobj = thisLayer.position;\nmaxDist = 100;\ndist = length(light, obj);\nlinear(dist, 0, 500, 10, maxDist);\n\n// Apply this to the Softness property of the Drop Shadow effect\nlight = thisComp.layer(\"Light Source\").position;\nobj = thisLayer.position;\nmaxSoft = 300;\ndist = length(light, obj);\nlinear(dist, 0, 500, 5, maxSoft);"
+    },
+    {
+      "name_en": "Circular Orbit Around a Layer",
+      "name_ua": "Кругова орбіта навколо шару",
+      "category_en": "Motion Paths",
+      "category_ua": "Траєкторії руху",
+      "icon": "🔄",
+      "description_ua": "Змушує шар обертатися навколо іншого шару з заданою швидкістю та радіусом",
+      "purpose_ua": "Для анімації супутників, планет або ефектів кругового руху",
+      "use_cases_ua": [
+        "🛰️ Анімації супутників навколо планет",
+        "🌍 Планетарні системи та орбіти",
+        "🎯 Кругові ефекти руху",
+        "⚙️ Механічні обертання"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'CenterLayer'\n2. Додайте до властивості 'Position'\n3. Налаштуйте 'radius' та 'speed' у коді\n4. Шар буде обертатися навколо центру",
+      "target_properties": ["position"],
+      "expression_template": "center = thisComp.layer(\"CenterLayer\").position;\nradius = 500;\nspeed = 2;\nx = center[0] + Math.cos(time * speed) * radius;\ny = center[1] + Math.sin(time * speed) * radius;\n[x, y];"
+    },
+    {
+      "name_en": "Flip Layer Vertically Based on Y Position",
+      "name_ua": "Вертикальне віддзеркалення за Y-позицією",
+      "category_en": "Interactive Animation",
+      "category_ua": "Інтерактивна анімація",
+      "icon": "🔄",
+      "description_ua": "Віддзеркалює масштаб шару вертикально залежно від його позиції по Y",
+      "purpose_ua": "Для анімацій персонажів, дзеркального відображення об'єктів або інтерфейсних елементів, що перевертаються",
+      "use_cases_ua": [
+        "🎭 Анімації персонажів, що перевертаються",
+        "🪞 Дзеркальне відображення об'єктів",
+        "📱 UI-елементи, що реагують на позицію",
+        "🎮 Ігрові механіки з перевертанням"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Шар автоматично перевертається при перетині центру композиції\n3. Налаштуйте умову у коді за потребою",
+      "target_properties": ["scale"],
+      "expression_template": "flip = (position[1] > thisComp.height / 2) ? [100, 100] : [100, -100];\nflip;"
+    },
+    {
+      "name_en": "Flip Layer Horizontally Based on X Position",
+      "name_ua": "Горизонтальне віддзеркалення за X-позицією",
+      "category_en": "Interactive Animation",
+      "category_ua": "Інтерактивна анімація",
+      "icon": "🔄",
+      "description_ua": "Віддзеркалює масштаб шару горизонтально при перетині центру композиції",
+      "purpose_ua": "Для автоматичного перевертання шарів при русі через центр екрану",
+      "use_cases_ua": [
+        "🎭 Персонажі, що повертаються при русі",
+        "🎯 Іконки, що віддзеркалюються",
+        "📊 Об'єкти, що змінюють напрямок",
+        "🎮 Інтерактивні елементи інтерфейсу"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Шар автоматично віддзеркалиться при русі через центр\n3. Ідеально для анімацій зміни напрямку",
+      "target_properties": ["scale"],
+      "expression_template": "flip = (position[0] > thisComp.width / 2) ? [100, 100] : [-100, 100];\nflip;"
+    },
+    {
+      "name_en": "Auto-Wiggle When Near Another Layer",
+      "name_ua": "Автоматичне коливання при наближенні до іншого шару",
+      "category_en": "Interactive Animation",
+      "category_ua": "Інтерактивна анімація",
+      "icon": "🎯",
+      "description_ua": "Автоматично регулює інтенсивність коливання на основі відстані до іншого шару",
+      "purpose_ua": "Для інтерактивних UI-анімацій, фізичного руху або об'єктів, що реагують на наближення",
+      "use_cases_ua": [
+        "📱 Інтерактивні UI-анімації",
+        "⚛️ Фізичні анімації з реакцією",
+        "🎯 Об'єкти, що тремтять при наближенні",
+        "🔗 Системи взаємодії між елементами"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'TargetLayer'\n2. Додайте до будь-якої властивості (Position, Rotation)\n3. Налаштуйте 'maxWiggle', 'maxFrequency', 'maxDistance'\n4. Коливання збільшуватиметься при наближенні",
+      "target_properties": ["position", "rotation"],
+      "expression_template": "maxWiggle = 20;\nmaxFrequency = 10;\nmaxDistance = 500;\ntarget = thisComp.layer(\"TargetLayer\").position;\ndist = length(position, target);\nwiggleAmount = linear(dist, 0, maxDistance, maxWiggle, 0);\nwiggleFrequency = linear(dist, 0, maxDistance, maxFrequency, 1);\nwiggle(wiggleFrequency, wiggleAmount);"
+    },
+    {
+      "name_en": "Timecode Counter with Drop Frame Support",
+      "name_ua": "Лічильник таймкоду з підтримкою дроп-фреймів",
+      "category_en": "Time Display",
+      "category_ua": "Відображення часу",
+      "icon": "⏱️",
+      "description_ua": "Відображає лічильник таймкоду у правильному форматі з годинами, хвилинами, секундами та кадрами",
+      "purpose_ua": "Для створення on-екранних дисплеїв таймкоду, що точно відповідають частотам кадрів",
+      "use_cases_ua": [
+        "🎬 Професійні дисплеї таймкоду",
+        "📺 Телевізійне виробництво",
+        "🎮 Запис ігрового процесу",
+        "📊 Точні часові метки"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Змініть 'fps' на частоту кадрів вашої композиції\n3. Таймкод відображатиметься у форматі HH:MM:SS:FF",
+      "target_properties": ["text"],
+      "expression_template": "fps = 30;\nframes = Math.floor(time * fps);\nhours = Math.floor(frames / (fps * 3600));\nminutes = Math.floor((frames % (fps * 3600)) / (fps * 60));\nseconds = Math.floor((frames % (fps * 60)) / fps);\nframes = frames % fps;\n(hours < 10 ? \"0\" : \"\") + hours + \":\" +\n(minutes < 10 ? \"0\" : \"\") + minutes + \":\" +\n(seconds < 10 ? \"0\" : \"\") + seconds + \":\" +\n(frames < 10 ? \"0\" : \"\") + frames;"
+    },
+    {
+      "name_en": "DVD Screensaver Bounce Effect",
+      "name_ua": "Ефект відскоку DVD Screensaver",
+      "category_en": "Motion Paths",
+      "category_ua": "Траєкторії руху",
+      "icon": "📀",
+      "description_ua": "Переміщує шар по екрану, динамічно відскакуючи від країв",
+      "purpose_ua": "Для відтворення класичного ефекту відскоку логотипу DVD для моушн-дизайну, скрінсейверів або ретро-анімацій",
+      "use_cases_ua": [
+        "📀 Ретро-анімації у стилі DVD",
+        "🎮 Ігрові елементи з відскоком",
+        "📱 Скрінсейвери та заставки",
+        "🎨 Веселі моушн-ефекти"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте 'speedX' та 'speedY' для контролю швидкості\n3. Шар автоматично відскакуватиме від країв",
+      "target_properties": ["position"],
+      "expression_template": "layerBounds = sourceRectAtTime(time, false);\nlayerWidth = layerBounds.width;\nlayerHeight = layerBounds.height;\ncompWidth = thisComp.width;\ncompHeight = thisComp.height;\nminX = layerWidth / 2;\nmaxX = compWidth - layerWidth / 2;\nminY = layerHeight / 2;\nmaxY = compHeight - layerHeight / 2;\nspeedX = 300;\nspeedY = 200;\nt = time - inPoint;\nx = minX + (t * speedX) % ((maxX - minX) * 2);\ny = minY + (t * speedY) % ((maxY - minY) * 2);\nif (x > maxX) x = maxX - (x - maxX);\nif (x < minX) x = minX + (minX - x);\nif (y > maxY) y = maxY - (y - maxY);\nif (y < minY) y = minY + (minY - y);\n[x, y];"
+    },
+    {
+      "name_en": "Dynamic Number Counter without Keyframes",
+      "name_ua": "Динамічний лічильник чисел без ключових кадрів",
+      "category_en": "Number Animation",
+      "category_ua": "Анімація чисел",
+      "icon": "🔢",
+      "description_ua": "Автоматично анімує число від початкового значення до кінцевого протягом заданої тривалості",
+      "purpose_ua": "Для UI-анімацій, статистики, фінансових даних та відліку, де число має плавно анімуватися без ручних ключових кадрів",
+      "use_cases_ua": [
+        "📱 UI-анімації з лічильниками",
+        "📊 Статистичні дані та метрики",
+        "💰 Фінансові показники",
+        "⏰ Таймери та відлік"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Налаштуйте 'startValue', 'endValue', 'animationDuration', 'decimals'\n3. Лічильник автоматично анімується від початку шару",
+      "target_properties": ["text"],
+      "expression_template": "startValue = 0;\nendValue = 99.99;\nanimationDuration = 2;\ndecimals = 2;\nstartTime = inPoint;\nendTime = startTime + animationDuration;\nt = clamp(time, startTime, endTime);\nanimatedValue = linear(t, startTime, endTime, startValue, endValue);\ndecimals = Math.round(decimals);\nroundedValue = animatedValue.toFixed(decimals);\nroundedValue;"
+    },
+    {
+      "name_en": "Auto Align and Center Two Text Layers",
+      "name_ua": "Автоматичне вирівнювання та центрування двох текстових шарів",
+      "category_en": "Text Layout",
+      "category_ua": "Макет тексту",
+      "icon": "🎯",
+      "description_ua": "Тримає два текстові шари візуально відцентрованими відносно один одного та композиції",
+      "purpose_ua": "Для забезпечення ідеального центрування двох текстових шарів у композиції",
+      "use_cases_ua": [
+        "📝 Заголовки з динамічним текстом",
+        "🏷️ Парні текстові блоки",
+        "🎬 Титры з двома рядками",
+        "📊 Інфографіка з кількома текстами"
+      ],
+      "how_to_use_ua": "1. Перший шар - вирівняти праворуч\n2. Другий шар - вирівняти ліворуч\n3. Другий шар батьківський до першого\n4. Додайте вираз до позиції першого шару",
+      "target_properties": ["position"],
+      "expression_template": "t1 = thisLayer.sourceRectAtTime();\nt2 = thisComp.layer(\"Text 2\").sourceRectAtTime();\nmargin = thisComp.layer(\"Text 2\").position[0];\nx = t1.width - margin - t2.width;\n[thisComp.width / 2, thisComp.height / 2] + [x / 2, t1.height / 2];"
+    },
+    {
+      "name_en": "Word Counter for Text Layers",
+      "name_ua": "Лічильник слів для текстових шарів",
+      "category_en": "Text Analysis",
+      "category_ua": "Аналіз тексту",
+      "icon": "📝",
+      "description_ua": "Підраховує кількість слів у текстовому шарі та відображає результат",
+      "purpose_ua": "Для динамічного підрахунку слів у сценаріях, субтитрах або інфографічних анімаціях",
+      "use_cases_ua": [
+        "🎬 Субтитри та підрахунок слів",
+        "📊 Інфографіка з метриками тексту",
+        "📝 Аналіз сценаріїв",
+        "🎯 Обмеження довжини тексту"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Змініть 'Source' на назву вашого текстового шару\n3. Лічильник автоматично оновлюватиметься",
+      "target_properties": ["text"],
+      "expression_template": "myText = thisComp.layer(\"Source\").text.sourceText;\nmyText.split(\" \").length;"
+    },
+    {
+      "name_en": "Repeat Text Expression",
+      "name_ua": "Повторення тексту",
+      "category_en": "Text Manipulation",
+      "category_ua": "Маніпуляція текстом",
+      "icon": "🔄",
+      "description_ua": "Повторює рядок кілька разів на основі числового введення",
+      "purpose_ua": "Для автоматизації повторення тексту, ідеально для ефектів прокручування тексту або типографії на основі патернів",
+      "use_cases_ua": [
+        "📜 Ефекти прокручування тексту",
+        "🎨 Типографія на основі патернів",
+        "🔁 Повторювані текстові елементи",
+        "📏 Текстові лінійки та шкали"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Замініть '0' на кількість повторень\n3. Текст автоматично повториться вказану кількість разів",
+      "target_properties": ["text"],
+      "expression_template": "repeat(0); // Replace 0 with a number"
+    },
+    {
+      "name_en": "Convert Spaces into Line Breaks in Text Layers",
+      "name_ua": "Перетворення пробілів на переноси рядків у текстових шарах",
+      "category_en": "Text Formatting",
+      "category_ua": "Форматування тексту",
+      "icon": "↩️",
+      "description_ua": "Замінює всі пробіли у текстовому шарі на переноси рядків",
+      "purpose_ua": "Для динамічного форматування тексту, забезпечуючи переноси рядків після кожного пробілу",
+      "use_cases_ua": [
+        "📝 Субтитри та підписи",
+        "📄 Форматування абзаців",
+        "🎬 Вертикальні текстові ефекти",
+        "📊 Списки з переносами"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Кожен пробіл автоматично заміниться на перенос рядка\n3. Ідеально для створення вертикальних текстів",
+      "target_properties": ["text"],
+      "expression_template": "text.sourceText.replace(/ /g, \"\\r\");"
+    },
+    {
+      "name_en": "Replace Text Expression",
+      "name_ua": "Заміна тексту",
+      "category_en": "Text Manipulation",
+      "category_ua": "Маніпуляція текстом",
+      "icon": "🔄",
+      "description_ua": "Замінює конкретні символи у текстовому шарі, автоматизуючи модифікації тексту",
+      "purpose_ua": "Для динамічної заміни слів, літер або символів у текстовому шарі",
+      "use_cases_ua": [
+        "🔄 Версії відео з різним текстом",
+        "📝 Автоматизовані оновлення тексту",
+        "🎨 Модифікації тексту в реальному часі",
+        "🌐 Багатомовні заміни"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Замініть 'x' на текст для заміни\n3. Замініть 'y' на новий текст\n4. Всі входження автоматично заміняться",
+      "target_properties": ["text"],
+      "expression_template": "text.sourceText.replace(/x/g, \"y\");"
+    },
+    {
+      "name_en": "Toggle Layer Visibility with a Dropdown Menu",
+      "name_ua": "Перемикач видимості шару з випадаючим меню",
+      "category_en": "Layer Control",
+      "category_ua": "Керування шарами",
+      "icon": "👁️",
+      "description_ua": "Зв'язує прозорість з випадаючим меню, дозволяючи перемикати видимість на основі вибору",
+      "purpose_ua": "Для легкого вмикання/вимикання шарів за допомогою випадаючого меню",
+      "use_cases_ua": [
+        "🎛️ Шаблони з варіантами відображення",
+        "🔄 Перемикання між версіями",
+        "👁️ Контроль видимості елементів",
+        "📊 Альтернативні відображення даних"
+      ],
+      "how_to_use_ua": "1. Створіть 'Dropdown Menu Control' з опціями\n2. Додайте до властивості 'Opacity'\n3. Вибирайте опції для контролю видимості",
+      "target_properties": ["opacity"],
+      "expression_template": "dropdown = thisLayer.effect(\"Dropdown Menu Control\")(\"Menu\");\ndropdown == 1 ? 100 : 0;"
+    },
+    {
+      "name_en": "Dynamic AM/PM Digital Timer Expression",
+      "name_ua": "Динамічний цифровий таймер AM/PM",
+      "category_en": "Time Display",
+      "category_ua": "Відображення часу",
+      "icon": "🕒",
+      "description_ua": "Адаптивний цифровий таймер з форматуванням AM/PM, що оновлюється динамічно на основі таймлайну",
+      "purpose_ua": "Для моушн-графіки, як-от цифрові годинники, панелі приладів або анімації на основі часу",
+      "use_cases_ua": [
+        "🕒 Цифрові годинники та таймери",
+        "📊 Панелі приладів та дашборди",
+        "⏰ Анімації на основі часу",
+        "🎬 Тайм-коди з AM/PM"
+      ],
+      "how_to_use_ua": "1. Створіть слайдери: hours, minutes, seconds\n2. Створіть випадаюче меню AM/PM\n3. Додайте до властивості 'Source Text'\n4. Таймер оновлюватиметься автоматично",
+      "target_properties": ["text"],
+      "expression_template": "startHours = effect(\"hours\")(\"Slider\");\nstartMinutes = effect(\"minutes\")(\"Slider\");\nstartSeconds = effect(\"seconds\")(\"Slider\");\nstartTime = (startHours * 3600) + (startMinutes * 60) + startSeconds;\ncurrentTime = time - inPoint;\nelapsedTime = currentTime + startTime;\nhours = Math.floor(elapsedTime / 3600);\nminutes = Math.floor((elapsedTime % 3600) / 60);\nseconds = Math.floor(elapsedTime % 60);\nformattedHours = hours < 10 ? \"0\" + hours : hours;\nformattedMinutes = minutes < 10 ? \"0\" + minutes : minutes;\nformattedSeconds = seconds < 10 ? \"0\" + seconds : seconds;\ntiming = [\" AM\", \" PM\"];\nmenu = effect(\"AM/PM\")(\"Menu\")\namPm = timing[menu - 1];\nformattedTime = formattedHours + \":\" + formattedMinutes + \":\" + formattedSeconds + amPm;\nformattedTime;"
+    },
+    {
+      "name_en": "Row Counter for Text Layers",
+      "name_ua": "Лічильник рядків для текстових шарів",
+      "category_en": "Text Analysis",
+      "category_ua": "Аналіз тексту",
+      "icon": "📏",
+      "description_ua": "Підраховує кількість рядків у текстовому шарі, адаптуючись динамічно на основі розміру шрифту та інтервалів",
+      "purpose_ua": "Для автоматизації макетів, де кількість текстових рядків впливає на дизайн",
+      "use_cases_ua": [
+        "📝 Субтитри та підписи",
+        "📄 Абзаци з динамічним макетом",
+        "🎬 Текст, що адаптується до рядків",
+        "📊 Макети, залежні від кількості рядків"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Змініть 'textLayer' на назву вашого шару\n3. Лічильник автоматично розрахує кількість рядків",
+      "target_properties": ["text"],
+      "expression_template": "L = thisComp.layer(\"textLayer\");\nvar newStyle = L.text.sourceText.style;\nvar myLeading = newStyle.autoLeading ? newStyle.fontSize * 1.2 : newStyle.leading;\nH = L.sourceRectAtTime(time, false).height;\nrowNo = Math.ceil(H / myLeading);\nrowNo;"
+    },
+    {
+      "name_en": "Character Counter for Text Layers Excluding Spaces",
+      "name_ua": "Лічильник символів для текстових шарів (без пробілів)",
+      "category_en": "Text Analysis",
+      "category_ua": "Аналіз тексту",
+      "icon": "🔤",
+      "description_ua": "Підраховує кількість символів у текстовому шарі, виключаючи пробіли",
+      "purpose_ua": "Для шаблонів та анімацій, де кількість символів без пробілів відіграє роль у динамічних макетах",
+      "use_cases_ua": [
+        "📝 Шаблони з обмеженням символів",
+        "🎨 Динамічні макети, що адаптуються",
+        "📊 Точний підрахунок символів",
+        "🔤 Аналіз тексту без пробілів"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Змініть 'textLayer' на назву вашого шару\n3. Лічильник покаже кількість символів без пробілів",
+      "target_properties": ["text"],
+      "expression_template": "myText = thisComp.layer(\"textLayer\").text.sourceText;\nmyTextWithoutSpaces = myText.replace(/\\s/g, \"\");\nmyTextWithoutSpaces.length;"
+    },
+    {
+      "name_en": "Letter-by-Letter Write-On Text Animation",
+      "name_ua": "Побуквена анімація набору тексту",
+      "category_en": "Text Animation",
+      "category_ua": "Анімація тексту",
+      "icon": "⌨️",
+      "description_ua": "Анімує видимість текстового шару, поступово відкриваючи літери одну за одною",
+      "purpose_ua": "Для анімації заголовків, інтро або послідовностей у стилі друкарської машинки",
+      "use_cases_ua": [
+        "🎬 Титри у стилі друкарської машинки",
+        "💻 Кодувальні послідовності",
+        "📝 Поступове розкриття текстів",
+        "🎮 Ігрові інтерфейси з набором тексту"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Налаштуйте 'timePerChar' для контролю швидкості\n3. Текст буде поступово з'являтися літера за літерою",
+      "target_properties": ["text"],
+      "expression_template": "chars = text.sourceText.length;\ntimePerChar = 0.1;\nvisibleChars = Math.floor((time - inPoint) / timePerChar);\ntext.sourceText.substr(0, visibleChars);"
+    },
+    {
+      "name_en": "Swinging Pendulum Animation",
+      "name_ua": "Анімація маятника, що гойдається",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🔄",
+      "description_ua": "Імітує рух маятника, що гойдається, зі зменшенням амплітуди з часом",
+      "purpose_ua": "Для створення фізичних ефектів або додавання органічного руху об'єктам",
+      "use_cases_ua": [
+        "🏪 Вивіски, що гойдаються",
+        "🎪 Декор, що гойдається",
+        "⚖️ Фізичні симуляції маятників",
+        "🎨 Органічні рухи в моушн-дизайні"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Rotation'\n2. Налаштуйте 'frequency', 'amplitude', 'decay'\n3. Маятник автоматично гойдатиметься з затуханням",
+      "target_properties": ["rotation"],
+      "expression_template": "frequency = 1;\namplitude = 45;\ndecay = 0.1;\namplitude * Math.sin(time * frequency * Math.PI * 2) * Math.exp(-decay * time);"
+    },
+    {
+      "name_en": "Automatic Scale Animation with Overshoot",
+      "name_ua": "Автоматична анімація масштабу з перельотом",
+      "category_en": "Auto Animation",
+      "category_ua": "Автоматична анімація",
+      "icon": "🎯",
+      "description_ua": "Застосовує плавну анімацію масштабу з ефектом перельоту, що динамічно адаптується до тривалості шару",
+      "purpose_ua": "Для анімації елементів, як-от кнопки, логотипи або текст",
+      "use_cases_ua": [
+        "🔘 Анімації кнопок з перельотом",
+        "🏢 Масштабування логотипів",
+        "📝 Текстові переходи",
+        "🔄 Шаблони з автоматичною анімацією"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Налаштуйте 'scaleDuration', 'startValue', 'endValue', 'overshootPower'\n3. Анімація автоматично запуститься на початку та завершенні шару",
+      "target_properties": ["scale"],
+      "expression_template": "scaleDuration = 0.5;\nstartValue = 0;\nendValue = 100;\novershootPower = 5;\novershootValue = endValue * (1 + overshootPower / endValue);\nif (time >= inPoint && time < inPoint + scaleDuration) {\nt = (time - inPoint) / scaleDuration;\nif (t <= 0.5) {\nanimatedValue = easeOut(t, 0, 0.5, startValue, overshootValue);}\nelse {\nanimatedValue = ease(t, 0.5, 1, overshootValue, endValue);}}\nelse if (time > outPoint - scaleDuration && time <= outPoint){\nt = (time - (outPoint - scaleDuration)) / scaleDuration;\nif (t <= 0.5) {\nanimatedValue = ease(t, 0, 0.5, endValue, overshootValue);}\nelse {\nanimatedValue = ease(t, 0.5, 1, overshootValue, startValue);}}\nelse if (time > outPoint) {\nanimatedValue = startValue;}\nelse {\nanimatedValue = endValue;}\n[animatedValue, animatedValue];"
+    },
+    {
+      "name_en": "Color Animation Based on Layer Position",
+      "name_ua": "Анімація кольору за позицією шару",
+      "category_en": "Color Animation",
+      "category_ua": "Анімація кольору",
+      "icon": "🎨",
+      "description_ua": "Динамічно змінює колір шару на основі його позиції у композиції",
+      "purpose_ua": "Для інтерактивних анімацій, де об'єкти змінюють колір під час руху",
+      "use_cases_ua": [
+        "🎚️ Слайдери, що змінюють колір",
+        "🗺️ Мапи з кольоровою відповідністю",
+        "📊 Реактивна графіка",
+        "🎯 Інтерактивні елементи"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Color' (наприклад, Fill)\n2. X-координата контролює червоний, Y-координата - зелений\n3. Колір автоматично змінюватиметься при русі",
+      "target_properties": ["color"],
+      "expression_template": "xNorm = linear(position[0], 0, thisComp.width, 0, 1);\nyNorm = linear(position[1], 0, thisComp.height, 0, 1);\nr = linear(xNorm, 0, 1, 0, 255);\ng = linear(yNorm, 0, 1, 0, 255);\nb = 255 - (r + g) / 2;\n[r, g, b, 255] / 255;"
+    },
+    {
+      "name_en": "Constrain Shape Layer Inside Circle Bounds",
+      "name_ua": "Обмеження шару форми всередині круглих меж",
+      "category_en": "Constraints",
+      "category_ua": "Обмеження",
+      "icon": "⭕",
+      "description_ua": "Утримує менший шар форми всередині більшого кола, обмежуючи його позицію",
+      "purpose_ua": "Для створення анімацій, де менші об'єкти рухаються вільно, але залишаються у круглому фреймі",
+      "use_cases_ua": [
+        "🎯 Кнопки у круглих контейнерах",
+        "🔄 Іконки, що рухаються по колу",
+        "🎮 Ігрові елементи з обмеженням",
+        "📊 Кругові інтерфейси"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'LargeCircle' з формою кола\n2. Додайте до властивості 'Position' меншого шару\n3. Менший шар не зможе вийти за межі великого кола",
+      "target_properties": ["position"],
+      "expression_template": "largeCircle = thisComp.layer(\"LargeCircle\");\nlargePosition = largeCircle.position;\nlargeRadius = largeCircle.content(\"Ellipse 1\").content(\"Ellipse Path 1\").size[0] / 2;\nsmallRadius = content(\"Ellipse 1\").content(\"Ellipse Path 1\").size[0] / 2;\ndelta = position - largePosition;\ndistance = length(delta);\nif (distance > (largeRadius - smallRadius)) {\nconstrainedDelta = normalize(delta) * (largeRadius - smallRadius);\nconstrainedPosition = largePosition + constrainedDelta;}\nelse {\nconstrainedPosition = position;}\nconstrainedPosition;"
+    },
+    {
+      "name_en": "Keyframe Value Control with Sliders",
+      "name_ua": "Контроль значень ключових кадрів за допомогою слайдерів",
+      "category_en": "Animation Control",
+      "category_ua": "Керування анімацією",
+      "icon": "🎛️",
+      "description_ua": "Дозволяє динамічно керувати значеннями ключових кадрів за допомогою слайдерів",
+      "purpose_ua": "Для проектів, де потрібно регулювати початкові та кінцеві значення анімацій на льоту",
+      "use_cases_ua": [
+        "🔄 Налаштування анімацій без зміни ключових кадрів",
+        "🎛️ Інтерактивні контролери анімації",
+        "📊 Динамічні параметри моушн-графіки",
+        "🔄 Шаблони з регульованими значеннями"
+      ],
+      "how_to_use_ua": "1. Створіть два ключові кадри на властивості\n2. Створіть слайдери 'Key 1' та 'Key 2'\n3. Додайте вираз до властивості\n4. Змінюйте значення через слайдери",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "key1Value = effect(\"Key 1\")(\"Slider\");\nkey2Value = effect(\"Key 2\")(\"Slider\");\nkey1Time = key(1).time;\nkey2Time = key(2).time;\nif (time <= key1Time){\nkey1Value;}\nelse if (time >= key2Time){\nkey2Value;}\nelse{\noriginalValue = valueAtTime(time);\nlinear(originalValue, valueAtTime(key1Time), valueAtTime(key2Time), key1Value, key2Value);}"
+    },
+    {
+      "name_en": "Detect Layer Overlap",
+      "name_ua": "Виявлення перекриття шарів",
+      "category_en": "Layer Interaction",
+      "category_ua": "Взаємодія шарів",
+      "icon": "🎯",
+      "description_ua": "Виявляє, коли два шари перекриваються, регулюючи прозорість при зіткненні",
+      "purpose_ua": "Для ефектів виявлення зіткнень, таких як інтерактивні анімації",
+      "use_cases_ua": [
+        "🎮 Виявлення зіткнень у ігрових анімаціях",
+        "📱 Інтерактивні елементи, що змінюються при контакті",
+        "🎯 Ефекти перетину об'єктів",
+        "🔗 Взаємодія між елементами"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity'\n2. Вираз автоматично визначатиме перекриття з іншими шарами\n3. Змініть значення 30 на бажаний рівень прозорості",
+      "target_properties": ["opacity"],
+      "expression_template": "function getBoundingBox(layer) {\nvar rect = layer.sourceRectAtTime(time, false);\nvar topLeft = layer.toWorld([rect.left, rect.top]);\nvar topRight = layer.toWorld([rect.left + rect.width, rect.top]);\nvar bottomLeft = layer.toWorld([rect.left, rect.top + rect.height]);\nvar bottomRight = layer.toWorld([rect.left + rect.width, rect.top + rect.height]);\nreturn [topLeft, topRight, bottomRight, bottomLeft];\n}\nfunction layersOverlap() {\nvar myCorners = getBoundingBox(thisLayer);\nfor (var i = 1; i <= thisComp.numLayers; i++) {\nif (i == index) continue;\nvar otherLayer = thisComp.layer(i);\nif (!otherLayer.active) continue;\nvar otherCorners = getBoundingBox(otherLayer);\nif (isAnyCornerInside(myCorners, otherCorners) || isAnyCornerInside(otherCorners, myCorners)) {\nreturn true;\n}}\nreturn false;\n}\nfunction isAnyCornerInside(cornersA, cornersB) {\nfor (var i = 0; i < cornersA.length; i++){\nvar point = cornersA[i];\nif (isPointInside(point, cornersB)) {\nreturn true;\n}}\nreturn false;\n}\nfunction isPointInside(point, corners) {\nvar minX = Math.min(corners[0][0], corners[1][0], corners[2][0], corners[3][0]);\nvar maxX = Math.max(corners[0][0], corners[1][0], corners[2][0], corners[3][0]);\nvar minY = Math.min(corners[0][1], corners[1][1], corners[2][1], corners[3][1]);\nvar maxY = Math.max(corners[0][1], corners[1][1], corners[2][1], corners[3][1]);\nreturn (point[0] >= minX && point[0] <= maxX && point[1] >= minY && point[1] <= maxY);\n}\nlayersOverlap() ? 30 : 100;"
+    },
+    {
+      "name_en": "Elastic Connection Expression for Linked Animation",
+      "name_ua": "Пружне з'єднання для зв'язаної анімації",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🔄",
+      "description_ua": "Створює ефект пружного руху для шару, що слідує за іншим, наче пружина",
+      "purpose_ua": "Для анімації об'єктів, з'єднаних пружинним рухом",
+      "use_cases_ua": [
+        "🧵 Банджі-корди та гумові з'єднання",
+        "🔗 Гнучкі з'єднувачі",
+        "🎯 Пружні зв'язки між елементами",
+        "⚡ Динамічні з'єднання в моушн-дизайні"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'leader'\n2. Додайте до властивості 'Position' веденого шару\n3. Налаштуйте 'restLength' та 'damp'\n4. Ведений шар буде пружно слідувати за лідером",
+      "target_properties": ["position"],
+      "expression_template": "var restLength = 20;\nvar damp = 0.95;\nvar leader = thisComp.layer(\"leader\");\nvar fDur = thisComp.frameDuration;\nvar currTime = time;\nvar p2 = position.valueAtTime(0);\nvar v2 = 0;\nfor (var t = 0; t <= currTime; t += fDur) {\nvar p1 = leader.transform.position.valueAtTime(t);\nvar delta = p2 - p1;\nvar dist = length(delta) - restLength;\nvar a = normalize(delta) * (dist * fDur * 2);\nv2 = (v2 - a) * damp;\np2 += v2;\n}\np2;"
+    },
+    {
+      "name_en": "Wiggle One Dimension Only",
+      "name_ua": "Коливання тільки в одному вимірі",
+      "category_en": "Animation Effects",
+      "category_ua": "Ефекти анімації",
+      "icon": "↔️",
+      "description_ua": "Застосовує ефект коливання тільки до одного виміру позиції шару",
+      "purpose_ua": "Для тонких ефектів тремтіння на тексті або зображеннях, що повинні рухатися тільки горизонтально або вертикально",
+      "use_cases_ua": [
+        "📝 Текст, що тремтить горизонтально",
+        "🖼️ Зображення з вертикальним тремтінням",
+        "🎯 Одновимірні вібрації",
+        "⚡ Специфічні напрямки коливання"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Вираз коливатиме тільки X-координату\n3. Для Y-координати змініть [w[0],value[1]] на [value[0],w[1]]",
+      "target_properties": ["position"],
+      "expression_template": "w = wiggle(2,50);\n[w[0],value[1]]"
+    },
+    {
+      "name_en": "Digital Timer, Hours, Minutes, and Seconds Format",
+      "name_ua": "Цифровий таймер у форматі Години:Хвилини:Секунди",
+      "category_en": "Time Display",
+      "category_ua": "Відображення часу",
+      "icon": "🕒",
+      "description_ua": "Відображає час у форматі ГГ:ХХ:СС, налаштовуваний через слайдер",
+      "purpose_ua": "Для детальних анімацій на основі часу, таких як таймери або цифрові дисплеї",
+      "use_cases_ua": [
+        "⏱️ Точні таймери з секундами",
+        "📊 Цифрові дисплеї часу",
+        "🎬 Анімації з детальним відліком",
+        "🔄 Тайм-коди для відео"
+      ],
+      "how_to_use_ua": "1. Створіть слайдер 'Slider Control'\n2. Додайте до властивості 'Source Text'\n3. Слайдер контролює загальну кількість секунд\n4. Час відображатиметься у форматі ГГ:ХХ:СС",
+      "target_properties": ["text"],
+      "expression_template": "slider = Math.round(effect(\"Slider Control\")(\"Slider\"));\nsec = slider % 60;\nmin = Math.floor((slider / 60) % 60);\nhrs = Math.floor(slider / 3600);\nfunction addZero(n) {\nreturn n < 10 ? \"0\" + n : n;\n}\naddZero(hrs) + \":\" + addZero(min) + \":\" + addZero(sec);"
+    },
+    {
+      "name_en": "Digital Timer, Hours and Minutes Format",
+      "name_ua": "Цифровий таймер у форматі Години:Хвилини",
+      "category_en": "Time Display",
+      "category_ua": "Відображення часу",
+      "icon": "⏰",
+      "description_ua": "Відображає час у форматі ГГ:ХХ з використанням контролю слайдера",
+      "purpose_ua": "Для відліку часу або анімацій на основі часу, де потрібні години та хвилини",
+      "use_cases_ua": [
+        "⏱️ Відлік часу без секунд",
+        "📊 Дисплеї годинника",
+        "🎬 Анімації з годинним форматом",
+        "🔄 Таймери для тривалих подій"
+      ],
+      "how_to_use_ua": "1. Створіть слайдер 'Slider Control'\n2. Додайте до властивості 'Source Text'\n3. Слайдер контролює загальну кількість секунд\n4. Час відображатиметься у форматі ХХ:СС (хвилини:секунди)",
+      "target_properties": ["text"],
+      "expression_template": "slider = Math.round(effect(\"Slider Control\")(\"Slider\"));\nsec = slider % 60;\nmin = Math.floor(slider / 60);\nfunction addZero(n) {\nreturn n < 10 ? \"0\" + n : n;\n}\naddZero(min) + \":\" + addZero(sec);"
+    },
+    {
+      "name_en": "Squash and Stretch Animation Expression",
+      "name_ua": "Анімація стиснення та розтягування",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🎈",
+      "description_ua": "Створює ефект стиснення та розтягування на початку таймлайну шару",
+      "purpose_ua": "Для додавання жвавого, мультяшного ефекту до анімацій відскоку або приземлення",
+      "use_cases_ua": [
+        "🏀 М'ячі, що відскакують з деформацією",
+        "🎪 Мультяшні анімації",
+        "📱 UI-елементи з пружністю",
+        "🎬 Динамічні переходи"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Налаштуйте 'maxDev', 'spd', 'duration'\n3. Ефект автоматично активується на початку шару",
+      "target_properties": ["scale"],
+      "expression_template": "maxDev = 10;\nspd = 30;\nduration = 2;\nt = time - inPoint;\ndecay = Math.log(100) / duration;\nif (t < duration) {\nx = scale[0] + maxDev * Math.sin(spd * t) / Math.exp(decay * t);\ny = (scale[0] * scale[1]) / x;\n[x, y]; }\nelse {\nscale;}"
+    },
+    {
+      "name_en": "Ignore Parent Layer Rotation Expression",
+      "name_ua": "Ігнорування обертання батьківського шару",
+      "category_en": "Parenting Control",
+      "category_ua": "Керування батьківськими зв'язками",
+      "icon": "🔄",
+      "description_ua": "Забезпечує незалежність обертання шару від обертання його батька",
+      "purpose_ua": "Для елементів, що потребують стабільної орієнтації незважаючи на обертання батьківського шару",
+      "use_cases_ua": [
+        "🏷️ Фіксовані іконки на обертових об'єктах",
+        "📝 Підписи, що не обертаються",
+        "🎯 Стабільні UI-елементи",
+        "🔧 Інструменти з фіксованою орієнтацією"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Rotation'\n2. Шар залишиться у початковому обертанні незалежно від батька\n3. Ідеально для елементів, що не повинні обертатися",
+      "target_properties": ["rotation"],
+      "expression_template": "value - parent.transform.rotation"
+    },
+    {
+      "name_en": "Display Current Date in After Effects",
+      "name_ua": "Відображення поточної дати",
+      "category_en": "Information Display",
+      "category_ua": "Відображення інформації",
+      "icon": "📅",
+      "description_ua": "Показує поточну дату у текстовому шарі, налаштовувану за форматом",
+      "purpose_ua": "Для динамічних накладань дат або шаблонних проектів, де дата має автоматично оновлюватися",
+      "use_cases_ua": [
+        "📅 Динамічні накладання дат",
+        "🔄 Шаблони з автоматичною датою",
+        "📊 Проекти з актуальною датою",
+        "🎬 Відео з поточною датою"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Налаштуйте 'divider' та 'yearLength'\n3. Дата автоматично оновлюватиметься",
+      "target_properties": ["text"],
+      "expression_template": "d = new Date(Date(0));\ndivider = \"/\";\nyearLength = 2;\nfunction padZeros(n){\nif(n <= 9){\nreturn \"0\" + n;\n}\nreturn n;\n}\nyearTrim = (yearLength===2) ? 2 : 0;\n\"\" + padZeros(d.getMonth()+1) + divider + padZeros(d.getDate()) + divider + d.getFullYear().toString().substring(yearTrim,4);"
+    },
+    {
+      "name_en": "Automatic Fade In and Out Expression",
+      "name_ua": "Автоматичне зникнення та поява",
+      "category_en": "Auto Animation",
+      "category_ua": "Автоматична анімація",
+      "icon": "🎭",
+      "description_ua": "Додає ефект зникнення та появи на основі тривалості шару без ключових кадрів",
+      "purpose_ua": "Для шаблонів або MOGRT, де шари потребують швидких переходів зникнення/появи",
+      "use_cases_ua": [
+        "🔄 Шаблони з автоматичними переходами",
+        "🎬 MOGRT з плавними появами",
+        "📝 Текстові анімації з затуханням",
+        "⚡ Швидкі ефекти переходу"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity'\n2. Налаштуйте 'fade' для контролю тривалості\n3. Шар автоматично з'являтиметься та зникатиме",
+      "target_properties": ["opacity"],
+      "expression_template": "fade = 1;\nfadeIn = (time-inPoint)/fade;\nfadeOut = (outPoint - time)/fade;\nif (time < inPoint + fade){\nease(fadeIn,0,1)*value;\n}else if (time > outPoint - fade){\nease(fadeOut,0,1)*value;\n}else{\nvalue;\n}"
+    },
+    {
+      "name_en": "Replace Spaces with New Line Expression",
+      "name_ua": "Заміна пробілів на переноси рядків",
+      "category_en": "Text Formatting",
+      "category_ua": "Форматування тексту",
+      "icon": "↩️",
+      "description_ua": "Перетворює пробіли у тексті на переноси рядків, ефективно створюючи нові рядки",
+      "purpose_ua": "Для автоматизації багаторядкових текстових макетів у шаблонах або проектах, керованих даними",
+      "use_cases_ua": [
+        "📄 Багаторядкові текстові макети",
+        "🔄 Шаблони з автоматичним форматуванням",
+        "📊 Проекти, керовані даними",
+        "🎬 Вертикальні текстові ефекти"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Кожен пробіл автоматично заміниться на перенос рядка\n3. Ідеально для створення вертикальних текстів",
+      "target_properties": ["text"],
+      "expression_template": "text.sourceText.replace(/ /gi,\"\\r\");"
+    },
+    {
+      "name_en": "LookAt Expression in 2D Space",
+      "name_ua": "Вираз 'Дивитися на' у 2D просторі",
+      "category_en": "Layer Interaction",
+      "category_ua": "Взаємодія шарів",
+      "icon": "👀",
+      "description_ua": "Направляє орієнтацію шару до іншого шару, як у функції 'дивитися на'",
+      "purpose_ua": "Для створення ефектів взаємодії, як-от очі або стрілки, що слідкують за об'єктом, що рухається",
+      "use_cases_ua": [
+        "👀 Очі, що слідкують за об'єктом",
+        "🎯 Стрілки, що вказують на ціль",
+        "🔭 Прицілювання та наведення",
+        "🎮 Інтерактивні елементи, що слідкують"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'targetLayer'\n2. Додайте до властивості 'Rotation'\n3. Шар автоматично повертатиметься до цільового шару",
+      "target_properties": ["rotation"],
+      "expression_template": "function lookAtMe(fromPt, toPt){\nlkAt = lookAt(fromPt, toPt);\nif (toPt[1] > fromPt[1]){\nreturn 180-lkAt[1]; }\nelse {\nreturn lkAt[1]; }}\np0= transform.position;\np1=thisComp.layer(\"targetLayer\").transform.position;\nlookAtMe(p0, p1);"
+    },
+    {
+      "name_en": "Gradient Ramp Fixed to Layer Edges, Ignore Rotation",
+      "name_ua": "Градієнтний рамп, зафіксований до країв шару, ігнорує обертання",
+      "category_en": "Gradient Effects",
+      "category_ua": "Ефекти градієнту",
+      "icon": "🌈",
+      "description_ua": "Тримає градієнтний рамп вирівняним по верхніх та нижніх краях шару, ігноруючи обертання шару",
+      "purpose_ua": "Для підтримки послідовного кута градієнта під час анімацій",
+      "use_cases_ua": [
+        "🎨 Градієнти, що залишаються стабільними при обертанні",
+        "📊 Фонові градієнти з фіксованим напрямком",
+        "🎬 Анімації з послідовними градієнтами",
+        "🔄 Ефекти освітлення, незалежні від обертання"
+      ],
+      "how_to_use_ua": "1. Додайте першу частину до 'Start of Ramp'\n2. Додайте другу частину до 'End of Ramp'\n3. Градієнт залишатиметься вирівняним по вертикалі незалежно від обертання",
+      "target_properties": ["effect"],
+      "expression_template": "// add to Start of Ramp\nrect = thisLayer.sourceRectAtTime(time, false);\nscaleFactor = thisLayer.scale[1] / 100;\nxPos = thisLayer.position[0];\nyPos = thisLayer.position[1] - (rect.height / 2) * scaleFactor;\n[xPos, yPos];\n\n// add to End of Ramp\nrect = thisLayer.sourceRectAtTime(time, false);\nscaleFactor = thisLayer.scale[1] / 100;\nxPos = thisLayer.position[0];\nyPos = thisLayer.position[1] + (rect.height / 2) * scaleFactor;\n[xPos, yPos];"
+    },
+    {
+      "name_en": "Maintain Stroke Width in 3D Space",
+      "name_ua": "Підтримка ширини обводки у 3D просторі",
+      "category_en": "3D Effects",
+      "category_ua": "3D ефекти",
+      "icon": "📏",
+      "description_ua": "Тримає ширину обводки візуально послідовною незалежно від відстані шару від камери у 3D просторі",
+      "purpose_ua": "Для 3D проектів, де послідовність ширини обводки є критичною",
+      "use_cases_ua": [
+        "🎬 3D моушн-графіка з лінійними анімаціями",
+        "📐 Консистентні обводки у 3D просторі",
+        "🎯 Лінії, що не змінюють товщину з відстанню",
+        "🔄 3D анімації з стабільними контурами"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Stroke Width'\n2. Переконайтеся, що є активний шар 'Camera 1'\n3. Ширина обводки залишатиметься послідовною незалежно від позиції у 3D",
+      "target_properties": ["stroke_width"],
+      "expression_template": "nominalDist = 200;\nd = length (thisComp.layer(\"Camera 1\").toWorld([0,0,0]),toWorld(anchorPoint));\nvalue*(d/nominalDist);"
+    },
+    {
+      "name_en": "Inherit Parent Opacity",
+      "name_ua": "Успадкування прозорості батька",
+      "category_en": "Parenting Control",
+      "category_ua": "Керування батьківськими зв'язками",
+      "icon": "👁️",
+      "description_ua": "З'єднує прозорість шару з значенням прозорості його батьківського шару",
+      "purpose_ua": "Для нижніх третин або інших анімованих текстових елементів, що з'являються та зникають разом з батьківським шаром",
+      "use_cases_ua": [
+        "📺 Нижні третини, що зникають разом з фоном",
+        "🎬 Текстові елементи, синхронізовані з анімацією батька",
+        "🔄 Групи елементів з спільною прозорістю",
+        "📊 Ієрархії з успадкуванням видимості"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity'\n2. Зробіть шар дочірнім до батьківського шару\n3. Прозорість автоматично успадковуватиметься",
+      "target_properties": ["opacity"],
+      "expression_template": "(hasParent) ? parent.opacity : value;"
+    },
+    {
+      "name_en": "Loop Mask Animation Expression",
+      "name_ua": "Циклічна анімація маски",
+      "category_en": "Mask Animation",
+      "category_ua": "Анімація масок",
+      "icon": "🔄",
+      "description_ua": "Зациклює анімацію шляху маски безперервно від першого до останнього ключового кадру",
+      "purpose_ua": "Для повторюваних ефектів на основі масок",
+      "use_cases_ua": [
+        "🎬 Циклічні анімації на растрових зображеннях",
+        "📹 Відео з повторюваними масками",
+        "🎨 Форми з циклічними перетвореннями",
+        "⚡ Ефекти, де трек-мати непрактичні"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри на шляху маски\n2. Додайте до властивості 'Mask Path'\n3. Анімація автоматично зациклюється",
+      "target_properties": ["mask_path"],
+      "expression_template": "if (numKeys >1 && time > key(numKeys).time){ \nt1 = key(1).time;\nt2 = key(numKeys).time;\nspan = t2 - t1;\ndelta = time - t2;\nt = delta%span;\nvalueAtTime(t1 + t);}\nelse\nvalue;"
+    },
+    {
+      "name_en": "Trigger Animation with Markers",
+      "name_ua": "Запуск анімації за маркерами",
+      "category_en": "Animation Control",
+      "category_ua": "Керування анімацією",
+      "icon": "🎯",
+      "description_ua": "Запускає послідовність анімації кожного разу, коли зустрічається маркер на вказаному шарі",
+      "purpose_ua": "Для запуску UI-анімацій при кліку або наведенні",
+      "use_cases_ua": [
+        "🖱️ Анімації кнопок при кліку",
+        "🎯 Підказки, що з'являються при наведенні",
+        "📱 Інтерактивні UI-елементи",
+        "🎬 Послідовності, що запускаються за подіями"
+      ],
+      "how_to_use_ua": "1. Додайте маркери на шар\n2. Створіть ключові кадри анімації\n3. Додайте вираз до властивості\n4. Анімація запускатиметься при кожному маркері",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "markerLayer = thisLayer;\nif (markerLayer){\nif (markerLayer.marker.numKeys > 0){\nvar n = markerLayer.marker.nearestKey(time).index;\nif (markerLayer.marker.key(n).time > time) n--;\nif (n > 0) {\nt = time - markerLayer.marker.key(n).time;\nanimStart = key(1).time;\nanimEnd = key(numKeys).time;\nanimDur = animEnd - animStart;\nif (t >= 0 && t <= animDur) {\nvalueAtTime(animStart + t);}\nelse if (t > animDur) {\nvalueAtTime(animEnd); }\nelse {\nvalueAtTime(animStart);\n}}\nelse{\nvalue;\n}}\nelse {\nvalue;}}\nelse {\nvalue;\n}"
+    },
+    {
+      "name_en": "Scale Up Near Another Layer Expression",
+      "name_ua": "Збільшення масштабу біля іншого шару",
+      "category_en": "Interactive Animation",
+      "category_ua": "Інтерактивна анімація",
+      "icon": "🎯",
+      "description_ua": "Масштабує об'єкт на основі його близькості до іншого шару",
+      "purpose_ua": "Для інтерактивних анімацій, як-от UI-кнопки, що збільшуються при наближенні курсора",
+      "use_cases_ua": [
+        "🖱️ Кнопки, що збільшуються при наведенні",
+        "🎯 Інтерактивні елементи з реакцією на відстань",
+        "📱 UI, що реагує на позицію",
+        "🎮 Ігрові інтерфейси з масштабуванням"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'targetLayer'\n2. Додайте до властивості 'Scale'\n3. Налаштуйте 'startSize' та 'endSize'\n4. Масштаб збільшуватиметься при наближенні",
+      "target_properties": ["scale"],
+      "expression_template": "point1=thisLayer.position;\npoint2=thisComp.layer('targetLayer').position;\ndelta=sub(point1, point2);\ndistance=length(delta);\nstartSize = 10;\nendSize = 100;\nlinear(distance, 0, 500, [endSize, endSize], [startSize, startSize]);"
+    },
+    {
+      "name_en": "Maintain Scale While Parented Expression",
+      "name_ua": "Підтримка масштабу при батьківському зв'язку",
+      "category_en": "Parenting Control",
+      "category_ua": "Керування батьківськими зв'язками",
+      "icon": "⚖️",
+      "description_ua": "Забезпечує послідовність масштабу шару навіть при зміні масштабу його батьківського шару",
+      "purpose_ua": "Для підтримки оригінального розміру елементів у ієрархії",
+      "use_cases_ua": [
+        "📝 Текст, що не масштабується з батьком",
+        "🎯 UI-компоненти з фіксованим розміром",
+        "🔄 Елементи, що зберігають масштаб у групах",
+        "📊 Іконки з постійним розміром"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Зробіть шар дочірнім\n3. Масштаб залишатиметься незмінним незалежно від батька",
+      "target_properties": ["scale"],
+      "expression_template": "s = [];\nps = parent.transform.scale.value;\nfor (i = 0; i < ps.length; i++){\ns[i] = value[i]*100/ps[i];\n}\ns;"
+    },
+    {
+      "name_en": "Maintain Stroke Width During Scaling",
+      "name_ua": "Підтримка ширини обводки під час масштабування",
+      "category_en": "Vector Consistency",
+      "category_ua": "Консистентність векторів",
+      "icon": "📏",
+      "description_ua": "Тримає ширину обводки послідовною навіть при масштабуванні шару",
+      "purpose_ua": "Для іконок або форм, де послідовність ширини обводки є ключовою",
+      "use_cases_ua": [
+        "🎨 Іконки з послідовною обводкою",
+        "📐 Форми, що не втрачають товщину ліній",
+        "🔄 Векторна графіка в After Effects",
+        "📊 Елементи з стабільними контурами"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Stroke Width'\n2. Масштабуйте шар\n3. Ширина обводки залишатиметься послідовною",
+      "target_properties": ["stroke_width"],
+      "expression_template": "value / length(toComp([0,0]), toComp([0.7071,0.7071])) || 0.001;"
+    },
+    {
+      "name_en": "LoopOut Duration Control Expression",
+      "name_ua": "Контроль тривалості LoopOut",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Додає обмеження тривалості до loopOut, дозволяючи вказаний час для циклічного ефекту",
+      "purpose_ua": "Для анімації коротких циклів з контрольованим таймінгом",
+      "use_cases_ua": [
+        "💡 Мерехтливі вогні з контролем часу",
+        "📈 Пульсуючі ефекти",
+        "🎬 Короткі циклічні анімації",
+        "⚡ Ефекти з обмеженою тривалістю"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри для циклу\n2. Додайте до властивості\n3. Вкажіть тривалість циклу (1 секунда за замовчуванням)",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "loopOutDuration(\"cycle\",1);"
+    },
+    {
+      "name_en": "LoopIn Specific Number of Keyframes",
+      "name_ua": "LoopIn конкретної кількості ключових кадрів",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Зациклює тільки перші кілька ключових кадрів, створюючи повторювану початкову анімацію",
+      "purpose_ua": "Для створення динамічних інтро-анімацій",
+      "use_cases_ua": [
+        "🎬 Динамічні інтро-анімації",
+        "📱 Повторювані початкові рухи",
+        "🎮 Персонажі з циклічними рухами",
+        "🏢 Логотипи з повторюваними елементами"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри на початку анімації\n2. Додайте до властивості\n3. Вкажіть кількість ключових кадрів для циклу (1 за замовчуванням)",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "loopIn(\"cycle\",1);"
+    },
+    {
+      "name_en": "LoopOut Specific Number of Keyframes",
+      "name_ua": "LoopOut конкретної кількості ключових кадрів",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Зациклює тільки останні кілька ключових кадрів, створюючи повторювані анімації у встановленому діапазоні",
+      "purpose_ua": "Для зациклювання конкретних послідовностей руху",
+      "use_cases_ua": [
+        "🎭 Повторювані рухи персонажів",
+        "🏢 Анімації логотипів з циклічними елементами",
+        "📊 Моушн-графіка з повторюваними послідовностями",
+        "🎬 Специфічні рухи, що повторюються"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри в кінці анімації\n2. Додайте до властивості\n3. Вкажіть кількість ключових кадрів для циклу (1 за замовчуванням)",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "loopOut(\"cycle\",1);"
+    },
+    {
+      "name_en": "Random Seeded Color Expression",
+      "name_ua": "Випадковий колір з насінням",
+      "category_en": "Color Generation",
+      "category_ua": "Генерація кольору",
+      "icon": "🎨",
+      "description_ua": "Генерує випадкові кольори послідовно на основі індексу шару",
+      "purpose_ua": "Для генерації випадкових кольорів послідовно для текстових шарів",
+      "use_cases_ua": [
+        "🎨 Текстові шари з унікальними кольорами",
+        "📊 Різнокольорові елементи в групах",
+        "🔄 Послідовні випадкові кольори",
+        "📝 Дизайн-системи з варіаціями кольорів"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Color'\n2. Кожен шар отримає унікальний колір на основі свого індексу\n3. Кольори будуть послідовними при кожному запуску",
+      "target_properties": ["color"],
+      "expression_template": "seedRandom(index, true);\n[random(), random(), random(), 1];"
+    },
+    {
+      "name_en": "Parent Position Offset Expression",
+      "name_ua": "Зміщення позиції від батька",
+      "category_en": "Parenting Control",
+      "category_ua": "Керування батьківськими зв'язками",
+      "icon": "📍",
+      "description_ua": "Зміщує позицію шару відносно його батька",
+      "purpose_ua": "Для зміщення позиції дочірнього шару на 100 пікселів відносно батька",
+      "use_cases_ua": [
+        "📍 Фіксовані зміщення від батька",
+        "🎯 Точне позиціювання в ієрархіях",
+        "📐 Відносне розташування елементів",
+        "🔄 Групи з специфічними зміщеннями"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Зробіть шар дочірнім\n3. Змініть [100, 100] на потрібне зміщення\n4. Позиція буде зміщена відносно батька",
+      "target_properties": ["position"],
+      "expression_template": "parent.position + [100, 100];"
+    },
+    {
+      "name_en": "Scale Based On Distance",
+      "name_ua": "Масштаб залежно від відстані",
+      "category_en": "Interactive Animation",
+      "category_ua": "Інтерактивна анімація",
+      "icon": "📏",
+      "description_ua": "Обчислює відстань між двома шарами та впливає на властивість на основі цієї відстані",
+      "purpose_ua": "Для масштабування об'єкта залежно від його відстані від іншого об'єкта у сцені",
+      "use_cases_ua": [
+        "🎯 Об'єкти, що збільшуються при наближенні",
+        "📊 Інтерактивні системи масштабування",
+        "🎮 Ігрові механіки з відстанню",
+        "🔍 Лупи та зум-ефекти"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'TargetLayer'\n2. Додайте до властивості 'Scale'\n3. Налаштуйте дільник (500) для контролю інтенсивності\n4. Масштаб змінюватиметься залежно від відстані",
+      "target_properties": ["scale"],
+      "expression_template": "targetLayer = thisComp.layer(\"TargetLayer\");\ndist = length(thisLayer.position, targetLayer.position);\nvalue * (1 + dist / 500);"
+    },
+    {
+      "name_en": "Random Rotation Expression",
+      "name_ua": "Випадкове обертання",
+      "category_en": "Randomization",
+      "category_ua": "Рандомізація",
+      "icon": "🔄",
+      "description_ua": "Рандомізує обертання шару між 0 та 360 градусами",
+      "purpose_ua": "Для рандомізації обертання шарів у візерунку зірчастої спалаху",
+      "use_cases_ua": [
+        "⭐ Зірчасті спалахи з випадковим обертанням",
+        "🎲 Випадкові орієнтації елементів",
+        "🎨 Абстрактні композиції",
+        "📊 Різноманітність у повторюваних елементах"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Rotation'\n2. Кожен шар отримає випадкове обертання\n3. Ідеально для створення природного хаосу",
+      "target_properties": ["rotation"],
+      "expression_template": "random(360);"
+    },
+    {
+      "name_en": "Parent Scale Expression",
+      "name_ua": "Масштаб від батька",
+      "category_en": "Parenting Control",
+      "category_ua": "Керування батьківськими зв'язками",
+      "icon": "⚖️",
+      "description_ua": "Додає до масштабу батьківського шару фіксоване значення",
+      "purpose_ua": "Для збільшення масштабу дочірнього шару на 10% порівняно з його батьківським шаром",
+      "use_cases_ua": [
+        "📏 Фіксовані збільшення масштабу",
+        "🎯 Точні відносні розміри",
+        "🔄 Консистентні співвідношення масштабу",
+        "📊 Ієрархії з специфічними масштабами"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Зробіть шар дочірнім\n3. Змініть [10, 10] на потрібне збільшення\n4. Масштаб буде відносним до батька",
+      "target_properties": ["scale"],
+      "expression_template": "parent.scale + [10, 10];"
+    },
+    {
+      "name_en": "Wiggle with Seed Expression",
+      "name_ua": "Коливання з насінням",
+      "category_en": "Animation Effects",
+      "category_ua": "Ефекти анімації",
+      "icon": "🎲",
+      "description_ua": "Створює ефект коливання з послідовним насінням для рандомізації",
+      "purpose_ua": "Для створення ефекту коливання на позиції з встановленим насінням",
+      "use_cases_ua": [
+        "🎬 Послідовні коливання між рендерами",
+        "📊 Відтворювані випадкові рухи",
+        "🎯 Стабільні ефекти тремтіння",
+        "🔄 Консистентність у анімаціях"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте частоту (2) та амплітуду (50)\n3. Коливання будуть послідовними при кожному рендері",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "seedRandom(index, true);\nwiggle(2, 50);"
+    },
+    {
+      "name_en": "Looping Wiggle",
+      "name_ua": "Циклічне коливання",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Створює безшовний, циклічний ефект коливання, що плавно переходить між початковою та кінцевою точками",
+      "purpose_ua": "Для об'єкта, що повільно рухається вгору-вниз циклічним, природним чином",
+      "use_cases_ua": [
+        "🎈 Плавні рухи повітряних куль",
+        "☁️ Дрейфуючі хмари з природним рухом",
+        "🌊 Хвилюваті ефекти води",
+        "🎯 Плавні циклічні анімації"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте 'freq', 'amp', 'loopTime'\n3. Ефект автоматично зациклюється кожні 3 секунди",
+      "target_properties": ["position"],
+      "expression_template": "freq = 1;\namp = 110;\nloopTime = 3;\nt = time % loopTime;\nwiggle1 = wiggle(freq, amp, 1, 0.5, t);\nwiggle2 = wiggle(freq, amp, 1, 0.5, t - loopTime);\nlinear(t, 0, loopTime, wiggle1, wiggle2);"
+    },
+    {
+      "name_en": "Rolling Ball Expression",
+      "name_ua": "Котячий м'яч",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🏀",
+      "description_ua": "Зв'язує позицію шару з іншою властивістю, як-от обертання",
+      "purpose_ua": "Для автоматичного кочення м'яча, що має ключові кадри позиції",
+      "use_cases_ua": [
+        "🏀 М'ячі, що котяться при русі",
+        "⚽ Реалістичне кочення об'єктів",
+        "🎯 Механічні колеса та шестерні",
+        "🔄 Синхронізація руху та обертання"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри позиції\n2. Додайте до властивості 'Rotation'\n3. Налаштуйте множник (0.8) для контролю швидкості обертання\n4. Об'єкт автоматично обертатиметься при русі",
+      "target_properties": ["rotation"],
+      "expression_template": "thisLayer.transform.position[0] * 0.8;"
+    },
+    {
+      "name_en": "Change Value Based On Position",
+      "name_ua": "Зміна значення залежно від позиції",
+      "category_en": "Conditional Animation",
+      "category_ua": "Умовна анімація",
+      "icon": "🎯",
+      "description_ua": "Змінює будь-яке значення шару на основі позиції",
+      "purpose_ua": "Для зміни прозорості шару, якщо він перетинає певну позицію",
+      "use_cases_ua": [
+        "👁️ Елементи, що з'являються у певних зонах",
+        "🎯 Умовні анімації за позицією",
+        "📱 Інтерактивні області реакції",
+        "🎬 Переходи, що активуються позицією"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Змініть умову (position[1] > 500) на потрібну\n3. Змініть значення (0.5) на бажаний ефект",
+      "target_properties": ["opacity", "scale"],
+      "expression_template": "if (position[1] > 500) {\nvalue * 0.5;\n} else {\nvalue;\n}"
+    },
+    {
+      "name_en": "Random Position Expression",
+      "name_ua": "Випадкова позиція",
+      "category_en": "Randomization",
+      "category_ua": "Рандомізація",
+      "icon": "🎲",
+      "description_ua": "Рандомізує позицію шару у вказаному діапазоні",
+      "purpose_ua": "Для рандомізації позиції шару у діапазоні 200 пікселів у обох напрямках X та Y",
+      "use_cases_ua": [
+        "🎲 Випадкове розташування елементів",
+        "⭐ Зірчасті поля з випадковими позиціями",
+        "🎨 Абстрактні композиції",
+        "📊 Різноманітність у макетах"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте діапазони ([960,540] та [760,340])\n3. Кожен шар отримає випадкову позицію у діапазоні",
+      "target_properties": ["position"],
+      "expression_template": "random([960, 540], [760, 340]);"
+    },
+    {
+      "name_en": "Point To A Layer",
+      "name_ua": "Направлення до шару",
+      "category_en": "Layer Interaction",
+      "category_ua": "Взаємодія шарів",
+      "icon": "🎯",
+      "description_ua": "Обчислює кут між двома шарами та направляє один до іншого",
+      "purpose_ua": "Для вирівнювання шару, щоб завжди бути оберненим до цільового шару",
+      "use_cases_ua": [
+        "👀 Очі, що слідкують за об'єктом",
+        "🎯 Стрілки, що вказують на ціль",
+        "🔭 Прицілювання та наведення",
+        "🎮 Об'єкти, що завжди дивляться на ціль"
+      ],
+      "how_to_use_ua": "1. Створіть шар 'Target'\n2. Додайте до властивості 'Rotation'\n3. Шар автоматично повертатиметься до цільового шару",
+      "target_properties": ["rotation"],
+      "expression_template": "target = thisComp.layer(\"Target\");\ntargetPos = target.toWorld(target.anchorPoint);\ndelta = targetPos - thisLayer.position;\nradians = Math.atan2(delta[1], delta[0]);\nradiansToDegrees(radians);"
+    },
+    {
+      "name_en": "Layer Linking Expression",
+      "name_ua": "Зв'язування шарів",
+      "category_en": "Layer Interaction",
+      "category_ua": "Взаємодія шарів",
+      "icon": "🔗",
+      "description_ua": "Зв'язує позицію шару з позицією іншого шару",
+      "purpose_ua": "Для зв'язування позиції дочірнього шару з його батьком з невеликим зміщенням",
+      "use_cases_ua": [
+        "🔗 Дочірні елементи з фіксованим зміщенням",
+        "🎯 Точне позиціювання відносно інших шарів",
+        "🔄 Ефекти слідування",
+        "📊 Групи з зв'язаними позиціями"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Змініть 'OtherLayer' на назву цільового шару\n3. Позиція буде ідентичною цільовому шару",
+      "target_properties": ["position"],
+      "expression_template": "thisComp.layer(\"OtherLayer\").position;"
+    },
+    {
+      "name_en": "EaseIn Expression",
+      "name_ua": "Плавний початок (EaseIn)",
+      "category_en": "Easing Functions",
+      "category_ua": "Функції плавності",
+      "icon": "🔄",
+      "description_ua": "Створює плавну анімацію між двома значеннями з повільним початком",
+      "purpose_ua": "Для поступового збільшення масштабу шару від 50% до 150% протягом 2 секунд",
+      "use_cases_ua": [
+        "📈 Анімації з повільним стартом",
+        "🎬 Плавні появи елементів",
+        "📱 UI-анімації з природним прискоренням",
+        "⚡ Ефекти розгону"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте час початку (0), кінця (2) та значення (50, 150)\n3. Анімація почнеться повільно та прискориться",
+      "target_properties": ["scale", "opacity", "position"],
+      "expression_template": "easeIn(time, 0, 2, 50, 150);"
+    },
+    {
+      "name_en": "Center Anchor Point Expression",
+      "name_ua": "Центрування точки прив'язки",
+      "category_en": "Text Layout",
+      "category_ua": "Макет тексту",
+      "icon": "🎯",
+      "description_ua": "Обчислює центральну точку текстового шару на основі його обмежувальної рамки",
+      "purpose_ua": "Для вирівнювання інших елементів до точного центру динамічно розміреного текстового блоку",
+      "use_cases_ua": [
+        "🎯 Іконки, вирівняні по центру тексту",
+        "📊 Графіка, збалансована з текстом",
+        "🔄 Динамічні текстові контейнери",
+        "📐 Точне центрування елементів"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Anchor Point'\n2. Точка прив'язки автоматично центруватиметься\n3. Ідеально для динамічного тексту, що змінює розмір",
+      "target_properties": ["anchor_point"],
+      "expression_template": "top = sourceRectAtTime().top;\nleft = sourceRectAtTime().left;\nx = left + (sourceRectAtTime().width / 2);\ny = top + (sourceRectAtTime().height / 2);\n[x,y];"
+    },
+    {
+      "name_en": "Exponential Counter Up Expression",
+      "name_ua": "Експоненційний лічильник",
+      "category_en": "Number Animation",
+      "category_ua": "Анімація чисел",
+      "icon": "📈",
+      "description_ua": "Створює ефект масштабування, що зростає експоненційно",
+      "purpose_ua": "Для анімації текстового шару, що показує ціну або число, яке зростає експоненційно",
+      "use_cases_ua": [
+        "💰 Швидко зростаючі фінансові показники",
+        "📊 Експоненційний ріст даних",
+        "🎬 Ефекти швидкого накопичення",
+        "⚡ Швидкі лічильники"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Source Text'\n2. Налаштуйте множник (1000) для контролю швидкості\n3. Число буде експоненційно зростати з часом",
+      "target_properties": ["text"],
+      "expression_template": "\"$\" + Math.floor(1000 * Math.exp(time)).toString();"
+    },
+    {
+      "name_en": "Color Fade Expression",
+      "name_ua": "Затухання кольору",
+      "category_en": "Color Animation",
+      "category_ua": "Анімація кольору",
+      "icon": "🎨",
+      "description_ua": "Затухає колір від білого до чорного протягом 5 секунд",
+      "purpose_ua": "Для затухання кольору від білого до чорного протягом 5 секунд",
+      "use_cases_ua": [
+        "🎬 Переходи кольорів",
+        "📱 Fade-ефекти для UI",
+        "🎨 Поступові зміни кольору",
+        "⚡ Анімації затухання"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Color'\n2. Налаштуйте час (0, 5) та кольори ([1,1,1,1], [0,0,0,0])\n3. Колір плавно змінюватиметься від білого до чорного",
+      "target_properties": ["color"],
+      "expression_template": "linear(time, 0, 5, [1,1,1,1], [0,0,0,0]);"
+    },
+    {
+      "name_en": "Time-Remap Control Expression",
+      "name_ua": "Контроль ремапу часу",
+      "category_en": "Time Control",
+      "category_ua": "Керування часом",
+      "icon": "⏱️",
+      "description_ua": "Уповільнює ремап часу для шару до 50%",
+      "purpose_ua": "Для уповільнення відеокліпу вдвічі за допомогою ремапу часу",
+      "use_cases_ua": [
+        "🎬 Уповільнене відтворення відео",
+        "📹 Заспільнені сцени",
+        "⚡ Контроль швидкості кліпів",
+        "🔄 Таймлапс у зворотному напрямку"
+      ],
+      "how_to_use_ua": "1. Увімкніть Time Remap для відеошару\n2. Додайте до властивості 'Time Remap'\n3. Налаштуйте множник (0.5) для потрібної швидкості\n4. Відео відтворюватиметься вдвічі повільніше",
+      "target_properties": ["time_remap"],
+      "expression_template": "timeRemap * 0.5;"
+    },
+    {
+      "name_en": "Dynamic Text Box",
+      "name_ua": "Динамічний текстовий блок",
+      "category_en": "Responsive Design",
+      "category_ua": "Адаптивний дизайн",
+      "icon": "📦",
+      "description_ua": "Динамічно регулює розмір текстового блоку на основі ширини та висоти іншого текстового шару",
+      "purpose_ua": "Для автоматичного змінення розміру фоного блоку для відповідності тексту, що змінюється",
+      "use_cases_ua": [
+        "🏷️ Мітки з адаптивними фонами",
+        "🔘 Кнопки, що розширюються під текст",
+        "📊 Підписи з автоматичним розміром",
+        "🎬 Текстові контейнери, що адаптуються"
+      ],
+      "how_to_use_ua": "1. Додайте першу частину до 'Size' форми\n2. Додайте другу частину до 'Anchor Point' тексту\n3. Створіть текстовий шар 'index-1'\n4. Розмір автоматично адаптуватиметься до тексту",
+      "target_properties": ["scale", "anchor_point"],
+      "expression_template": "// Shape layer size property\nsubText = thisComp.layer(\"index-1\");\ntextWidth = subText.sourceRectAtTime(time).width + 100;\ntextHeight = subText.sourceRectAtTime(time).height + 100;\n[textWidth, textHeight];\n\n// Text layer anchor point\ntop = sourceRectAtTime().top;\nleft = sourceRectAtTime().left;\nx = left + (sourceRectAtTime().width / 2);\ny = top + (sourceRectAtTime().height / 2);\n[x,y];"
+    },
+    {
+      "name_en": "Value Relative to Time Expression",
+      "name_ua": "Значення відносно часу",
+      "category_en": "Auto Animation",
+      "category_ua": "Автоматична анімація",
+      "icon": "⏰",
+      "description_ua": "Поступово змінює значення з часом у вказаному діапазоні",
+      "purpose_ua": "Для поступової зміни масштабу об'єкта від 0 до 100% протягом 5 секунд",
+      "use_cases_ua": [
+        "📈 Автоматичне збільшення масштабу",
+        "🎬 Плавні переходи значень",
+        "📱 Анімації без ключових кадрів",
+        "⚡ Лінійні зміни з часом"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте час (0, 10) та значення (0, 100)\n3. Значення плавно змінюватиметься з часом",
+      "target_properties": ["scale", "opacity", "rotation"],
+      "expression_template": "linear(time, 0, 10, 0, 100);"
+    },
+    {
+      "name_en": "Strobe Light Expression",
+      "name_ua": "Ефект стробоскопа",
+      "category_en": "Light Effects",
+      "category_ua": "Ефекти світла",
+      "icon": "💡",
+      "description_ua": "Створює ефект стробоскопа, перемикаючись між значеннями",
+      "purpose_ua": "Для миготіння прозорості текстового шару між 100% та 0% кожну секунду",
+      "use_cases_ua": [
+        "🚨 Сигнальні вогні",
+        "🎆 Миготливі ефекти",
+        "📱 Індикатори активності",
+        "⚡ Ефекти енергії"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity'\n2. Налаштуйте інтервал (2) для контролю швидкості\n3. Прозорість мигатиме між 100% та 0%",
+      "target_properties": ["opacity"],
+      "expression_template": "if (Math.floor(time % 2) == 1)\n{100}\nelse\n{0};"
+    },
+    {
+      "name_en": "Oscillate Expression",
+      "name_ua": "Осциляція",
+      "category_en": "Wave Animation",
+      "category_ua": "Хвильова анімація",
+      "icon": "〰️",
+      "description_ua": "Схоже на синусоїду, але з косинусом, створюючи ефект осциляції",
+      "purpose_ua": "Для створення простої синусоїдального руху для об'єкта, що відскакує, або ефекту маятника",
+      "use_cases_ua": [
+        "🏀 Відскакуючі м'ячі",
+        "🔄 Маятники, що гойдаються",
+        "📈 Хвильові рухи",
+        "🎯 Осцилюючі анімації"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте множник (2) та амплітуду (50)\n3. Значення осцилюватиме з часом",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "Math.cos(time * 2) * 50;"
+    },
+    {
+      "name_en": "Loop Path",
+      "name_ua": "Циклічний шлях",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Зациклює анімацію властивості, опційно створюючи 'пінг-понг' ефект",
+      "purpose_ua": "Для безперервного слідування об'єкта за циклічним шляхом",
+      "use_cases_ua": [
+        "🚗 Автомобілі, що їздять по колу",
+        "✈️ Літаки, що летять циклами",
+        "🎯 Безкінечні рухи по шляху",
+        "🔄 Повторювані траєкторії"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри для шляху\n2. Додайте до властивості\n3. Встановіть 'pingPong = true' для зворотного відтворення\n4. Анімація зациклюється автоматично",
+      "target_properties": ["position", "path"],
+      "expression_template": "try {\ntimeStart = thisProperty.key(1).time;\nduration = thisProperty.key(thisProperty.numKeys).time - timeStart;\npingPong = false;\nquant = Math.floor((time - timeStart) / duration);\nif (quant < 0) quant = 0;\nif (quant % 2 == 1 && pingPong == true) {\nt = 2 * timeStart + (quant + 1) * duration - time;\n} else {\nt = time - quant * duration;\n}\n} catch (err) {\nt = time;\n}\nthisProperty.valueAtTime(t);"
+    },
+    {
+      "name_en": "Distance-Based Scale Expression",
+      "name_ua": "Масштаб на основі відстані",
+      "category_en": "Interactive Animation",
+      "category_ua": "Інтерактивна анімація",
+      "icon": "📏",
+      "description_ua": "Масштабує об'єкт на основі його відстані від опорної точки",
+      "purpose_ua": "Масштабує шар на основі його відстані від точки [500, 500]",
+      "use_cases_ua": [
+        "🎯 Об'єкти, що зменшуються з відстанню",
+        "📊 Просторове масштабування",
+        "🎮 Ігрові перспективи",
+        "🔍 Ефекти відстані"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Змініть точку [500, 500] на потрібну опорну точку\n3. Налаштуйте діапазон (0, 1000) та значення (100, 0)\n4. Масштаб змінюватиметься залежно від відстані",
+      "target_properties": ["scale"],
+      "expression_template": "linear(length(position, [500, 500]), 0, 1000, 100, 0);"
+    },
+    {
+      "name_en": "Overshoot Expression",
+      "name_ua": "Ефект перельоту",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🎯",
+      "description_ua": "Додає ефект перельоту або відскоку після анімації",
+      "purpose_ua": "Для додавання ефекту перельоту до властивості масштабу",
+      "use_cases_ua": [
+        "🏀 Відскоки після анімації",
+        "📈 Перельоти за кінцевим значенням",
+        "🎯 Пружні ефекти",
+        "⚡ Динамічні завершення анімацій"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості після ключових кадрів\n2. Налаштуйте затримку (0.1) для контролю інтенсивності\n3. Ефект автоматично додасть перельот",
+      "target_properties": ["scale", "position"],
+      "expression_template": "value + (value - valueAtTime(time - 0.1)) * 2;"
+    },
+    {
+      "name_en": "Random Color Expression",
+      "name_ua": "Випадковий колір",
+      "category_en": "Color Generation",
+      "category_ua": "Генерація кольору",
+      "icon": "🎨",
+      "description_ua": "Генерує випадковий колір для шару в спектрі RGB",
+      "purpose_ua": "Для випадкової генерації кольору в діапазоні RGB для ефекту миготливого світла",
+      "use_cases_ua": [
+        "💡 Миготливі кольорові вогні",
+        "🎲 Випадкові кольори елементів",
+        "🌈 Кольорові спектри",
+        "🎨 Абстрактні кольорові ефекти"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Color'\n2. Налаштуйте діапазони ([0,0,0,0], [1,1,1,1])\n3. Кожен шар отримає випадковий колір",
+      "target_properties": ["color"],
+      "expression_template": "random([0, 0, 0, 0], [1, 1, 1, 1]);"
+    },
+    {
+      "name_en": "Parent Rotation Expression",
+      "name_ua": "Обертання від батька",
+      "category_en": "Parenting Control",
+      "category_ua": "Керування батьківськими зв'язками",
+      "icon": "🔄",
+      "description_ua": "Зв'язує обертання з батьківським шаром з додатковим зміщенням 45 градусів",
+      "purpose_ua": "Для додавання 45 градусів до обертання батьківського шару",
+      "use_cases_ua": [
+        "🎯 Дочірні елементи з фіксованим зміщенням",
+        "⚙️ Механізми з специфічними кутами",
+        "🔄 Групи з відносним обертанням",
+        "📐 Точні кутові зміщення"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Rotation'\n2. Зробіть шар дочірнім\n3. Змініть 45 на потрібне зміщення\n4. Обертання буде відносним до батька",
+      "target_properties": ["rotation"],
+      "expression_template": "parent.rotation + 45;"
+    },
+    {
+      "name_en": "Sine Wave Motion Expression",
+      "name_ua": "Синусоїдальний рух",
+      "category_en": "Wave Animation",
+      "category_ua": "Хвильова анімація",
+      "icon": "〰️",
+      "description_ua": "Створює синусоїдальний рух на властивості, як-от прозорість",
+      "purpose_ua": "Для анімації прозорості об'єкта для пульсації з часом за допомогою синусоїди",
+      "use_cases_ua": [
+        "💓 Пульсуюча прозорість",
+        "🌊 Хвильові ефекти",
+        "📈 Коливальні значення",
+        "🎯 Плавні осциляції"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте множник (2) та амплітуду (100)\n3. Значення пульсуватиме за синусоїдою",
+      "target_properties": ["opacity", "scale"],
+      "expression_template": "Math.sin(time * 2) * 100;"
+    },
+    {
+      "name_en": "Delay Expression",
+      "name_ua": "Затримка",
+      "category_en": "Timing Control",
+      "category_ua": "Керування таймінгом",
+      "icon": "⏰",
+      "description_ua": "Затримує значення властивості на основі анімації іншого шару",
+      "purpose_ua": "Для затримки обертання шестерні, щоб воно слідувало за обертанням більшої батьківської шестерні",
+      "use_cases_ua": [
+        "⚙️ Затримані механізми",
+        "🎬 Каскадні анімації",
+        "📱 Послідовні дії",
+        "🔄 Ланцюгові реакції"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості\n2. Змініть 'index-1' на назву шару-попередника\n3. Налаштуйте затримку (0.5) для контролю часу\n4. Значення затримуватиметься відносно іншого шару",
+      "target_properties": ["rotation", "position"],
+      "expression_template": "thisComp.layer(index-1).transform.rotation.valueAtTime(time - 0.5);"
+    },
+    {
+      "name_en": "PosterizeTime Expression",
+      "name_ua": "Постеризація часу",
+      "category_en": "Time Control",
+      "category_ua": "Керування часом",
+      "icon": "🎞️",
+      "description_ua": "Примушує шар оновлюватися тільки з встановленою частотою кадрів",
+      "purpose_ua": "Для примусу шару оновлюватися з 12 кадрами за секунду для створення стоп-моушн ефекту",
+      "use_cases_ua": [
+        "🎬 Стоп-моушн анімації",
+        "📹 Ефекти низької частоти кадрів",
+        "🎮 Ретро-відео ефекти",
+        "⚡ Контроль оновлення кадрів"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте частоту кадрів (12)\n3. Шар оновлюватиметься тільки з вказаною частотою",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "posterizeTime(12);\nvalue;"
+    },
+    {
+      "name_en": "ToComp Expression",
+      "name_ua": "Перетворення у композицію",
+      "category_en": "3D Conversion",
+      "category_ua": "3D перетворення",
+      "icon": "🎯",
+      "description_ua": "Перетворює позицію 3D шару у 2D простір композиції",
+      "purpose_ua": "Коли ви хочете, щоб 2D елемент відстежував позицію 3D шару",
+      "use_cases_ua": [
+        "🎯 2D елементи, що слідкують за 3D",
+        "📊 Плоскі підписи для 3D об'єктів",
+        "🔄 Інтеграція 2D та 3D елементів",
+        "📐 Конвертація просторів"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position' 2D шару\n2. Шар буде відстежувати позицію 3D об'єкта\n3. Ідеально для підписів та міток у 3D сценах",
+      "target_properties": ["position"],
+      "expression_template": "toComp(anchorPoint);"
+    },
+    {
+      "name_en": "SeedRandom Expression",
+      "name_ua": "Насіння рандомізації",
+      "category_en": "Randomization",
+      "category_ua": "Рандомізація",
+      "icon": "🎲",
+      "description_ua": "Генерує випадкові числа послідовно на основі значення насіння",
+      "purpose_ua": "Для забезпечення послідовності випадкових значень для кожного шару з часом на основі їх індексу",
+      "use_cases_ua": [
+        "🎲 Послідовні випадкові значення",
+        "📊 Стабільні рандомізації",
+        "🎯 Відтворювані випадкові ефекти",
+        "🔄 Консистентність між рендерами"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Використовуйте 'index' для унікальності кожного шару\n3. Налаштуйте діапазон ([-50,-50], [50,50])\n4. Значення будуть послідовно випадковими",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "seedRandom(index, true);\nvalue + random([-50, -50], [50, 50]);"
+    },
+    {
+      "name_en": "ConvertToWorld Expression",
+      "name_ua": "Перетворення у світовий простір",
+      "category_en": "3D Conversion",
+      "category_ua": "3D перетворення",
+      "icon": "🌍",
+      "description_ua": "Перетворює 2D позицію у координати 3D простору",
+      "purpose_ua": "Для вирівнювання позиції прожектора до світової просторової точки прив'язки іншого 3D об'єкта",
+      "use_cases_ua": [
+        "💡 Прожектори, що слідкують за 3D об'єктами",
+        "🎯 3D позиціонування з 2D координат",
+        "🔄 Інтеграція різних просторів",
+        "📐 Конвертація координатних систем"
+      ],
+      "how_to_use_ua": "1. Створіть 3D шар '3DLayer'\n2. Додайте до властивості 'Position' іншого 3D шару\n3. Позиція буде відповідати світовій позиції цільового шару",
+      "target_properties": ["position"],
+      "expression_template": "box = thisComp.layer(\"3DLayer\");\nboxWorldPos = box.toWorld(box.anchorPoint);\nboxWorldPos;"
+    },
+    {
+      "name_en": "Smooth Expression",
+      "name_ua": "Згладжування",
+      "category_en": "Motion Smoothing",
+      "category_ua": "Згладжування руху",
+      "icon": "🔄",
+      "description_ua": "Згладжує тремтливий рух властивості з часом",
+      "purpose_ua": "Для згладжування тремтливого руху ручної камери шляхом усереднення її позиції з часом",
+      "use_cases_ua": [
+        "🎬 Стабілізація ручної камери",
+        "📊 Згладжування тремтливих даних",
+        "📱 Плавні рухи курсора",
+        "⚡ Зменшення джиттеру"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте ширину (0.2) та кількість зразків (5)\n3. Рух стане значно плавнішим",
+      "target_properties": ["position"],
+      "expression_template": "smooth(width = 0.2, samples = 5);"
+    },
+    {
+      "name_en": "LookAt Expression in 3D space",
+      "name_ua": "Дивитися на (3D простір)",
+      "category_en": "3D Animation",
+      "category_ua": "3D анімація",
+      "icon": "👀",
+      "description_ua": "Обертає об'єкт, щоб завжди бути оберненим до іншого об'єкта",
+      "purpose_ua": "Для шару (наприклад, 3D об'єкта або камери), щоб завжди бути оберненим до іншого об'єкта, що рухається",
+      "use_cases_ua": [
+        "🎯 Камери, що слідкують за об'єктами",
+        "👀 3D об'єкти, що завжди дивляться на ціль",
+        "🔭 Прицілювання в 3D просторі",
+        "🔄 Орбітальні рухи"
+      ],
+      "how_to_use_ua": "1. Створіть шари 'Target' та 'Point'\n2. Додайте до властивості 'Rotation' 3D шару\n3. Шар автоматично повертатиметься до цільового шару",
+      "target_properties": ["rotation"],
+      "expression_template": "targetLayer = thisComp.layer(\"Target\");\nlookAt(thisComp.layer(\"Point\").position, targetLayer.position);"
+    },
+    {
+      "name_en": "Clamp Expression",
+      "name_ua": "Обмеження значень",
+      "category_en": "Value Control",
+      "category_ua": "Керування значеннями",
+      "icon": "📏",
+      "description_ua": "Обмежує значення властивості у вказаному діапазоні",
+      "purpose_ua": "Для забезпечення, що масштаб шару ніколи не опускається нижче 50% та не піднімається вище 150%",
+      "use_cases_ua": [
+        "📏 Обмеження діапазонів значень",
+        "🎯 Запобігання екстремальним значенням",
+        "📊 Безпечні межі для анімацій",
+        "⚡ Контроль допустимих значень"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Вкажіть minValue та maxValue\n3. Значення залишатиметься у вказаному діапазоні",
+      "target_properties": ["scale", "opacity", "rotation"],
+      "expression_template": "clamp(value, minValue, maxValue);"
+    },
+    {
+      "name_en": "Number Counter With Separators",
+      "name_ua": "Лічильник чисел з роздільниками",
+      "category_en": "Number Formatting",
+      "category_ua": "Форматування чисел",
+      "icon": "🔢",
+      "description_ua": "Форматує значення Slider Control до двох десяткових знаків та додає роздільники тисяч",
+      "purpose_ua": "Для акуратного форматування великих фінансових цифр з слайдера для on-екранного відображення",
+      "use_cases_ua": [
+        "💰 Фінансові показники з роздільниками",
+        "📊 Великі числа з форматуванням",
+        "🎬 Професійні відображення чисел",
+        "📈 Статистичні дані"
+      ],
+      "how_to_use_ua": "1. Створіть слайдер 'Slider Control'\n2. Додайте до властивості 'Source Text'\n3. Числа автоматично форматуватимуться з роздільниками",
+      "target_properties": ["text"],
+      "expression_template": "num = effect(\"Slider Control\")(\"Slider\").value.toFixed(2).toString().replace(\".\", \",\");\nfunction addCommas(x) {\nreturn x.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \".\");\n}\naddCommas(num);"
+    },
+    {
+      "name_en": "Index Expression",
+      "name_ua": "Вираз індексу",
+      "category_en": "Layer Automation",
+      "category_ua": "Автоматизація шарів",
+      "icon": "📑",
+      "description_ua": "Використовує індекс шару у таймлайні для керування властивостями",
+      "purpose_ua": "Для розміщення кожного шару на відстані 50 пікселів для сіткового макету",
+      "use_cases_ua": [
+        "🔳 Автоматичні сіткові макети",
+        "📊 Послідовні позиції шарів",
+        "🎯 Систематичне розташування",
+        "🔄 Масове позиціонування"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position' або 'Rotation'\n2. Налаштуйте множник (30) для контролю інтервалу\n3. Кожен шар автоматично позиціонується за індексом",
+      "target_properties": ["position", "rotation"],
+      "expression_template": "index * 30;"
+    },
+    {
+      "name_en": "LoopOut PingPong Expression",
+      "name_ua": "Циклічний пінг-понг",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Зациклює ремапований за часом footage вперед та назад",
+      "purpose_ua": "Для анімації позиції об'єкта у косинусному хвильовому візерунку",
+      "use_cases_ua": [
+        "🔄 Рухи вперед-назад",
+        "🎯 Коливальні анімації",
+        "📊 Періодичні рухи",
+        "⚡ Зворотні цикли"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри для анімації\n2. Додайте до властивості\n3. Анімація автоматично повторюватиметься у зворотному напрямку",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "loopOut(\"pingpong\");"
+    },
+    {
+      "name_en": "Bounce Expression",
+      "name_ua": "Відскок",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🏀",
+      "description_ua": "Створює ефект відскоку, коли об'єкт зупиняється",
+      "purpose_ua": "М'яч відскакує до зупинки після падіння",
+      "use_cases_ua": [
+        "🏀 Відскакуючі м'ячі",
+        "📈 Пружні анімації",
+        "🎯 Ефекти затухання відскоку",
+        "⚡ Фізичні симуляції"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості після ключового кадру падіння\n2. Налаштуйте амплітуду (50), частоту (2) та затухання (5)\n3. Ефект відскоку автоматично додасться",
+      "target_properties": ["position", "scale"],
+      "expression_template": "amp = 50;\nfreq = 2;\ndecay = 5;\nn = 0;\nif (numKeys > 0 && time > key(numKeys).time) {\nt = time - key(numKeys).time;\nn = Math.sin(freq * t * Math.PI * 2) * amp * Math.exp(-decay * t);\n}\nvalue + [n, n];"
+    },
+    {
+      "name_en": "Random Expression",
+      "name_ua": "Випадковість",
+      "category_en": "Randomization",
+      "category_ua": "Рандомізація",
+      "icon": "🎲",
+      "description_ua": "Генерує випадкові значення у вказаному діапазоні",
+      "purpose_ua": "Для встановлення прозорості кількох об'єктів на випадкові значення між 0 та 100",
+      "use_cases_ua": [
+        "🎲 Випадкові значення прозорості",
+        "📊 Рандомізація властивостей",
+        "🎨 Випадкові ефекти",
+        "⚡ Непередбачувані анімації"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Вкажіть діапазон (0, 100)\n3. Кожен шар отримає випадкове значення",
+      "target_properties": ["opacity", "scale", "rotation"],
+      "expression_template": "random(0, 100);"
+    },
+    {
+      "name_en": "Ease Expression",
+      "name_ua": "Плавність",
+      "category_en": "Easing Functions",
+      "category_ua": "Функції плавності",
+      "icon": "🔄",
+      "description_ua": "Плавно переходить між двома значеннями протягом заданого часу",
+      "purpose_ua": "Для плавного збільшення прозорості від 0 до 100 протягом 1 секунди для ефекту затухання",
+      "use_cases_ua": [
+        "🎬 Плавні появи та зникнення",
+        "📱 UI-переходи",
+        "⚡ Плавні зміни значень",
+        "🎯 Контрольовані анімації"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте час (0, 1) та значення (100, 200)\n3. Перехід буде плавним з прискоренням та уповільненням",
+      "target_properties": ["opacity", "scale", "position"],
+      "expression_template": "ease(time, 0, 1, 100, 200);"
+    },
+    {
+      "name_en": "ValueAtTime Expression",
+      "name_ua": "Значення в час",
+      "category_en": "Timing Control",
+      "category_ua": "Керування таймінгом",
+      "icon": "⏰",
+      "description_ua": "Зміщує анімацію шляхом отримання значення властивості з конкретного часу",
+      "purpose_ua": "Для затримки анімації позиції шару, щоб він слідував за іншим шаром з невеликою затримкою",
+      "use_cases_ua": [
+        "🎬 Затримані анімації",
+        "📊 Каскадні ефекти",
+        "🔄 Ефекти слідування",
+        "⚡ Таймінгові зсуви"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості\n2. Змініть 'LayerName' на назву цільового шару\n3. Налаштуйте затримку (1) для контролю часу\n4. Значення затримуватиметься відносно цільового шару",
+      "target_properties": ["position", "rotation"],
+      "expression_template": "thisComp.layer(\"LayerName\").transform.position.valueAtTime(time - 1);"
+    },
+    {
+      "name_en": "LoopOut Cycle Expression",
+      "name_ua": "Циклічне повторення",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Зациклює анімацію назад до першого ключового кадру після останнього",
+      "purpose_ua": "Для зациклювання позиції відскакуючого м'яча для повторення його руху без додавання більше ключових кадрів",
+      "use_cases_ua": [
+        "🏀 Безкінечні відскоки",
+        "🔄 Повторювані анімації",
+        "🎯 Циклічні рухи",
+        "⚡ Безперервні цикли"
+      ],
+      "how_to_use_ua": "1. Створіть ключові кадри для одного циклу\n2. Додайте до властивості\n3. Анімація автоматично повторюватиметься безкінечно",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "loopOut(\"cycle\");"
+    },
+    {
+      "name_en": "Wiggle Expression",
+      "name_ua": "Коливання",
+      "category_en": "Animation Effects",
+      "category_ua": "Ефекти анімації",
+      "icon": "🎚️",
+      "description_ua": "Додає випадковість до властивості. Перше число - частота, друге - амплітуда",
+      "purpose_ua": "Для створення тонкого тремтіння в текстовому шарі для імітації ефекту ручної камери",
+      "use_cases_ua": [
+        "🎬 Тремтіння ручної камери",
+        "📱 Вібраційні ефекти",
+        "⚡ Випадкові рухи",
+        "🎯 Додавання живості"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте частоту (2) та амплітуду (50)\n3. Властивість отримає випадкове коливання",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "wiggle(2, 50);"
+    },
+    {
+      "name_en": "Time Expression",
+      "name_ua": "Час",
+      "category_en": "Auto Animation",
+      "category_ua": "Автоматична анімація",
+      "icon": "⏰",
+      "description_ua": "Створює безперервний рух, як-от обертання або рух, з часом",
+      "purpose_ua": "Обертання об'єкта зі сталою швидкістю з часом шляхом застосування до властивості Обертання",
+      "use_cases_ua": [
+        "🔄 Безперервне обертання",
+        "📈 Лінійні зміни з часом",
+        "🎬 Автоматичні анімації",
+        "⚡ Постійний рух"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте множник (100) для контролю швидкості\n3. Значення лінійно змінюватиметься з часом",
+      "target_properties": ["rotation", "position"],
+      "expression_template": "time * 100;"
+    },
+    {
+      "name_en": "Gradient Ramp Fixed to Layer Edges",
+      "name_ua": "Градієнтний рамп, зафіксований до країв шару",
+      "category_en": "Gradient Effects",
+      "category_ua": "Ефекти градієнту",
+      "icon": "🌈",
+      "description_ua": "Тримає градієнтний рамп зафіксованим до верхніх та нижніх країв шару",
+      "purpose_ua": "Для анімації фонів, форм або заголовків, де послідовний градієнт потребує залишатися вирівняним з шаром під час його руху",
+      "use_cases_ua": [
+        "🎨 Фони з стабільними градієнтами",
+        "📊 Форми з зафіксованими градієнтами",
+        "🎬 Заголовки з послідовними градієнтами",
+        "🔄 Анімації з незмінними градієнтами"
+      ],
+      "how_to_use_ua": "1. Додайте першу частину до 'Start of Ramp'\n2. Додайте другу частину до 'End of Ramp'\n3. Градієнт залишатиметься зафіксованим до країв шару",
+      "target_properties": ["effect"],
+      "expression_template": "// add to Start of Ramp\nrect = thisLayer.sourceRectAtTime();\nxPos = rect.left + rect.width / 2;\nyPos = rect.top;\n[thisLayer.toComp([xPos, yPos])[0], thisLayer.toComp([xPos, yPos])[1]];\n\n// add to End of Ramp\nrect = thisLayer.sourceRectAtTime();\nxPos = rect.left + rect.width / 2;\nyPos = rect.top + rect.height;\n[thisLayer.toComp([xPos, yPos])[0], thisLayer.toComp([xPos, yPos])[1]];"
+    },
+    {
+      "name_en": "Linear Expression",
+      "name_ua": "Лінійна інтерполяція",
+      "category_en": "Easing Functions",
+      "category_ua": "Функції плавності",
+      "icon": "📈",
+      "description_ua": "Створює лінійну інтерполяцію між двома значеннями протягом заданого часу",
+      "purpose_ua": "Для плавної лінійної зміни значень без прискорення чи уповільнення",
+      "use_cases_ua": [
+        "📊 Рівномірні зміни значень",
+        "🎬 Лінійні переходи",
+        "📱 Постійна швидкість анімації",
+        "⚡ Прямі інтерполяції"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте час початку, кінця та значення\n3. Анімація буде лінійною без easing",
+      "target_properties": ["position", "scale", "opacity"],
+      "expression_template": "linear(time, startTime, endTime, startValue, endValue);"
+    },
+    {
+      "name_en": "Exponential Scale Expression",
+      "name_ua": "Експоненційний масштаб",
+      "category_en": "Scale Animation",
+      "category_ua": "Анімація масштабу",
+      "icon": "🚀",
+      "description_ua": "Створює експоненційне збільшення масштабу для ефектів швидкого росту",
+      "purpose_ua": "Для ефектів швидкого розширення або вибухових анімацій",
+      "use_cases_ua": [
+        "💥 Вибухові ефекти",
+        "📈 Швидке зростання",
+        "🎬 Драматичні масштабування",
+        "⚡ Енергетичні спалахи"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Scale'\n2. Налаштуйте базовий множник та експоненту\n3. Масштаб зростатиме експоненційно",
+      "target_properties": ["scale"],
+      "expression_template": "baseScale = 100;\ngrowthFactor = 2;\n[baseScale * Math.exp(time * growthFactor), baseScale * Math.exp(time * growthFactor)];"
+    },
+    {
+      "name_en": "Pulse Opacity Expression",
+      "name_ua": "Пульсуюча прозорість",
+      "category_en": "Opacity Animation",
+      "category_ua": "Анімація прозорості",
+      "icon": "💓",
+      "description_ua": "Створює пульсуючий ефект прозорості з використанням синусоїди",
+      "purpose_ua": "Для створення ефекту дихання або пульсації елементів",
+      "use_cases_ua": [
+        "💓 Пульсуючі елементи",
+        "📱 Індикатори активності",
+        "🎬 Ефекти дихання",
+        "⚡ Мерехтіння"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Opacity'\n2. Налаштуйте частоту та амплітуду\n3. Прозорість пульсуватиме автоматично",
+      "target_properties": ["opacity"],
+      "expression_template": "frequency = 2;\namplitude = 50;\nbaseOpacity = 50;\nbaseOpacity + Math.sin(time * frequency * Math.PI * 2) * amplitude;"
+    },
+    {
+      "name_en": "Auto Rotate Around Point",
+      "name_ua": "Автоматичне обертання навколо точки",
+      "category_en": "Rotation Animation",
+      "category_ua": "Анімація обертання",
+      "icon": "🌀",
+      "description_ua": "Автоматично обертає шар навколо заданої точки з постійною швидкістю",
+      "purpose_ua": "Для створення орбітальних рухів або обертання навколо центру",
+      "use_cases_ua": [
+        "🔄 Орбітальні рухи",
+        "⚙️ Обертові механізми",
+        "🎯 Кругові анімації",
+        "🌀 Спиральні ефекти"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Rotation'\n2. Налаштуйте центр обертання та швидкість\n3. Шар автоматично обертатиметься",
+      "target_properties": ["rotation"],
+      "expression_template": "centerPoint = [thisComp.width/2, thisComp.height/2];\nrotationSpeed = 30;\nangle = time * rotationSpeed;\nangle;"
+    },
+    {
+      "name_en": "Color Cycle Expression",
+      "name_ua": "Циклічна зміна кольору",
+      "category_en": "Color Animation",
+      "category_ua": "Анімація кольору",
+      "icon": "🌈",
+      "description_ua": "Створює плавний цикл зміни кольорів через спектр",
+      "purpose_ua": "Для створення анімацій, що циклічно змінюють кольори",
+      "use_cases_ua": [
+        "🌈 Веселки та спектри",
+        "🎨 Кольорові цикли",
+        "🎬 Анімації неона",
+        "⚡ Динамічні кольори"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Color'\n2. Налаштуйте швидкість циклу\n3. Колір плавно змінюватиметься через спектр",
+      "target_properties": ["color"],
+      "expression_template": "speed = 1;\nhue = (time * speed * 360) % 360;\nsaturation = 100;\nlightness = 50;\nfromHSL = thisComp.layer(\"Utilities\").effect(\"From HSL\")(\"Color\");\nfromHSL.setValue([hue, saturation, lightness]);\nfromHSL.value;"
+    },
+    {
+      "name_en": "Follow Mouse Expression",
+      "name_ua": "Слідування за мишею",
+      "category_en": "Interactive Animation",
+      "category_ua": "Інтерактивна анімація",
+      "icon": "🖱️",
+      "description_ua": "Змушує шар слідувати за позицією миші у композиції",
+      "purpose_ua": "Для створення інтерактивних елементів, що реагують на рух миші",
+      "use_cases_ua": [
+        "🎯 Курсори та вказівники",
+        "📱 Інтерактивні елементи",
+        "🎮 Ігрові інтерфейси",
+        "⚡ Реактивна графіка"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Шар автоматично слідуватиме за мишею\n3. Ідеально для інтерактивних демонстрацій",
+      "target_properties": ["position"],
+      "expression_template": "// Note: This requires After Effects CC 2018 or later\nthisComp.mousePosition;"
+    },
+    {
+      "name_en": "Audio Reactivity Expression",
+      "name_ua": "Реакція на аудіо",
+      "category_en": "Audio Animation",
+      "category_ua": "Анімація за аудіо",
+      "icon": "🎵",
+      "description_ua": "Зв'язує властивість з аудіо амплітудою для створення реактивних анімацій",
+      "purpose_ua": "Для створення анімацій, що реагують на звук або музику",
+      "use_cases_ua": [
+        "🎵 Аудіо-візуалізатори",
+        "📢 Реакції на звук",
+        "🎶 Музичні анімації",
+        "⚡ Енергетичні рівні"
+      ],
+      "how_to_use_ua": "1. Імпортуйте аудіофайл\n2. Додайте до властивості\n3. Налаштуйте чутливість\n4. Анімація реагуватиме на аудіо",
+      "target_properties": ["scale", "opacity"],
+      "expression_template": "audioLayer = thisComp.layer(\"Audio\");\nsensitivity = 5;\naudioLevel = audioLayer.transform.audioLevels;\nbaseValue = 100;\nbaseValue + audioLevel[0] * sensitivity;"
+    },
+    {
+      "name_en": "Time Delay Chain Expression",
+      "name_ua": "Ланцюг часових затримок",
+      "category_en": "Timing Control",
+      "category_ua": "Керування таймінгом",
+      "icon": "⏱️",
+      "description_ua": "Створює каскадний ефект з затримкою між послідовними шарами",
+      "purpose_ua": "Для створення послідовних анімацій, що поширюються через шари",
+      "use_cases_ua": [
+        "🎬 Каскадні анімації",
+        "📊 Послідовні дії",
+        "🔄 Хвильові ефекти",
+        "⚡ Ланцюгові реакції"
+      ],
+      "how_to_use_ua": "1. Додайте до групи шарів\n2. Налаштуйте затримку між шарами\n3. Анімації запускатимуться послідовно",
+      "target_properties": ["position", "scale"],
+      "expression_template": "delay = 0.1;\nstartTime = inPoint + (index - 1) * delay;\nif (time >= startTime) {\nvalue;\n} else {\nvalueAtTime(inPoint);\n}"
+    },
+    {
+      "name_en": "Random Walk Expression",
+      "name_ua": "Випадкова блукалка",
+      "category_en": "Random Animation",
+      "category_ua": "Випадкова анімація",
+      "icon": "🚶",
+      "description_ua": "Створює природний випадковий рух, схожий на блукання",
+      "purpose_ua": "Для імітації природного, органічного руху частинок або організмів",
+      "use_cases_ua": [
+        "🐜 Рух комах або тварин",
+        "🌫️ Блукаючі частинки",
+        "🎨 Органічні анімації",
+        "⚡ Випадкові траєкторії"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте швидкість та варіативність\n3. Шар блукатиме випадковим чином",
+      "target_properties": ["position"],
+      "expression_template": "seedRandom(index, true);\nstepSize = 10;\nif (time == 0) {\ncurrentPos = position;\n} else {\ncurrentPos = position.valueAtTime(time - thisComp.frameDuration);\n}\nnewX = currentPos[0] + (random() - 0.5) * stepSize;\nnewY = currentPos[1] + (random() - 0.5) * stepSize;\n[newX, newY];"
+    },
+    {
+      "name_en": "Spring Physics Expression",
+      "name_ua": "Пружинна фізика",
+      "category_en": "Physics Animation",
+      "category_ua": "Фізична анімація",
+      "icon": "🔄",
+      "description_ua": "Імітує пружинну фізику з масою, жорсткістю та демпфуванням",
+      "purpose_ua": "Для реалістичних пружинних анімацій з фізичною точністю",
+      "use_cases_ua": [
+        "🔄 Пружинні ефекти",
+        "📐 Фізичні симуляції",
+        "🎬 Реалістичні рухи",
+        "⚡ Динамічні системи"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте масу, жорсткість та демпфування\n3. Рух буде імітувати пружинну фізику",
+      "target_properties": ["position"],
+      "expression_template": "targetPos = [960, 540]; // Target position\nmass = 1;\nstiffness = 100;\ndamping = 10;\nif (time == 0) {\ncurrentPos = position;\nvelocity = [0, 0];\n} else {\ncurrentPos = position.valueAtTime(time - thisComp.frameDuration);\nvelocity = (position - currentPos) / thisComp.frameDuration;\n}\nforce = (targetPos - currentPos) * stiffness;\nacceleration = force / mass - velocity * damping;\nnewVelocity = velocity + acceleration * thisComp.frameDuration;\nnewPos = currentPos + newVelocity * thisComp.frameDuration;\nnewPos;"
+    },
+    {
+      "name_en": "Symmetric Wiggle",
+      "name_ua": "Симетричне коливання",
+      "category_en": "Animation Effects",
+      "category_ua": "Ефекти анімації",
+      "icon": "🔄",
+      "description_ua": "Створює коливання з однаковою амплітудою по обох осях X та Y",
+      "purpose_ua": "Для коливань, де потрібна ідентична поведінка по горизонталі та вертикалі",
+      "use_cases_ua": [
+        "🎯 Рівномірні тремтіння",
+        "📱 Симетричні вібрації",
+        "🎬 Збалансовані рухи",
+        "⚡ Однакові коливання по осях"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте частоту (0.5) та амплітуду (50)\n3. Коливання будуть ідентичними по X та Y",
+      "target_properties": ["position"],
+      "expression_template": "w = wiggle(0.5,50);\n[w[0],w[0]];"
+    },
+    {
+      "name_en": "Horizontal Wiggle Only",
+      "name_ua": "Коливання тільки по горизонталі",
+      "category_en": "Animation Effects",
+      "category_ua": "Ефекти анімації",
+      "icon": "↔️",
+      "description_ua": "Застосовує коливання тільки до горизонтальної осі (X), зберігаючи оригінальне значення вертикалі (Y)",
+      "purpose_ua": "Для горизонтальних тремтінь без впливу на вертикальну позицію",
+      "use_cases_ua": [
+        "🚂 Горизонтальні вібрації",
+        "📱 Бічні тремтіння",
+        "🎬 Рухи ліворуч-праворуч",
+        "⚡ Коливання по X осі"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте частоту (0.5) та амплітуду (50)\n3. Коливатиметься тільки X-координата",
+      "target_properties": ["position"],
+      "expression_template": "[wiggle(0.5,50)[0],value[1]];"
+    },
+    {
+      "name_en": "Vertical Wiggle Only",
+      "name_ua": "Коливання тільки по вертикалі",
+      "category_en": "Animation Effects",
+      "category_ua": "Ефекти анімації",
+      "icon": "↕️",
+      "description_ua": "Застосовує коливання тільки до вертикальної осі (Y), зберігаючи оригінальне значення горизонталі (X)",
+      "purpose_ua": "Для вертикальних тремтінь без впливу на горизонтальну позицію",
+      "use_cases_ua": [
+        "🔄 Вертикальні вібрації",
+        "📱 Вгору-вниз тремтіння",
+        "🎬 Рухи вгору-вниз",
+        "⚡ Коливання по Y осі"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте частоту (0.5) та амплітуду (50)\n3. Коливатиметься тільки Y-координата",
+      "target_properties": ["position"],
+      "expression_template": "[value[0],wiggle(0.5,50)[1]];"
+    },
+    {
+      "name_en": "Timed Wiggle Start",
+      "name_ua": "Коливання з відкладеним стартом",
+      "category_en": "Timing Control",
+      "category_ua": "Керування таймінгом",
+      "icon": "⏱️",
+      "description_ua": "Запускає коливання після вказаного часу, до цього зберігаючи оригінальне значення",
+      "purpose_ua": "Для коливань, що починаються не відразу, а через певний час",
+      "use_cases_ua": [
+        "🎬 Відкладені тремтіння",
+        "📱 Анімації з затримкою",
+        "⚡ Поступовий старт вібрацій",
+        "🔄 Запізнілі коливання"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте timeToStart (1 секунда)\n3. Коливання почнеться через вказаний час",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "timeToStart = 1;\nif (time > timeToStart) {\nwiggle(0.5,50);\n} else {\nvalue;\n}"
+    },
+    {
+      "name_en": "Timed Wiggle End",
+      "name_ua": "Коливання з обмеженням закінчення",
+      "category_en": "Timing Control",
+      "category_ua": "Керування таймінгом",
+      "icon": "⏹️",
+      "description_ua": "Зупиняє коливання після вказаного часу, повертаючи оригінальне значення",
+      "purpose_ua": "Для коливань, що мають обмежену тривалість",
+      "use_cases_ua": [
+        "🎬 Тимчасові тремтіння",
+        "📱 Обмежені за часом вібрації",
+        "⚡ Кінцеві точки коливань",
+        "🔄 Скінченні коливання"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налашстуйте timeToStop (10 секунд)\n3. Коливання зупиниться через вказаний час",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "timeToStop = 10;\nif (time > timeToStop) {\nvalue;\n} else {\nwiggle(0.5,50);\n}"
+    },
+    {
+      "name_en": "Timed Wiggle Start and End",
+      "name_ua": "Коливання з визначеним початком і кінцем",
+      "category_en": "Timing Control",
+      "category_ua": "Керування таймінгом",
+      "icon": "⏰",
+      "description_ua": "Запускає коливання у вказаний час та зупиняє у вказаний час",
+      "purpose_ua": "Для прецизійного контролю тривалості коливань",
+      "use_cases_ua": [
+        "🎬 Точні часові інтервали коливань",
+        "📱 Контрольовані за часом вібрації",
+        "⚡ Строго визначені періоди тремтіння",
+        "🔄 Коливання у конкретному вікні часу"
+      ],
+      "how_to_use_ua": "1. Додайте до будь-якої властивості\n2. Налаштуйте timeToStart (1с) та timeToStop (10с)\n3. Коливання працюватиме тільки між цими часами",
+      "target_properties": ["position", "scale", "rotation"],
+      "expression_template": "timeToStart = 1;\ntimeToStop = 10;\nif ((time > timeToStart) && (time < timeToStop)) {\nwiggle(0.5,50);\n} else {\nvalue;\n}"
+    },
+    {
+      "name_en": "Looping Horizontal Wiggle",
+      "name_ua": "Циклічне горизонтальне коливання",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Створює безшовне циклічне коливання тільки по горизонтальній осі",
+      "purpose_ua": "Для безперервних горизонтальних коливань з плавними переходами",
+      "use_cases_ua": [
+        "🚂 Безкінечні горизонтальні рухи",
+        "📱 Циклічні бічні вібрації",
+        "🎬 Плавні ліво-праві коливання",
+        "⚡ Безшовні X-осьові рухи"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте freq, amp, loopTime\n3. Горизонтальне коливання зациклюється автоматично",
+      "target_properties": ["position"],
+      "expression_template": "freq = 1;\namp = 110;\nloopTime = 3;\nt = time % loopTime;\nwiggle1 = wiggle(freq, amp, 1, 0.5, t);\nwiggle2 = wiggle(freq, amp, 1, 0.5, t - loopTime);\nlinear(t, 0, loopTime, [wiggle1[0],value[1]], [wiggle2[0],value[1]]);"
+    },
+    {
+      "name_en": "Looping Vertical Wiggle",
+      "name_ua": "Циклічне вертикальне коливання",
+      "category_en": "Loop Animation",
+      "category_ua": "Циклічна анімація",
+      "icon": "🔄",
+      "description_ua": "Створює безшовне циклічне коливання тільки по вертикальній осі",
+      "purpose_ua": "Для безперервних вертикальних коливань з плавними переходами",
+      "use_cases_ua": [
+        "🔄 Безкінечні вертикальні рухи",
+        "📱 Циклічні вгору-вниз вібрації",
+        "🎬 Плавні верхньо-нижні коливання",
+        "⚡ Безшовні Y-осьові рухи"
+      ],
+      "how_to_use_ua": "1. Додайте до властивості 'Position'\n2. Налаштуйте freq, amp, loopTime\n3. Вертикальне коливання зациклюється автоматично",
+      "target_properties": ["position"],
+      "expression_template": "freq = 1;\namp = 110;\nloopTime = 3;\nt = time % loopTime;\nwiggle1 = wiggle(freq, amp, 1, 0.5, t);\nwiggle2 = wiggle(freq, amp, 1, 0.5, t - loopTime);\nlinear(t, 0, loopTime, [value[0],wiggle1[1]], [value[0],wiggle2[1]]);"
+    }
+  ]
+}

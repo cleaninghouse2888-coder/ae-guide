@@ -1,0 +1,1034 @@
+{
+  "expressions": [
+    {
+      "id": "math-round",
+      "category_en": "Mathematics",
+      "category_ua": "Математика",
+      "name_en": "Math Round",
+      "name_ua": "Округлення",
+      "icon": "🔢",
+      "description_ua": "Перетворення дробових чисел на цілі - відкидає все після коми",
+      "purpose_ua": "Отримати красиві цілі числа без знаків після коми",
+      "expression_template": "Math.round({value})",
+      "target_properties": ["rotation", "opacity"],
+      "parameters": [
+        {
+          "id": "value",
+          "name_ua": "Значення для округлення",
+          "type": "float",
+          "default": 45.67,
+          "min": 0,
+          "max": 1000,
+          "step": 0.1,
+          "description_ua": "🔢 Введіть число, яке хочете округлити"
+        }
+      ]
+    },
+    {
+      "id": "math-operations",
+      "category_en": "Mathematics",
+      "category_ua": "Математика",
+      "name_en": "Math Operations",
+      "name_ua": "Математичні Операції",
+      "icon": "➕",
+      "description_ua": "Шкільна математика в дії - додавання, віднімання, множення, ділення",
+      "purpose_ua": "Виконувати прості математичні дії з значеннями",
+      "expression_template": "value + {addition}",
+      "target_properties": ["position", "rotation", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "addition",
+          "name_ua": "Число для додавання",
+          "type": "float",
+          "default": 10,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "➕ Скільки додати до поточного значення?"
+        }
+      ]
+    },
+    {
+      "id": "time-animation",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Time Animation",
+      "name_ua": "Анімація за Часом",
+      "icon": "⏰",
+      "description_ua": "Найпростіша автоматична анімація - рух вперед з часом",
+      "purpose_ua": "Створити безкінечну анімацію без ключових кадрів",
+      "expression_template": "time * {speed}",
+      "target_properties": ["rotation"],
+      "parameters": [
+        {
+          "id": "speed",
+          "name_ua": "Швидкість обертання",
+          "type": "float",
+          "default": 30,
+          "min": 0,
+          "max": 360,
+          "step": 1,
+          "description_ua": "🌀 Скільки градусів обертати за секунду?"
+        }
+      ]
+    },
+    {
+      "id": "layer-index",
+      "category_en": "Index",
+      "category_ua": "Індекс",
+      "name_en": "Layer Index",
+      "name_ua": "Індекс Шару",
+      "icon": "🔢",
+      "description_ua": "Автоматичне розташування дублікованих шарів - кожен наступний зміщується",
+      "purpose_ua": "Швидко створити сітку або ряд однакових об'єктів",
+      "expression_template": "offset = {spacing};\n[position[0] + offset * index, position[1]]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "spacing",
+          "name_ua": "Відстань між об'єктами",
+          "type": "float",
+          "default": 150,
+          "min": 0,
+          "max": 500,
+          "step": 10,
+          "description_ua": "📏 Скільки пікселів між кожним дублікатом?"
+        }
+      ]
+    },
+    {
+      "id": "linear-interpolation",
+      "category_en": "Mathematics",
+      "category_ua": "Математика",
+      "name_en": "Linear Interpolation",
+      "name_ua": "Лінійна Інтерполяція",
+      "icon": "📈",
+      "description_ua": "Перетворення значень з одного діапазону в інший - 'масштабування чисел'",
+      "purpose_ua": "Перетворити значення з одного масштабу на інший",
+      "expression_template": "linear({value}, {min_in}, {max_in}, {min_out}, {max_out})",
+      "target_properties": ["rotation", "opacity"],
+      "parameters": [
+        {
+          "id": "value",
+          "name_ua": "Вхідне значення",
+          "type": "float",
+          "default": 0.5,
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "description_ua": "🔢 Число яке потрібно перетворити"
+        },
+        {
+          "id": "min_in",
+          "name_ua": "Мінімум вхідного діапазону",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "📥 Найменше значення яке може бути на вході"
+        },
+        {
+          "id": "max_in",
+          "name_ua": "Максимум вхідного діапазону",
+          "type": "float",
+          "default": 1,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "📥 Найбільше значення яке може бути на вході"
+        },
+        {
+          "id": "min_out",
+          "name_ua": "Мінімум вихідного діапазону",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "📤 Найменше значення на виході"
+        },
+        {
+          "id": "max_out",
+          "name_ua": "Максимум вихідного діапазону",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "📤 Найбільше значення на виході"
+        }
+      ]
+    },
+    {
+      "id": "sin-cos-animation",
+      "category_en": "Mathematics",
+      "category_ua": "Математика",
+      "name_en": "Sine/Cosine Waves",
+      "name_ua": "Синусоїдні Хвилі",
+      "icon": "🌊",
+      "description_ua": "Створення плавних кругових і хвильових рухів за допомогою sin та cos",
+      "purpose_ua": "Реалістичні кругові траєкторії та хвилювання",
+      "expression_template": "x = thisComp.width/2;\ny = thisComp.height/2;\nradius = {radius};\n[x + Math.cos(time * {speed}) * radius, y + Math.sin(time * {speed}) * radius]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "radius",
+          "name_ua": "Радіус кола",
+          "type": "float",
+          "default": 200,
+          "min": 0,
+          "max": 1000,
+          "step": 10,
+          "description_ua": "⭕ На якій відстані від центру рухатися?"
+        },
+        {
+          "id": "speed",
+          "name_ua": "Швидкість обертання",
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "🌀 Швидкість обертання (1 = повне коло за 6.28 секунд)"
+        }
+      ]
+    },
+    {
+      "id": "value-at-time",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Value At Time",
+      "name_ua": "Значення в Час",
+      "icon": "⏪",
+      "description_ua": "Машина часу для анімації - отримати значення з минулого або майбутнього",
+      "purpose_ua": "Створити затримки, шлейфи, ехо ефекти",
+      "expression_template": "thisComp.layer(\"{layer_name}\").position.valueAtTime(time - {delay})",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "layer_name",
+          "name_ua": "Шар для відстеження",
+          "type": "string",
+          "default": "Null 1",
+          "description_ua": "🎯 Шар, рух якого ви хочете 'запам'ятати'"
+        },
+        {
+          "id": "delay",
+          "name_ua": "Затримка в секундах",
+          "type": "float",
+          "default": 0.5,
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "⏱️ На скільки секунд в минуле зазирнути?"
+        }
+      ]
+    },
+    {
+      "id": "speed-velocity",
+      "category_en": "Motion",
+      "category_ua": "Рух",
+      "name_en": "Speed and Velocity",
+      "name_ua": "Швидкість та Вектор",
+      "icon": "💨",
+      "description_ua": "Вимірювання швидкості руху - наскільки швидко рухається об'єкт",
+      "purpose_ua": "Створити ефекти що залежать від швидкості руху",
+      "expression_template": "{property}.speed",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "property",
+          "name_ua": "Властивість для виміру",
+          "type": "enum",
+          "options": ["position", "rotation", "scale"],
+          "default": "position",
+          "description_ua": "🎯 Яку властивість відстежувати?"
+        }
+      ]
+    },
+    {
+      "id": "loop-out-cycle",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Loop Out Cycle",
+      "name_ua": "Цикл Після (Cycle)",
+      "icon": "🔁",
+      "description_ua": "Безкінечне повторення анімації після ключових кадрів - ABABAB...",
+      "purpose_ua": "Створити нескінченну циклічну анімацію",
+      "expression_template": "loopOut(\"cycle\", {numKeyframes})",
+      "target_properties": ["position", "rotation", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "numKeyframes",
+          "name_ua": "Кількість кадрів для циклу",
+          "type": "int",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "description_ua": "🎞️ Скільки ключових кадрів використовувати? (0 = всі кадри)"
+        }
+      ]
+    },
+    {
+      "id": "loop-out-pingpong",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Loop Out PingPong",
+      "name_ua": "Цикл Після (PingPong)",
+      "icon": "↔️",
+      "description_ua": "Цикл туди-назад - анімація повторюється в зворотному порядку",
+      "purpose_ua": "Створити плавний рух туди і назад",
+      "expression_template": "loopOut(\"pingpong\", {numKeyframes})",
+      "target_properties": ["position", "rotation", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "numKeyframes",
+          "name_ua": "Кількість кадрів для циклу",
+          "type": "int",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "description_ua": "🎞️ Скільки ключових кадрів використовувати? (0 = всі кадри)"
+        }
+      ]
+    },
+    {
+      "id": "text-typewriter",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Typewriter Effect",
+      "name_ua": "Ефект Друкарської Машинки",
+      "icon": "⌨️",
+      "description_ua": "Класичний ефект поступового набору тексту з миготливим курсором",
+      "purpose_ua": "Створити анімацію набору тексту символ за символом",
+      "expression_template": "txt = text.sourceText;\ncharsPerSec = {typing_speed};\ncurrentChar = Math.floor(time * charsPerSec);\nif (currentChar > txt.length) currentChar = txt.length;\nvisibleText = txt.substring(0, currentChar);\nif (time % 1 > 0.5 && currentChar < txt.length) {\n  visibleText + \"{cursor}\";\n} else {\n  visibleText;\n}",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "typing_speed",
+          "name_ua": "Швидкість друку",
+          "type": "float",
+          "default": 5,
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "description_ua": "⚡ Скільки символів вводити за секунду? (5-8 = природно, 15+ = швидко)"
+        },
+        {
+          "id": "cursor",
+          "name_ua": "Символ курсора",
+          "type": "string",
+          "default": "|",
+          "description_ua": "📍 Який символ використовувати для курсора? (|, _, █, ❚)"
+        }
+      ]
+    },
+    {
+      "id": "wiggle-method",
+      "category_en": "Random",
+      "category_ua": "Випадковість",
+      "name_en": "Wiggle Method",
+      "name_ua": "Метод Wiggle",
+      "icon": "🎲",
+      "description_ua": "Створення природного тремтіння, вібрації, 'живого' руху",
+      "purpose_ua": "Додати реалістичну випадковість замість ідеально плавного руху",
+      "expression_template": "wiggle({frequency}, {amplitude}, {octaves}, {amp_multiplier})",
+      "target_properties": ["position", "rotation", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "frequency",
+          "name_ua": "Частота тремтіння",
+          "type": "float",
+          "default": 5,
+          "min": 0.1,
+          "max": 30,
+          "step": 0.1,
+          "description_ua": "📊 Скільки разів в секунду тремтіти? (2-5 = природно, 10+ = вібрація)"
+        },
+        {
+          "id": "amplitude",
+          "name_ua": "Сила тремтіння",
+          "type": "float",
+          "default": 20,
+          "min": 0,
+          "max": 500,
+          "step": 1,
+          "description_ua": "💥 Наскільки сильно тремтіти? (10-30 = легко, 50+ = сильно)"
+        },
+        {
+          "id": "octaves",
+          "name_ua": "Деталізація шуму",
+          "type": "int",
+          "default": 1,
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "description_ua": "🎵 Складність шуму (1 = простий, 3+ = складний природний)"
+        },
+        {
+          "id": "amp_multiplier",
+          "name_ua": "Мультиплікатор амплітуди",
+          "type": "float",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 1,
+          "step": 0.1,
+          "description_ua": "🔊 Як швидко зменшується сила додаткових шумів (0.5 = природно)"
+        }
+      ]
+    },
+    {
+      "id": "random-methods",
+      "category_en": "Random",
+      "category_ua": "Випадковість",
+      "name_en": "Random Methods",
+      "name_ua": "Випадкові Методи",
+      "icon": "🎯",
+      "description_ua": "Три типи випадковості - від простих чисел до природного шуму",
+      "purpose_ua": "Додати непередбачуваність та природність до анімації",
+      "expression_template": "random({max_value})",
+      "target_properties": ["rotation", "opacity"],
+      "parameters": [
+        {
+          "id": "max_value",
+          "name_ua": "Максимальне значення",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 1000,
+          "step": 10,
+          "description_ua": "🎲 До якого максимального числа генерувати?"
+        }
+      ]
+    },
+    {
+      "id": "seed-random",
+      "category_en": "Random",
+      "category_ua": "Випадковість",
+      "name_en": "Seed Random",
+      "name_ua": "Початкове Значення Random",
+      "icon": "🌱",
+      "description_ua": "Контроль випадковості - однакові результати при кожному запуску",
+      "purpose_ua": "Зробити випадковість відтворюваною та контрольованою",
+      "expression_template": "seedRandom({seed}, {timeless});\nrandom({max_value})",
+      "target_properties": ["rotation", "opacity"],
+      "parameters": [
+        {
+          "id": "seed",
+          "name_ua": "Початкове число (сід)",
+          "type": "int",
+          "default": 1,
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "description_ua": "🔑 Число для ініціалізації генератора (1-100)"
+        },
+        {
+          "id": "timeless",
+          "name_ua": "Без часовий режим",
+          "type": "bool",
+          "default": false,
+          "description_ua": "⏰ Чи має число залишатись постійним? (true = так, false = змінюється з часом)"
+        },
+        {
+          "id": "max_value",
+          "name_ua": "Максимальне значення",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 1000,
+          "step": 10,
+          "description_ua": "🎲 До якого числа генерувати?"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-text-frame-size",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Dynamic Text Frame Size",
+      "name_ua": "Динамічний розмір рамки тексту",
+      "icon": "📐",
+      "description_ua": "Автоматична плашка під текстом - розмір адаптується під довжину тексту",
+      "purpose_ua": "Створити красиві плашки що автоматично підлаштовуються під текст",
+      "expression_template": "margin_width = {margin_width};\nmargin_height = {margin_height};\n\ntext_width = thisComp.layer(index-1).sourceRectAtTime().width;\ntext_height = thisComp.layer(index-1).sourceRectAtTime().height;\n\nbox_width = text_width + margin_width*2;\nbox_height = text_height + margin_height*2;\n\n[box_width, box_height]",
+      "target_properties": ["size"],
+      "parameters": [
+        {
+          "id": "margin_width",
+          "name_ua": "Відступ по ширині",
+          "type": "float",
+          "default": 60,
+          "min": 0,
+          "max": 200,
+          "step": 1,
+          "description_ua": "↔️ Відступ зліва і справа від тексту"
+        },
+        {
+          "id": "margin_height",
+          "name_ua": "Відступ по висоті",
+          "type": "float",
+          "default": 40,
+          "min": 0,
+          "max": 200,
+          "step": 1,
+          "description_ua": "↕️ Відступ зверху і знизу від тексту"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-text-frame-position",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Dynamic Text Frame Position",
+      "name_ua": "Позиція рамки тексту",
+      "icon": "📌",
+      "description_ua": "Автоматичне центрування плашки під текстом",
+      "purpose_ua": "Точне позиціонування рамки відносно тексту",
+      "expression_template": "x = value[0];\ny = content(\"Rectangle 1\").content(\"Rectangle Path 1\").size[1]/2;\n[x,y]",
+      "target_properties": ["position"],
+      "parameters": []
+    },
+    {
+      "id": "animated-wiggle",
+      "category_en": "Animation",
+      "category_ua": "Анімація",
+      "name_en": "Animated Wiggle",
+      "name_ua": "Анімований wiggle",
+      "icon": "🔄",
+      "description_ua": "Простий спосіб анімувати wiggle з налаштовуваними параметрами через інтерфейс",
+      "purpose_ua": "Дозволяє створювати коливання з частотою та амплітудою, що регулюються",
+      "expression_template": "w_freq = {w_freq}; // Частота коливань\nw_amplitude = {w_amplitude}; // Амплітуда коливань\n\nwiggle(w_freq, w_amplitude)",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "w_freq",
+          "name_ua": "Частота wiggle",
+          "type": "float",
+          "default": 1,
+          "min": 0,
+          "max": 30,
+          "step": 0.1,
+          "description_ua": "📊 Частота коливань"
+        },
+        {
+          "id": "w_amplitude",
+          "name_ua": "Амплітуда wiggle",
+          "type": "float",
+          "default": 25,
+          "min": 0,
+          "max": 500,
+          "step": 1,
+          "description_ua": "📊 Амплітуда коливань"
+        }
+      ]
+    },
+    {
+      "id": "cyclic-wiggle",
+      "category_en": "Animation",
+      "category_ua": "Анімація",
+      "name_en": "Cyclic Wiggle",
+      "name_ua": "Циклічний wiggle",
+      "icon": "🔁",
+      "description_ua": "Wiggle, що починається і закінчується в одній точці",
+      "purpose_ua": "Створює циклічний wiggle, що повертається до початкової точки",
+      "expression_template": "freq = {freq};\namp = {amp};\n\nstartTime = 0;\nloopTime = {loopTime};\n\nt = (time+startTime) % loopTime;\nwiggle1 = wiggle(freq, amp, 1, 0.5, t);\nwiggle2 = wiggle(freq, amp, 1, 0.5, t - loopTime);\n\nlinear(t, 0, loopTime, wiggle1, wiggle2)",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "freq",
+          "name_ua": "Частота",
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "📊 Частота коливань"
+        },
+        {
+          "id": "amp",
+          "name_ua": "Амплітуда",
+          "type": "float",
+          "default": 65,
+          "min": 0,
+          "max": 300,
+          "step": 1,
+          "description_ua": "💥 Амплітуда коливань"
+        },
+        {
+          "id": "loopTime",
+          "name_ua": "Час циклу",
+          "type": "float",
+          "default": 3,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "⏱️ Тривалість циклу в секундах"
+        }
+      ]
+    },
+    {
+      "id": "stick-shape-to-side",
+      "category_en": "Shape Adjustment",
+      "category_ua": "Налаштування шейпу",
+      "name_en": "Stick Shape to Side",
+      "name_ua": "Прикріпити шейп до однієї сторони",
+      "icon": "📌",
+      "description_ua": "Фіксує одну сторону шейпу на місці при зміні розміру",
+      "purpose_ua": "Забезпечує фіксацію сторони шейпу під час зміни розміру",
+      "expression_template": "stickTo = \"{stickTo}\";\nchosenShape = content(\"Rectangle 1\").content(\"Rectangle Path 1\");\n\nif (stickTo == \"top\"){\n     x = chosenShape.position[0];\n     y = chosenShape.position[1]+chosenShape.size[1]/2;\n}\n\nelse if (stickTo == \"bottom\"){\n     x = chosenShape.position[0];\n     y = chosenShape.position[1]-chosenShape.size[1]/2;\n}\n\nelse if (stickTo == \"right\"){\n     x = chosenShape.position[0]-chosenShape.size[0]/2\n     y = chosenShape.position[1]\n}\n\nelse if (stickTo == \"left\"){\n     x = chosenShape.position[0]+chosenShape.size[0]/2;\n     y = chosenShape.position[1]\n}\n\n[x,y]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "stickTo",
+          "name_ua": "Сторона фіксації",
+          "type": "enum",
+          "options": ["top", "bottom", "right", "left"],
+          "default": "left",
+          "description_ua": "📍 Сторона для фіксації"
+        }
+      ]
+    },
+    {
+      "id": "rolling-circle-rotation",
+      "category_en": "Animation Rig",
+      "category_ua": "Риг анімації",
+      "name_en": "Rolling Circle Rotation",
+      "name_ua": "Обертання катящогося кола",
+      "icon": "⚙️",
+      "description_ua": "Правильне обертання для катящогося кола",
+      "purpose_ua": "Для реалістичного обертання круглих об'єктів",
+      "expression_template": "circleSize = content(\"Ellipse 1\").content(\"Ellipse Path 1\").size[0]/2;\ncurrentPos = transform.position[0];\ncurrentPos - circleSize - currentPos/2",
+      "target_properties": ["rotation"],
+      "parameters": []
+    },
+    {
+      "id": "rolling-square-position",
+      "category_en": "Animation Rig",
+      "category_ua": "Риг анімації",
+      "name_en": "Rolling Square Position",
+      "name_ua": "Позиція катящогося квадрата",
+      "icon": "🟪",
+      "description_ua": "Створює ефект катіння квадрата з коригуванням",
+      "purpose_ua": "Для реалістичного катіння квадратних об'єктів",
+      "expression_template": "targetLayer = thisLayer;\nsquareSize = targetLayer.sourceRectAtTime().width;\nsquareDiag = (Math.sqrt(2)*squareSize)/2/3.5;\n\ntry{\n    squareOffset = effect(\"Slider Control\")(\"Slider\");\n}\ncatch(err) {\n    squareOffset = 0;\n}\n\nrot=transform.rotation;\nscl=transform.scale[0]/100;\nw=(squareSize/2)*scl;\nr=(degreesToRadians(rot))*2;\nt=transform.position;\n\n[t[0]+w*rot/45,t[1]-(Math.abs((squareDiag+squareOffset)*Math.sin(r)))*scl]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "squareOffset",
+          "name_ua": "Зсув квадрата",
+          "type": "float",
+          "default": 0,
+          "min": -100,
+          "max": 100,
+          "step": 1,
+          "description_ua": "📐 Коригування для правильного катіння"
+        }
+      ]
+    },
+    {
+      "id": "stepped-rotations",
+      "category_en": "Animation",
+      "category_ua": "Анімація",
+      "name_en": "Stepped Rotations",
+      "name_ua": "Ступенчасті повороти",
+      "icon": "⏱️",
+      "description_ua": "Створює ступенчасті рухи для анімації стрілок годинника, шестереньок",
+      "purpose_ua": "Створює ступенчасті повороти замість плавних",
+      "expression_template": "angle = {angle};\nrotateDuration = {rotateDuration};\n\nrotateDurationFr = rotateDuration/(1/thisComp.frameDuration);\n\nwholeSecond = Math.floor(time);\nstartAngle = wholeSecond * angle;\nease(time, wholeSecond, wholeSecond + rotateDurationFr, startAngle, startAngle + angle)",
+      "target_properties": ["rotation"],
+      "parameters": [
+        {
+          "id": "angle",
+          "name_ua": "Кут повороту",
+          "type": "float",
+          "default": 15,
+          "min": 0,
+          "max": 360,
+          "step": 1,
+          "description_ua": "📐 Кут повороту в секунду"
+        },
+        {
+          "id": "rotateDuration",
+          "name_ua": "Тривалість повороту",
+          "type": "int",
+          "default": 10,
+          "min": 1,
+          "max": 60,
+          "step": 1,
+          "description_ua": "⏱️ Тривалість повороту в кадрах"
+        }
+      ]
+    },
+    {
+      "id": "advanced-stepped-rotations",
+      "category_en": "Animation",
+      "category_ua": "Анімація",
+      "name_en": "Advanced Stepped Rotations",
+      "name_ua": "Продвинуті ступенчасті повороти",
+      "icon": "⚙️",
+      "description_ua": "Створює ступенчасті повороти з паузами та зсувом",
+      "purpose_ua": "Для більш складних механічних анімацій",
+      "expression_template": "angle = {angle};\nrotateDuration = {rotateDuration};\ntimeStop = {timeStop};\noffset = {offset};\n\nfr = timeToFrames(time)+offset;\n\ncycle = timeStop+rotateDuration;\nn = Math.floor(fr/cycle);\ncur_phase = fr-n*cycle;\n\nif((cur_phase)>timeStop){\nangle*n+(cur_phase-timeStop)*angle/rotateDuration;\n}\nelse{\nangle*n;\n}",
+      "target_properties": ["rotation"],
+      "parameters": [
+        {
+          "id": "angle",
+          "name_ua": "Кут повороту",
+          "type": "float",
+          "default": 15,
+          "min": 0,
+          "max": 360,
+          "step": 1,
+          "description_ua": "📐 Кут повороту"
+        },
+        {
+          "id": "rotateDuration",
+          "name_ua": "Тривалість повороту",
+          "type": "int",
+          "default": 6,
+          "min": 1,
+          "max": 60,
+          "step": 1,
+          "description_ua": "⏱️ Тривалість повороту в кадрах"
+        },
+        {
+          "id": "timeStop",
+          "name_ua": "Час зупинки",
+          "type": "int",
+          "default": 5,
+          "min": 0,
+          "max": 60,
+          "step": 1,
+          "description_ua": "⏸️ Тривалість зупинки між поворотами"
+        },
+        {
+          "id": "offset",
+          "name_ua": "Зсув",
+          "type": "float",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "📍 Зсув для налаштування"
+        }
+      ]
+    },
+    {
+      "id": "constant-scale",
+      "category_en": "Transform",
+      "category_ua": "Трансформація",
+      "name_en": "Constant Scale",
+      "name_ua": "Постійний масштаб",
+      "icon": "⚖️",
+      "description_ua": "Зберігає постійний масштаб незалежно від масштабу батьківського шару",
+      "purpose_ua": "Для елементів, що не повинні масштабуватись разом з батьківським шаром",
+      "expression_template": "s = [];\nps = parent.transform.scale.value;\nfor (i = 0; i < ps.length; i++){\ns[i] = value[i]*100/ps[i];\n}\ns",
+      "target_properties": ["scale"],
+      "parameters": []
+    },
+    {
+      "id": "checkbox-switcher",
+      "category_en": "Controls",
+      "category_ua": "Контроли",
+      "name_en": "Checkbox Switcher",
+      "name_ua": "Перемикач чекбоксу",
+      "icon": "✅",
+      "description_ua": "Перемикає значення між 0 і 100 на основі стану чекбоксу",
+      "purpose_ua": "Для створення перемикачів у анімаціях",
+      "expression_template": "if (effect(\"Checkbox Control\")(1) == 0) 0 else 100",
+      "target_properties": ["opacity"],
+      "parameters": []
+    },
+    {
+      "id": "shape-loop",
+      "category_en": "Animation",
+      "category_ua": "Анімація",
+      "name_en": "Shape Loop",
+      "name_ua": "Цикл форми",
+      "icon": "🔄",
+      "description_ua": "Зациклює анімацію форми між ключовими кадрами з опцією ping-pong",
+      "purpose_ua": "Для нескінченного повторення анімацій форм",
+      "expression_template": "try{\npingPong = {ping_pong};\n\ntimeStart = thisProperty.key(1).time;\nduration = thisProperty.key(thisProperty.numKeys).time-timeStart;\nquant=Math.floor((time-timeStart)/duration);\n\nif(quant<0) quant = 0\n\nif(quant%2 == 1 && pingPong == true){\nt = 2*timeStart+ (quant+1)*duration - time;\n}\n\nelse{\nt = time-quant*duration;\n}\n}\ncatch(err){\nt = time;\n}\nthisProperty.valueAtTime(t)",
+      "target_properties": ["path"],
+      "parameters": [
+        {
+          "id": "ping_pong",
+          "name_ua": "Ping-pong режим",
+          "type": "bool",
+          "default": false,
+          "description_ua": "🔄 Увімкнути рух туди-назад"
+        }
+      ]
+    },
+    {
+      "id": "range-mapper",
+      "category_en": "Mathematics",
+      "category_ua": "Математика",
+      "name_en": "Range Mapper",
+      "name_ua": "Мапер діапазону",
+      "icon": "📊",
+      "description_ua": "Перетворює значення з одного діапазону в інший",
+      "purpose_ua": "Для масштабування значень між різними діапазонами",
+      "expression_template": "input = effect(\"Slider Control\")(\"Slider\");\n\ninputLow = {input_low};\ninputHigh = {input_high};\noutputLow = {output_low};\noutputHigh = {output_high};\n\nlinear(input,inputLow,inputHigh,outputLow,outputHigh)",
+      "target_properties": ["rotation", "opacity"],
+      "parameters": [
+        {
+          "id": "input_low",
+          "name_ua": "Мін. вхід",
+          "type": "float",
+          "default": 0,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "📥 Мінімальне вхідне значення"
+        },
+        {
+          "id": "input_high",
+          "name_ua": "Макс. вхід",
+          "type": "float",
+          "default": 100,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "📥 Максимальне вхідне значення"
+        },
+        {
+          "id": "output_low",
+          "name_ua": "Мін. вихід",
+          "type": "float",
+          "default": 466,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "📤 Мінімальне вихідне значення"
+        },
+        {
+          "id": "output_high",
+          "name_ua": "Макс. вихід",
+          "type": "float",
+          "default": 618,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "📤 Максимальне вихідне значення"
+        }
+      ]
+    },
+    {
+      "id": "scale-independent-stroke",
+      "category_en": "Shape Adjustment",
+      "category_ua": "Налаштування шейпу",
+      "name_en": "Scale Independent Stroke",
+      "name_ua": "Незалежний обвідок",
+      "icon": "✒️",
+      "description_ua": "Зберігає товщину обвідку постійною незалежно від масштабу",
+      "purpose_ua": "Для обвідків, що не повинні змінювати товщину при масштабуванні",
+      "expression_template": "value / length(toComp([0,0]), toComp([0.7071,0.7071])) || 0.001;",
+      "target_properties": ["strokeWidth"],
+      "parameters": []
+    },
+    {
+      "id": "simple-counter",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Simple Counter",
+      "name_ua": "Простий лічильник",
+      "icon": "🔢",
+      "description_ua": "Базовий числовий лічильник з двома знаками після коми",
+      "purpose_ua": "Для відображення чисел з слайдера",
+      "expression_template": "parseFloat(effect(\"Slider Control\")(\"Slider\")).toFixed({decimal_places})",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "decimal_places",
+          "name_ua": "Знаків після коми",
+          "type": "int",
+          "default": 2,
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "description_ua": "🔢 Кількість знаків після десяткової коми"
+        }
+      ]
+    },
+    {
+      "id": "counter-with-commas",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Counter with Commas",
+      "name_ua": "Лічильник з комами",
+      "icon": "🔣",
+      "description_ua": "Лічильник з європейським форматом чисел (кома замість крапки)",
+      "purpose_ua": "Для відображення чисел у європейському форматі",
+      "expression_template": "c = parseFloat(effect(\"Slider Control\")(\"Slider\")).toFixed({decimal_places});\nc.toString().replace(\".\", \",\")",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "decimal_places",
+          "name_ua": "Знаків після коми",
+          "type": "int",
+          "default": 2,
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "description_ua": "🔢 Кількість знаків після коми"
+        }
+      ]
+    },
+    {
+      "id": "counter-with-symbols",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Counter with Symbols",
+      "name_ua": "Лічильник з символами",
+      "icon": "📈",
+      "description_ua": "Лічильник з додаванням символів (+ і %)",
+      "purpose_ua": "Для відображення процентів та змін",
+      "expression_template": "\"{prefix}\"+parseFloat(effect(\"Slider Control\")(\"Slider\")).toFixed({decimal_places})+\"{suffix}\"",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "prefix",
+          "name_ua": "Префікс",
+          "type": "string",
+          "default": "+",
+          "description_ua": "🔤 Текст перед числом"
+        },
+        {
+          "id": "suffix",
+          "name_ua": "Суфікс",
+          "type": "string",
+          "default": "%",
+          "description_ua": "🔤 Текст після числа"
+        },
+        {
+          "id": "decimal_places",
+          "name_ua": "Знаків після коми",
+          "type": "int",
+          "default": 2,
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "description_ua": "🔢 Кількість знаків після коми"
+        }
+      ]
+    },
+    {
+      "id": "leading-zeros-counter",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Leading Zeros Counter",
+      "name_ua": "Лічильник з нулями",
+      "icon": "000",
+      "description_ua": "Лічильник з ведучими нулями для фіксованої довжини",
+      "purpose_ua": "Для таймерів, лічильників з фіксованою кількістю цифр",
+      "expression_template": "zerosAmount = {zeros_amount};\n\nvar slider = effect(\"Slider Control\")(\"Slider\");\n\nfunction padStart(string, targetLength, character) {\n\tstring = (string instanceof String) ? string : string.toString();\n\ttargetLength = targetLength >> 0;\n\tcharacter = character || ' ';\n\n\twhile (string.length < targetLength) {\n\t\tstring = character + string;\n\t}\n\nreturn string;\n};\n\nif (slider >= 0) {\nzeroAmount = zerosAmount + 1;\npaddedString = padStart(parseFloat(slider.value).toFixed(0), zerosAmount, '0');\n}\n\nelse {\npaddedString = '-0'+padStart(parseFloat(slider.value).toFixed(0)*-1, zerosAmount, '0');\n}\n\npaddedString;",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "zeros_amount",
+          "name_ua": "Кількість нулів",
+          "type": "int",
+          "default": 3,
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "description_ua": "🔢 Загальна кількість цифр (включаючи нулі)"
+        }
+      ]
+    },
+    {
+      "id": "thousand-separator-counter",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Thousand Separator Counter",
+      "name_ua": "Лічильник з роздільником тисяч",
+      "icon": "🔢",
+      "description_ua": "Форматує числа з пробілами між тисячами",
+      "purpose_ua": "Для відображення великих чисел у зручному форматі",
+      "expression_template": "num = parseFloat(effect(\"Slider Control\")(\"Slider\")).toFixed(0);\nstr = isNaN(num) ? \"\" : (num * 1 + \"\");\nstr.replace(/(\\d)(?=(\\d\\d\\d)+([^\\d]|$))/g, '$1 ');",
+      "target_properties": ["text"],
+      "parameters": []
+    },
+    {
+      "id": "large-numbers-counter",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Large Numbers Counter",
+      "name_ua": "Лічильник великих чисел",
+      "icon": "💯",
+      "description_ua": "Форматує дуже великі числа з роздільниками",
+      "purpose_ua": "Для роботи з дуже великими числовими значеннями",
+      "expression_template": "number = Math.round(effect(\"Angle Control\")(\"Angle\")/360);\n\nn=\"\" + number;\ns=\"\";\nfor(i=0, l=n.length; i<l;  i++){\n    if(s && s!=\"-\" && (l-i)%3 ==0)\n                s+=\" \"; \n        s += n[i];\n}\ns;",
+      "target_properties": ["text"],
+      "parameters": []
+    },
+    {
+      "id": "layer-above-reference",
+      "category_en": "Objects",
+      "category_ua": "Об'єкти",
+      "name_en": "Layer Above Reference",
+      "name_ua": "Посилання на шар вище",
+      "icon": "⬆️",
+      "description_ua": "Отримує посилання на шар, що знаходиться безпосередньо вище поточного",
+      "purpose_ua": "Для автоматичної прив'язки до сусідніх шарів",
+      "expression_template": "thisComp.layer(index-1)",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": []
+    },
+    {
+      "id": "accelerating-rotations",
+      "category_en": "Animation",
+      "category_ua": "Анімація",
+      "name_en": "Accelerating Rotations",
+      "name_ua": "Прискорені обертання",
+      "icon": "⚡",
+      "description_ua": "Створює ефект прискореного обертання з часом",
+      "purpose_ua": "Для динамічних анімацій з прискоренням",
+      "expression_template": "time*time*time*time",
+      "target_properties": ["rotation"],
+      "parameters": []
+    },
+    {
+      "id": "time-with-keys",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Time with Keys",
+      "name_ua": "Час з ключами",
+      "icon": "⏰",
+      "description_ua": "Комбінує ключові кадри з постійною швидкістю часу",
+      "purpose_ua": "Для поєднання ключових кадрів з автоматичною анімацією",
+      "expression_template": "value+time*{speed}",
+      "target_properties": ["rotation"],
+      "parameters": [
+        {
+          "id": "speed",
+          "name_ua": "Швидкість",
+          "type": "float",
+          "default": 11,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "🌀 Множник швидкості анімації"
+        }
+      ]
+    },
+    {
+      "id": "gradient-ramp-link",
+      "category_en": "Effects",
+      "category_ua": "Ефекти",
+      "name_en": "Gradient Ramp Link",
+      "name_ua": "Зв'язок градієнту",
+      "icon": "🌈",
+      "description_ua": "Прив'язує градієнт до композиції для правильного позиціонування",
+      "purpose_ua": "Для коректного відображення градієнтів у просторі композиції",
+      "expression_template": "toComp(value)",
+      "target_properties": ["position"],
+      "parameters": []
+    }
+  ]
+}

@@ -1,0 +1,2309 @@
+{
+  "expressions": [
+    {
+      "id": "basic-wiggle",
+      "category_en": "Motion",
+      "category_ua": "Рух",
+      "name_en": "Basic Wiggle",
+      "name_ua": "Базове Тремтіння",
+      "icon": "🔄",
+      "description_ua": "Створює випадкові коливання значення. Найпопулярніший експрешен для додавання природного руху.",
+      "purpose_ua": "Використовуй для тремтіння камери, вібрації, випадкового руху об'єктів. Ідеально для створення \"живих\" анімацій.",
+      "expression_template": "wiggle({frequency}, {amplitude})",
+      "target_properties": ["position", "rotation", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "frequency",
+          "name_ua": "Частота",
+          "type": "float",
+          "default": 5,
+          "min": 0.1,
+          "max": 30,
+          "step": 0.1,
+          "description_ua": "Скільки разів в секунду значення змінюється. 2 = повільно, 10 = швидко"
+        },
+        {
+          "id": "amplitude",
+          "name_ua": "Амплітуда",
+          "type": "float",
+          "default": 20,
+          "min": 0,
+          "max": 500,
+          "step": 1,
+          "description_ua": "Наскільки сильно значення змінюється. Для позиції: 10 = небагато, 100 = сильно"
+        }
+      ]
+    },
+    {
+      "id": "time-wiggle",
+      "category_en": "Motion",
+      "category_ua": "Рух",
+      "name_en": "Time Wiggle",
+      "name_ua": "Тремтіння з Часовим Зсувом",
+      "icon": "⏰",
+      "description_ua": "Розширена версія wiggle з контролем часу та деталізації. Створює більш природні коливання.",
+      "purpose_ua": "Для складних анімацій, де потрібен контроль над деталізацією тремтіння. Краще для довгих анімацій.",
+      "expression_template": "wiggle({frequency}, {amplitude}, {octaves}, {amp_multiplier}, {time_offset})",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "frequency",
+          "name_ua": "Частота",
+          "type": "float",
+          "default": 3,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Основна швидкість коливань"
+        },
+        {
+          "id": "amplitude",
+          "name_ua": "Амплітуда",
+          "type": "float",
+          "default": 50,
+          "min": 0,
+          "max": 300,
+          "step": 1,
+          "description_ua": "Сила основного коливання"
+        },
+        {
+          "id": "octaves",
+          "name_ua": "Деталізація",
+          "type": "int",
+          "default": 1,
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "description_ua": "Скільки додаткових шарів коливань додати. 1 = просто, 3 = багато деталей"
+        },
+        {
+          "id": "amp_multiplier",
+          "name_ua": "Мультиплікатор",
+          "type": "float",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 1,
+          "step": 0.1,
+          "description_ua": "Як сильно додаткові шари впливають. 0.5 = помірно, 0.9 = сильно"
+        }
+      ]
+    },
+    {
+      "id": "linear-loop",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Linear Loop",
+      "name_ua": "Лінійний Цикл",
+      "icon": "🔄",
+      "description_ua": "Створює нескінченну анімацію, що плавно переходить з початку в кінець.",
+      "purpose_ua": "Для обертання, пульсації, повторюваних рухів. Наприклад, обертання стрілки годинника.",
+      "expression_template": "loopDuration = {duration};\nlinear(time % loopDuration, 0, loopDuration, {start_value}, {end_value})",
+      "target_properties": ["rotation", "position", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "duration",
+          "name_ua": "Тривалість циклу",
+          "type": "float",
+          "default": 3,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Скільки секунд триває один повний цикл"
+        },
+        {
+          "id": "start_value",
+          "name_ua": "Початкове значення",
+          "type": "float",
+          "default": 0,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Значення на початку кожного циклу"
+        },
+        {
+          "id": "end_value",
+          "name_ua": "Кінцеве значення",
+          "type": "float",
+          "default": 360,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Значення в кінці кожного циклу"
+        }
+      ]
+    },
+    {
+      "id": "ping-pong-loop",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Ping Pong Loop",
+      "name_ua": "Цикл Туди-Назад",
+      "icon": "↔️",
+      "description_ua": "Анімація рухається від А до Б і назад до А. Ідеально для плавних повторюваних рухів.",
+      "purpose_ua": "Для анімації маятника, дихання, ходьби - будь-якого руху, що повторюється туди-назад.",
+      "expression_template": "loopDuration = {duration};\nstartVal = {start_value};\nendVal = {end_value};\npingPong = linear(time % (loopDuration * 2), 0, loopDuration * 2, startVal, endVal);\nlinear(pingPong, startVal, endVal, startVal, endVal)",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "duration",
+          "name_ua": "Тривалість (туди)",
+          "type": "float",
+          "default": 2,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Час руху в один бік (туди або назад)"
+        },
+        {
+          "id": "start_value",
+          "name_ua": "Значення А",
+          "type": "float",
+          "default": 0,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Перше значення (початок і кінець циклу)"
+        },
+        {
+          "id": "end_value",
+          "name_ua": "Значення Б",
+          "type": "float",
+          "default": 100,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Друге значення (середина циклу)"
+        }
+      ]
+    },
+    {
+      "id": "smooth-movement",
+      "category_en": "Motion",
+      "category_ua": "Рух",
+      "name_en": "Smooth Movement",
+      "name_ua": "Плавний Рух",
+      "icon": "🌊",
+      "description_ua": "Створює дуже плавний, органічний рух з використанням математичних функцій.",
+      "purpose_ua": "Для елегантних анімацій, природних рухів, плавних переходів. Краще за стандартну ейзинг.",
+      "expression_template": "freq = {frequency};\namp = {amplitude};\nMath.sin(time * freq) * amp",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "frequency",
+          "name_ua": "Швидкість",
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Як швидко відбуваються коливання. 0.5 = повільно, 2 = швидко"
+        },
+        {
+          "id": "amplitude",
+          "name_ua": "Сила руху",
+          "type": "float",
+          "default": 50,
+          "min": 0,
+          "max": 500,
+          "step": 1,
+          "description_ua": "Наскільки далеко об'єкт рухається від центру"
+        }
+      ]
+    },
+    {
+      "id": "exponential-scale",
+      "category_en": "Motion",
+      "category_ua": "Рух",
+      "name_en": "Exponential Scale",
+      "name_ua": "Експоненційний Масштаб",
+      "icon": "📈",
+      "description_ua": "Масштабування, що прискорюється з часом. Створює ефект \"стрімкого зростання\".",
+      "purpose_ua": "Для анімації вибухів, швидкого зростання, енергійних переходів. Дуже драматичний ефект.",
+      "expression_template": "startScale = {start_scale};\nendScale = {end_scale};\nduration = {duration};\nlinear(time, 0, duration, startScale, endScale) * (1 + Math.pow(time/{acceleration}, 2))",
+      "target_properties": ["scale"],
+      "parameters": [
+        {
+          "id": "start_scale",
+          "name_ua": "Початковий масштаб",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 500,
+          "step": 1,
+          "description_ua": "Масштаб на початку анімації (100% = нормальний розмір)"
+        },
+        {
+          "id": "end_scale",
+          "name_ua": "Кінцевий масштаб",
+          "type": "float",
+          "default": 200,
+          "min": 0,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Масштаб в кінці анімації"
+        },
+        {
+          "id": "duration",
+          "name_ua": "Тривалість",
+          "type": "float",
+          "default": 3,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "За скільки секунд досягти кінцевого масштабу"
+        },
+        {
+          "id": "acceleration",
+          "name_ua": "Прискорення",
+          "type": "float",
+          "default": 2,
+          "min": 0.5,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Як швидко наростає швидкість. 1 = плавно, 4 = дуже швидко"
+        }
+      ]
+    },
+    {
+      "id": "delay-chain",
+      "category_en": "Time",
+      "category_ua": "Час",
+      "name_en": "Delay Chain",
+      "name_ua": "Ланцюг Затримки",
+      "icon": "⛓️",
+      "description_ua": "Створює послідовність анімацій з затримкою між елементами. Ідеально для каскадних ефектів.",
+      "purpose_ua": "Для текстів, що з'являються по одній літері, елементів, що анімуються послідовно, хвилеподібних рухів.",
+      "expression_template": "delay = {delay_per_item};\nmyIndex = {index_offset};\nstartTime = {start_time};\nif (time >= startTime + (myIndex * delay)) {\n  // Основний вираз\n  {main_expression};\n} else {\n  value;\n}",
+      "target_properties": ["position", "rotation", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "delay_per_item",
+          "name_ua": "Затримка між елементами",
+          "type": "float",
+          "default": 0.1,
+          "min": 0,
+          "max": 2,
+          "step": 0.05,
+          "description_ua": "Скільки секунд чекати між анімацією кожного елемента"
+        },
+        {
+          "id": "index_offset",
+          "name_ua": "Зсув порядку",
+          "type": "int",
+          "default": 0,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "description_ua": "З якого елемента починати (0 = перший, 5 = шостий)"
+        },
+        {
+          "id": "start_time",
+          "name_ua": "Час початку",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Коли починати всю послідовність"
+        },
+        {
+          "id": "main_expression",
+          "name_ua": "Основна анімація",
+          "type": "enum",
+          "options": ["wiggle(5, 50)", "value + 100", "value * 1.5"],
+          "default": "wiggle(5, 50)",
+          "description_ua": "Яку анімацію виконувати для кожного елемента"
+        }
+      ]
+    },
+    {
+      "id": "random-opacity",
+      "category_en": "Visual",
+      "category_ua": "Візуальні",
+      "name_en": "Random Opacity",
+      "name_ua": "Випадкова Прозорість",
+      "icon": "🎲",
+      "description_ua": "Створює випадкове миготіння прозорості. Ідеально для ефекту старих плівок, телевізорів, іскр.",
+      "purpose_ua": "Для емуляції шумів, дефектів зображення, електричних розрядів, мерехтіння вогників.",
+      "expression_template": "seedRandom({seed}, timeless = true);\nminOpacity = {min_opacity};\nmaxOpacity = {max_opacity};\nif (random() > {flicker_chance}) {\n  random(minOpacity, maxOpacity);\n} else {\n  value;\n}",
+      "target_properties": ["opacity"],
+      "parameters": [
+        {
+          "id": "min_opacity",
+          "name_ua": "Мінімальна прозорість",
+          "type": "float",
+          "default": 20,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Найменше значення прозорості (0 = повністю прозорий)"
+        },
+        {
+          "id": "max_opacity",
+          "name_ua": "Максимальна прозорість",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Найбільше значення прозорості (100 = повністю видимий)"
+        },
+        {
+          "id": "flicker_chance",
+          "name_ua": "Частота миготіння",
+          "type": "float",
+          "default": 0.3,
+          "min": 0,
+          "max": 1,
+          "step": 0.05,
+          "description_ua": "Як часто змінюється прозорість. 0.1 = рідко, 0.8 = дуже часто"
+        },
+        {
+          "id": "seed",
+          "name_ua": "Випадкове число",
+          "type": "int",
+          "default": 1,
+          "min": 1,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Змініть для отримання іншого випадкового паттерну"
+        }
+      ]
+    },
+    {
+      "id": "circular-motion",
+      "category_en": "Motion",
+      "category_ua": "Рух",
+      "name_en": "Circular Motion",
+      "name_ua": "Рух по Колу",
+      "icon": "⭕",
+      "description_ua": "Рухає об'єкт по ідеальному колу навколо заданої точки. Контроль радіусу та швидкості.",
+      "purpose_ua": "Для планет, що обертаються, кругових меню, орбітальних камер. Базовий експрешен для 2D анімації.",
+      "expression_template": "centerX = {center_x};\ncenterY = {center_y};\nradius = {radius};\nspeed = {speed};\nangle = time * speed;\n[centerX + Math.sin(angle) * radius, centerY + Math.cos(angle) * radius]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "center_x",
+          "name_ua": "Центр X",
+          "type": "float",
+          "default": 960,
+          "min": 0,
+          "max": 1920,
+          "step": 1,
+          "description_ua": "Горизонтальна координата центру кола"
+        },
+        {
+          "id": "center_y",
+          "name_ua": "Центр Y",
+          "type": "float",
+          "default": 540,
+          "min": 0,
+          "max": 1080,
+          "step": 1,
+          "description_ua": "Вертикальна координата центру кола"
+        },
+        {
+          "id": "radius",
+          "name_ua": "Радіус",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Відстань від центру до об'єкта"
+        },
+        {
+          "id": "speed",
+          "name_ua": "Швидкість",
+          "type": "float",
+          "default": 1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Як швидко обертається. Додатне = проти годинникової, від'ємне = за годинниковою"
+        }
+      ]
+    },
+    {
+      "id": "spiral-motion",
+      "category_en": "Motion",
+      "category_ua": "Рух",
+      "name_en": "Spiral Motion",
+      "name_ua": "Спіральний Рух",
+      "icon": "🌀",
+      "description_ua": "Рух по спіралі, що розширюється або звужується з часом. Ефект \"закручування\".",
+      "purpose_ua": "Для ефектів порталів, водоворотів, закручування, еволюційних анімацій.",
+      "expression_template": "centerX = {center_x};\ncenterY = {center_y};\nstartRadius = {start_radius};\nendRadius = {end_radius};\nrotations = {rotations};\nduration = {duration};\n\nprogress = linear(time, 0, duration, 0, 1);\ncurrentRadius = linear(progress, 0, 1, startRadius, endRadius);\nangle = progress * rotations * 2 * Math.PI;\n\n[centerX + Math.sin(angle) * currentRadius, centerY + Math.cos(angle) * currentRadius]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "start_radius",
+          "name_ua": "Початковий радіус",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 500,
+          "step": 1,
+          "description_ua": "Радіус на початку анімації (0 = з центру)"
+        },
+        {
+          "id": "end_radius",
+          "name_ua": "Кінцевий радіус",
+          "type": "float",
+          "default": 300,
+          "min": 0,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Радіус в кінці анімації"
+        },
+        {
+          "id": "rotations",
+          "name_ua": "Кількість обертів",
+          "type": "float",
+          "default": 3,
+          "min": 0.1,
+          "max": 20,
+          "step": 0.1,
+          "description_ua": "Скільки повних обертів зробить об'єкт"
+        },
+        {
+          "id": "duration",
+          "name_ua": "Тривалість",
+          "type": "float",
+          "default": 5,
+          "min": 0.1,
+          "max": 30,
+          "step": 0.1,
+          "description_ua": "За скільки секунд завершити всю спіраль"
+        }
+      ]
+    },
+    {
+      "id": "spring-physics",
+      "category_en": "Physics",
+      "category_ua": "Фізика",
+      "name_en": "Spring Physics",
+      "name_ua": "Пружинна Фізика",
+      "icon": "🔄",
+      "description_ua": "Емулює реальну пружину - об'єкт коливається навколо цільової позиції, поступово заспокоюючись.",
+      "purpose_ua": "Для природних анімацій, еластичних рухів, \"джампі\" інтерфейсів. Дуже популярно в UI-анімаціях.",
+      "expression_template": "target = {target_value};\ncurrent = value;\nvelocity = {initial_velocity};\nspring = {spring_strength};\ndamping = {damping};\n\nfor (i = 0; i < time * {precision}; i++) {\n  force = (target - current) * spring;\n  velocity += force;\n  velocity *= damping;\n  current += velocity;\n}\ncurrent",
+      "target_properties": ["position", "scale", "rotation"],
+      "parameters": [
+        {
+          "id": "target_value",
+          "name_ua": "Цільове значення",
+          "type": "float",
+          "default": 100,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "До якого значення має прийти анімація"
+        },
+        {
+          "id": "spring_strength",
+          "name_ua": "Сила пружини",
+          "type": "float",
+          "default": 0.1,
+          "min": 0.01,
+          "max": 0.5,
+          "step": 0.01,
+          "description_ua": "Як сильно пружина тягне до цілі. 0.05 = слабко, 0.2 = сильно"
+        },
+        {
+          "id": "damping",
+          "name_ua": "Гальмування",
+          "type": "float",
+          "default": 0.8,
+          "min": 0.1,
+          "max": 0.99,
+          "step": 0.01,
+          "description_ua": "Як швидко коливання зупиняються. 0.5 = швидко, 0.95 = повільно"
+        },
+        {
+          "id": "precision",
+          "name_ua": "Точність",
+          "type": "float",
+          "default": 100,
+          "min": 10,
+          "max": 500,
+          "step": 10,
+          "description_ua": "Якість симуляції. Більше = плавніше, але повільніше"
+        }
+      ]
+    },
+    {
+      "id": "gravity-bounce",
+      "category_en": "Physics",
+      "category_ua": "Фізика",
+      "name_en": "Gravity Bounce",
+      "name_ua": "Гравітація з Відскоком",
+      "icon": "🏀",
+      "description_ua": "Реалістичне падіння об'єкта з відскоками. Враховує гравітацію, енергію та тертя.",
+      "purpose_ua": "Для анімації падаючих об'єктів, куль, що відскакують, природних фізичних ефектів.",
+      "expression_template": "gravity = {gravity};\nbounce = {bounce_factor};\nfriction = {friction};\nstartHeight = {start_height};\n\nvelocity = 0;\nheight = startHeight;\n\nfor (i = 0; i < time * {precision}; i++) {\n  velocity -= gravity;\n  height += velocity;\n  \n  if (height <= 0) {\n    height = 0;\n    velocity = -velocity * bounce;\n    velocity *= friction;\n  }\n}\nheight",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "gravity",
+          "name_ua": "Гравітація",
+          "type": "float",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 2,
+          "step": 0.1,
+          "description_ua": "Сила тяжіння. 0.2 = місяць, 1.0 = сильна гравітація"
+        },
+        {
+          "id": "bounce_factor",
+          "name_ua": "Відскок",
+          "type": "float",
+          "default": 0.7,
+          "min": 0.1,
+          "max": 0.95,
+          "step": 0.05,
+          "description_ua": "Як високо відскакує об'єкт. 0.3 = низько, 0.9 = високо"
+        },
+        {
+          "id": "friction",
+          "name_ua": "Тертя",
+          "type": "float",
+          "default": 0.98,
+          "min": 0.8,
+          "max": 1,
+          "step": 0.01,
+          "description_ua": "Як швидко втрачається енергія. 0.9 = швидко, 0.99 = повільно"
+        },
+        {
+          "id": "start_height",
+          "name_ua": "Початкова висота",
+          "type": "float",
+          "default": 500,
+          "min": 0,
+          "max": 2000,
+          "step": 10,
+          "description_ua": "З якої висоти починає падати об'єкт"
+        }
+      ]
+    },
+    {
+      "id": "audio-amplitude",
+      "category_en": "Audio",
+      "category_ua": "Аудіо",
+      "name_en": "Audio Amplitude",
+      "name_ua": "Амплітуда Аудіо",
+      "icon": "🎵",
+      "description_ua": "Перетворює гучність аудіо на числове значення. Основа для всіх аудіо-реактивних анімацій.",
+      "purpose_ua": "Для створення анімацій, що реагують на музику, візуалізації звуку, синхронізації з битами.",
+      "expression_template": "audioLayer = thisComp.layer(\"{audio_layer_name}\");\nsmoothFrames = {smooth_frames};\n\nif (audioLayer != null) {\n  amplitude = 0;\n  for (i = 0; i <= smoothFrames; i++) {\n    amplitude += audioLayer.sampleImage([0.5, 0.5], [time - i * thisComp.frameDuration, 0.5])[0];\n  }\n  amplitude / (smoothFrames + 1) * {multiplier};\n} else {\n  0;\n}",
+      "target_properties": ["slider"],
+      "parameters": [
+        {
+          "id": "audio_layer_name",
+          "name_ua": "Аудіо шар",
+          "type": "string",
+          "default": "Audio",
+          "description_ua": "Назва шару з аудіофайлом. За замовчуванням 'Audio'"
+        },
+        {
+          "id": "smooth_frames",
+          "name_ua": "Згладжування",
+          "type": "int",
+          "default": 5,
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "description_ua": "Скільки кадрів усереднювати для плавності. 0 = різкі зміни"
+        },
+        {
+          "id": "multiplier",
+          "name_ua": "Помножувач",
+          "type": "float",
+          "default": 100,
+          "min": 1,
+          "max": 1000,
+          "step": 10,
+          "description_ua": "Наскільки посилити сигнал. 50 = слабко, 200 = сильно"
+        }
+      ]
+    },
+    {
+      "id": "beat-detector-advanced",
+      "category_en": "Audio",
+      "category_ua": "Аудіо",
+      "name_en": "Advanced Beat Detector",
+      "name_ua": "Просунутий Детектор Бітів",
+      "icon": "🥁",
+      "description_ua": "Автоматично знаходить бити в музиці, порівнюючи амплітуду з попередніми значеннями.",
+      "purpose_ua": "Для автоматичної синхронізації анімації з битами без ручної розмітки. Ідеально для EDM, хіп-хопу.",
+      "expression_template": "function detectBeat() {\n  audioLayer = thisComp.layer(\"{audio_layer_name}\");\n  threshold = {sensitivity};\n  lookback = {lookback_frames};\n  \n  if (audioLayer == null) return 0;\n  \n  currentAmp = audioLayer.sampleImage([0.5, 0.5], [time, 0.5])[0] * 100;\n  pastAmp = audioLayer.sampleImage([0.5, 0.5], [time - lookback * thisComp.frameDuration, 0.5])[0] * 100;\n  \n  if (currentAmp > pastAmp + threshold && currentAmp > {minimum_amplitude}) {\n    100; // Beat detected!\n  } else {\n    0;\n  }\n}\n\ndetectBeat()",
+      "target_properties": ["slider"],
+      "parameters": [
+        {
+          "id": "sensitivity",
+          "name_ua": "Чутливість",
+          "type": "float",
+          "default": 5,
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "description_ua": "Наскільки різкою має бути зміна гучності. 2 = тільки сильні бити, 10 = всі бити"
+        },
+        {
+          "id": "lookback_frames",
+          "name_ua": "Порівняння з",
+          "type": "int",
+          "default": 3,
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "description_ua": "З яким попереднім кадром порівнювати. 2 = короткі бити, 6 = довгі"
+        },
+        {
+          "id": "minimum_amplitude",
+          "name_ua": "Мінімальна гучність",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "description_ua": "Яка мінімальна гучність вважається битом"
+        }
+      ]
+    },
+    {
+      "id": "frequency-analyzer",
+      "category_en": "Audio",
+      "category_ua": "Аудіо",
+      "name_en": "Frequency Analyzer",
+      "name_ua": "Аналізатор Частот",
+      "icon": "📊",
+      "description_ua": "Аналізує конкретні частотні діапазони в аудіо (низькі, середні, високі частоти).",
+      "purpose_ua": "Для окремої реакції на баси, вокал, тарілки. Професійна візуалізація музики.",
+      "expression_template": "audioLayer = thisComp.layer(\"{audio_layer_name}\");\nfrequencyBand = \"{frequency_band}\";\n\nif (audioLayer != null) {\n  // Спрощена емуляція частотних фільтрів\n  baseAmp = audioLayer.sampleImage([0.5, 0.5], [time, 0.5])[0] * 100;\n  \n  if (frequencyBand == \"bass\") {\n    baseAmp * {bass_boost};\n  } else if (frequencyBand == \"treble\") {\n    baseAmp * {treble_boost};\n  } else {\n    baseAmp; // mids\n  }\n} else {\n  0;\n}",
+      "target_properties": ["slider"],
+      "parameters": [
+        {
+          "id": "frequency_band",
+          "name_ua": "Частотний діапазон",
+          "type": "enum",
+          "options": ["bass", "mids", "treble"],
+          "default": "bass",
+          "description_ua": "Які частоти аналізувати: bass = низькі, mids = середні, treble = високі"
+        },
+        {
+          "id": "bass_boost",
+          "name_ua": "Посилення басів",
+          "type": "float",
+          "default": 1.5,
+          "min": 0.5,
+          "max": 3,
+          "step": 0.1,
+          "description_ua": "Наскільки посилити низькі частоти"
+        },
+        {
+          "id": "treble_boost",
+          "name_ua": "Посилення верховів",
+          "type": "float",
+          "default": 1.2,
+          "min": 0.5,
+          "max": 3,
+          "step": 0.1,
+          "description_ua": "Наскільки посилити високі частоти"
+        }
+      ]
+    },
+    {
+      "id": "text-typing",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Typing Animation",
+      "name_ua": "Ефект Друку",
+      "icon": "⌨️",
+      "description_ua": "Імітує друкування тексту по одній літері. Контроль швидкості, пауз та курсора.",
+      "purpose_ua": "Для ефектів терміналу, машинного друку, поступового розкриття тексту. Дуже популярно в explainer-відео.",
+      "expression_template": "fullText = \"{text_content}\";\ncharsPerSecond = {typing_speed};\nstartTime = {start_time};\nshowCursor = {show_cursor};\n\ncharsToShow = Math.floor((time - startTime) * charsPerSecond);\nresult = fullText.substring(0, charsToShow);\n\nif (showCursor && charsToShow < fullText.length) {\n  result + \"{cursor_character}\";\n} else {\n  result;\n}",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "text_content",
+          "name_ua": "Текст",
+          "type": "string",
+          "default": "Hello World!",
+          "description_ua": "Текст, який буде 'друкуватися'"
+        },
+        {
+          "id": "typing_speed",
+          "name_ua": "Швидкість друку",
+          "type": "float",
+          "default": 5,
+          "min": 1,
+          "max": 20,
+          "step": 0.5,
+          "description_ua": "Скільки літер в секунду. 3 = повільно, 10 = швидко"
+        },
+        {
+          "id": "start_time",
+          "name_ua": "Час початку",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Коли починати друкування"
+        },
+        {
+          "id": "show_cursor",
+          "name_ua": "Показувати курсор",
+          "type": "bool",
+          "default": true,
+          "description_ua": "Додавати курсор, що блимає, поки текст друкується"
+        },
+        {
+          "id": "cursor_character",
+          "name_ua": "Символ курсору",
+          "type": "string",
+          "default": "_",
+          "description_ua": "Який символ використовувати для курсору"
+        }
+      ]
+    },
+    {
+      "id": "text-jitter",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Text Jitter Effect",
+      "name_ua": "Ефект Тремтіння Тексту",
+      "icon": "🔤",
+      "description_ua": "Кожна літера тексту тремтить незалежно. Створює ефект напруги, енергії, страху.",
+      "purpose_ua": "Для хоррор-відео, технологічних ефектів, 'зламаного' тексту, енергетичних заголовків.",
+      "expression_template": "seedRandom({seed}, timeless = true);\nbaseText = \"{text_content}\";\nmaxOffset = {jitter_strength};\n\nresult = \"\";\nfor (i = 0; i < baseText.length; i++) {\n  charOffset = random(-maxOffset, maxOffset);\n  // Емулюємо тремтіння через зміну позиції символу\n  result += baseText[i];\n}\nresult",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "jitter_strength",
+          "name_ua": "Сила тремтіння",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "description_ua": "Наскільки сильно тремтять літери. 5 = ледь помітно, 30 = дуже сильно"
+        },
+        {
+          "id": "frequency",
+          "name_ua": "Частота",
+          "type": "float",
+          "default": 3,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Як часто змінюється тремтіння"
+        }
+      ]
+    },
+    {
+      "id": "wave-text",
+      "category_en": "Text",
+      "category_ua": "Текст",
+      "name_en": "Waving Text",
+      "name_ua": "Хвилястий Текст",
+      "icon": "🌊",
+      "description_ua": "Текст рухається хвилеподібно - кожна літера зміщується зі зсувом по фазі.",
+      "purpose_ua": "Для плавних, органічних анімацій тексту, ефектів 'плавання', креативних заголовків.",
+      "expression_template": "text = \"{text_content}\";\nwaveHeight = {wave_height};\nwaveSpeed = {wave_speed};\n\nsourceText = text;\nif (sourceText.numKeys > 0) sourceText = sourceText.value;\n\nresult = \"\";\nfor (i = 0; i < sourceText.length; i++) {\n  charOffset = Math.sin(time * waveSpeed + i * {phase_shift}) * waveHeight;\n  // У реальному експрешені це буде впливати на позицію символу\n  result += sourceText[i];\n}\nresult",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "wave_height",
+          "name_ua": "Висота хвилі",
+          "type": "float",
+          "default": 20,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Наскільки високо піднімаються літери"
+        },
+        {
+          "id": "wave_speed",
+          "name_ua": "Швидкість хвилі",
+          "type": "float",
+          "default": 2,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Як швидко рухається хвиля"
+        },
+        {
+          "id": "phase_shift",
+          "name_ua": "Зсув фаз",
+          "type": "float",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 2,
+          "step": 0.1,
+          "description_ua": "Наскільки кожна літера відстає від попередньої"
+        }
+      ]
+    },
+    {
+      "id": "3d-orbit-camera",
+      "category_en": "3D & Camera",
+      "category_ua": "3D та Камера",
+      "name_en": "3D Orbit Camera",
+      "name_ua": "Камера на Орбіті",
+      "icon": "🛰️",
+      "description_ua": "Камера обертається навколо цільового об'єкта на фіксованій відстані. Ідеально для демонстрації 3D моделей.",
+      "purpose_ua": "Для продуктів, що обертаються, 3D презентацій, огляду об'єктів з усіх боків.",
+      "expression_template": "target = thisComp.layer(\"{target_layer}\").transform.position;\nradius = {orbit_radius};\nheight = {orbit_height};\nspeed = {orbit_speed};\n\nangle = time * speed;\nx = target[0] + Math.cos(angle) * radius;\nz = target[2] + Math.sin(angle) * radius;\ny = target[1] + height;\n\n[x, y, z]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "target_layer",
+          "name_ua": "Цільовий об'єкт",
+          "type": "string",
+          "default": "Target",
+          "description_ua": "Назва шару, навколо якого обертатиметься камера"
+        },
+        {
+          "id": "orbit_radius",
+          "name_ua": "Радіус орбіти",
+          "type": "float",
+          "default": 500,
+          "min": 100,
+          "max": 2000,
+          "step": 10,
+          "description_ua": "Відстань від камери до об'єкта"
+        },
+        {
+          "id": "orbit_height",
+          "name_ua": "Висота камери",
+          "type": "float",
+          "default": 0,
+          "min": -500,
+          "max": 500,
+          "step": 10,
+          "description_ua": "Наскільки вище/нижче від центру розташована камера"
+        },
+        {
+          "id": "orbit_speed",
+          "name_ua": "Швидкість обертання",
+          "type": "float",
+          "default": 1,
+          "min": -3,
+          "max": 3,
+          "step": 0.1,
+          "description_ua": "Як швидко обертається камера. Мінус = у зворотному напрямку"
+        }
+      ]
+    },
+    {
+      "id": "look-at-target",
+      "category_en": "3D & Camera",
+      "category_ua": "3D та Камера",
+      "name_en": "Look At Target",
+      "name_ua": "Дивитись на Ціль",
+      "icon": "🎯",
+      "description_ua": "Об'єкт завжди повертається до вказаної цілі. Фундаментальний експрешен для 3D анімації.",
+      "purpose_ua": "Для персонажів, що дивляться на ціль, камери, що слідкують за об'єктом, напрямних систем.",
+      "expression_template": "target = thisComp.layer(\"{target_layer}\").transform.position;\nmyPos = transform.position;\n\n// Розрахунок напрямку\ndir = target - myPos;\n\n// Для 2D обертання\nangle = Math.atan2(dir[1], dir[0]);\nradiansToDegrees(angle)",
+      "target_properties": ["rotation"],
+      "parameters": [
+        {
+          "id": "target_layer",
+          "name_ua": "Цільовий шар",
+          "type": "string",
+          "default": "Target",
+          "description_ua": "Шар, на який має дивитись об'єкт"
+        },
+        {
+          "id": "rotation_offset",
+          "name_ua": "Зсув обертання",
+          "type": "float",
+          "default": 0,
+          "min": -180,
+          "max": 180,
+          "step": 1,
+          "description_ua": "Додаткове обертання (коригує орієнтацію об'єкта)"
+        }
+      ]
+    },
+    {
+      "id": "camera-shake-3d",
+      "category_en": "3D & Camera",
+      "category_ua": "3D та Камера",
+      "name_en": "3D Camera Shake",
+      "name_ua": "Тремтіння Камери 3D",
+      "icon": "📷",
+      "description_ua": "Реалістичне тремтіння камери в 3D просторі. Включає рух, обертання та дрожання.",
+      "purpose_ua": "Для ефектів вибухів, землетрусів, бігу камери, документальних стилів.",
+      "expression_template": "intensity = {shake_intensity};\nfrequency = {shake_frequency};\n\n// Тремтіння позиції\nposX = wiggle(frequency, intensity)[0];\nposY = wiggle(frequency, intensity)[1]; \nposZ = wiggle(frequency, intensity * 0.5)[0]; // Менше тремтіння по Z\n\n// Тремтіння обертання\nrotX = wiggle(frequency, intensity * 0.3)[0];\nrotY = wiggle(frequency, intensity * 0.3)[1];\nrotZ = wiggle(frequency, intensity * 0.2)[0];\n\n// Комбінуємо з оригінальними значеннями\noriginalPos = value;\noriginalRot = transform.rotation.value;\n\n[originalPos[0] + posX, originalPos[1] + posY, originalPos[2] + posZ]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "shake_intensity",
+          "name_ua": "Сила тремтіння",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Наскільки сильно тремтить камера. 5 = легке, 50 = сильне"
+        },
+        {
+          "id": "shake_frequency",
+          "name_ua": "Частота тремтіння",
+          "type": "float",
+          "default": 8,
+          "min": 0.5,
+          "max": 20,
+          "step": 0.5,
+          "description_ua": "Як швидко тремтить. 3 = повільно, 15 = дуже швидко"
+        }
+      ]
+    },
+    {
+      "id": "depth-of-field",
+      "category_en": "3D & Camera",
+      "category_ua": "3D та Камера",
+      "name_en": "Auto Depth of Field",
+      "name_ua": "Авто Глибина Різкості",
+      "icon": "🎭",
+      "description_ua": "Автоматично налаштовує фокусну відстань камери на найближчий об'єкт.",
+      "purpose_ua": "Для кінематографічних ефектів, реалістичної камери, автоматичного фокусування.",
+      "expression_template": "focusLayer = thisComp.layer(\"{focus_target}\");\nmyPos = transform.position;\ntargetPos = focusLayer.transform.position;\n\n// Розрахунок відстані\ndistance = length(myPos, targetPos);\n\n// Додаємо зсув для творчого контролю\ndistance + {focus_offset}",
+      "target_properties": ["focus distance"],
+      "parameters": [
+        {
+          "id": "focus_target",
+          "name_ua": "Ціль фокусу",
+          "type": "string",
+          "default": "Focus Target",
+          "description_ua": "Шар, на який має фокусуватися камера"
+        },
+        {
+          "id": "focus_offset",
+          "name_ua": "Зсув фокусу",
+          "type": "float",
+          "default": 0,
+          "min": -500,
+          "max": 500,
+          "step": 10,
+          "description_ua": "Додаткова відстань до фокусу (для точного налаштування)"
+        }
+      ]
+    },
+    {
+      "id": "parallax-scroll",
+      "category_en": "3D & Camera",
+      "category_ua": "3D та Камера",
+      "name_en": "Parallax Scrolling",
+      "name_ua": "Паралакс Ефект",
+      "icon": "🏞️",
+      "description_ua": "Створює ефект глибини через різну швидкість руху шарів. Класичний 2.5D ефект.",
+      "purpose_ua": "Для створення глибини в 2D сценах, рухомих фонів, ігрових інтерфейсів.",
+      "expression_template": "scrollSpeed = {scroll_speed};\ndepthFactor = {depth_factor};\n\n// Рух залежно від глибини\nxMove = time * scrollSpeed * depthFactor;\noriginalPos = value;\n\n[originalPos[0] + xMove, originalPos[1]]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "scroll_speed",
+          "name_ua": "Швидкість прокрутки",
+          "type": "float",
+          "default": 100,
+          "min": -500,
+          "max": 500,
+          "step": 10,
+          "description_ua": "Базова швидкість руху. Мінус = у зворотному напрямку"
+        },
+        {
+          "id": "depth_factor",
+          "name_ua": "Фактор глибини",
+          "type": "float",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 2,
+          "step": 0.1,
+          "description_ua": "Як сильно впливає глибина. 0.2 = далекий фон, 1.5 = близький передній план"
+        }
+      ]
+    },
+    {
+      "id": "mouse-follower",
+      "category_en": "Practical Cases",
+      "category_ua": "Практичні Кейси",
+      "name_en": "Mouse Follower",
+      "name_ua": "Відстежувач Миші",
+      "icon": "🖱️",
+      "description_ua": "Об'єкт слідкує за положенням миші з плавністю та обмеженнями. Готове рішення для інтерактивності.",
+      "purpose_ua": "Для інтерактивних презентацій, ігрових інтерфейсів, ефектів, що реагують на мишу.",
+      "expression_template": "// Отримуємо позицію миші (потребує плагіна)\nmouseX = thisComp.layer(\"Controller\").effect(\"Mouse X\")(\"Slider\");\nmouseY = thisComp.layer(\"Controller\").effect(\"Mouse Y\")(\"Slider\");\n\n// Плавне відстеження\nsmoothFactor = {smoothness};\ncurrentX = value[0];\ncurrentY = value[1];\n\nnewX = currentX + (mouseX - currentX) * smoothFactor;\nnewY = currentY + (mouseY - currentY) * smoothFactor;\n\n[newX, newY]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "smoothness",
+          "name_ua": "Плавність",
+          "type": "float",
+          "default": 0.1,
+          "min": 0.01,
+          "max": 0.5,
+          "step": 0.01,
+          "description_ua": "Як плавно слідкує за мишею. 0.05 = дуже плавно, 0.3 = швидко"
+        }
+      ]
+    },
+    {
+      "id": "progress-loader",
+      "category_en": "Practical Cases",
+      "category_ua": "Практичні Кейси",
+      "name_en": "Progress Loader",
+      "name_ua": "Індикатор Завантаження",
+      "icon": "📊",
+      "description_ua": "Анімація індикатора прогресу, що заповнюється від 0% до 100% з різними стилями.",
+      "purpose_ua": "Для екранів завантаження, індикаторів прогресу, таймерів, відображення статусу.",
+      "expression_template": "duration = {load_duration};\nstartTime = {start_time};\nstyle = \"{progress_style}\";\n\nprogress = linear(time - startTime, 0, duration, 0, 100);\n\nif (style == \"smooth\") {\n  ease(progress, 0, 100, 0, 100);\n} else if (style == \"bounce\") {\n  // Додаємо невелике відскакування в кінці\n  progress + Math.sin(progress * 10) * 2;\n} else {\n  progress; // linear\n}",
+      "target_properties": ["slider", "scale"],
+      "parameters": [
+        {
+          "id": "load_duration",
+          "name_ua": "Тривалість завантаження",
+          "type": "float",
+          "default": 5,
+          "min": 0.1,
+          "max": 30,
+          "step": 0.1,
+          "description_ua": "За скільки секунд завершити завантаження"
+        },
+        {
+          "id": "start_time",
+          "name_ua": "Час початку",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Коли починати анімацію завантаження"
+        },
+        {
+          "id": "progress_style",
+          "name_ua": "Стиль прогресу",
+          "type": "enum",
+          "options": ["linear", "smooth", "bounce"],
+          "default": "smooth",
+          "description_ua": "Як заповнюється індикатор: лінійно, плавно, з відскоком"
+        }
+      ]
+    },
+    {
+      "id": "expression-control",
+      "category_en": "Optimization",
+      "category_ua": "Оптимізація",
+      "name_en": "Expression Controller",
+      "name_ua": "Контролер Експрешенів",
+      "icon": "🎛️",
+      "description_ua": "Централізований контроль всіх експрешенів через один слайдер. Значно покращує продуктивність.",
+      "purpose_ua": "Для оптимізації складних композицій, централізованого керування, швидкого налаштування.",
+      "expression_template": "masterControl = thisComp.layer(\"Controller\").effect(\"Master Control\")(\"Slider\");\n\n// Використовуємо masterControl для керування різними параметрами\nif (masterControl > {activation_threshold}) {\n  // Активуємо анімацію\n  {active_expression};\n} else {\n  // Стан спокою\n  {idle_expression};\n}",
+      "target_properties": ["slider", "position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "activation_threshold",
+          "name_ua": "Поріг активації",
+          "type": "float",
+          "default": 50,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "При якому значенні контролера активувати анімацію"
+        },
+        {
+          "id": "active_expression",
+          "name_ua": "Активна анімація",
+          "type": "string",
+          "default": "wiggle(5, 30)",
+          "description_ua": "Вираз, який виконується, коли контролер активний"
+        },
+        {
+          "id": "idle_expression",
+          "name_ua": "Анімація спокою",
+          "type": "string",
+          "default": "value",
+          "description_ua": "Вираз, який виконується, коли контролер неактивний"
+        }
+      ]
+    },
+    {
+      "id": "smooth-clamp",
+      "category_en": "Math & Transform",
+      "category_ua": "Математика та Перетворення",
+      "name_en": "Smooth Clamp",
+      "name_ua": "Плавне Обмеження",
+      "icon": "📏",
+      "description_ua": "Обмежує значення в заданому діапазоні, але з плавними переходами на межах.",
+      "purpose_ua": "Для контролю анімації без різких стрибків, обмеження руху з плавністю.",
+      "expression_template": "inputValue = {input_value};\nminVal = {minimum};\nmaxVal = {maximum};\nsmoothness = {edge_smoothness};\n\n// Плавне обмеження\nif (inputValue < minVal) {\n  ease(inputValue, minVal - smoothness, minVal, minVal - smoothness, minVal);\n} else if (inputValue > maxVal) {\n  ease(inputValue, maxVal, maxVal + smoothness, maxVal, maxVal + smoothness);\n} else {\n  inputValue;\n}",
+      "target_properties": ["slider", "position", "rotation"],
+      "parameters": [
+        {
+          "id": "input_value",
+          "name_ua": "Вхідне значення",
+          "type": "float",
+          "default": 50,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Значення, яке потрібно обмежити"
+        },
+        {
+          "id": "minimum",
+          "name_ua": "Мінімум",
+          "type": "float",
+          "default": 0,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Нижня межа діапазону"
+        },
+        {
+          "id": "maximum",
+          "name_ua": "Максимум",
+          "type": "float",
+          "default": 100,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Верхня межа діапазону"
+        },
+        {
+          "id": "edge_smoothness",
+          "name_ua": "Плавність країв",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Наскільки плавний перехід на межах. 0 = різко, 20 = дуже плавно"
+        }
+      ]
+    },
+    {
+      "id": "value-remap",
+      "category_en": "Math & Transform",
+      "category_ua": "Математика та Перетворення",
+      "name_en": "Value Remapping",
+      "name_ua": "Перемапування Значень",
+      "icon": "🔄",
+      "description_ua": "Перетворює значення з одного діапазону в інший. Найкорисніша математична функція.",
+      "purpose_ua": "Для конвертації значень між різними системами, адаптації анімацій, створення універсальних контролів.",
+      "expression_template": "inputValue = {input_value};\ninputMin = {input_min};\ninputMax = {input_max};\noutputMin = {output_min};\noutputMax = {output_max};\n\nlinear(inputValue, inputMin, inputMax, outputMin, outputMax)",
+      "target_properties": ["slider", "position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "input_value",
+          "name_ua": "Вхідне значення",
+          "type": "float",
+          "default": 50,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Значення, яке потрібно перетворити"
+        },
+        {
+          "id": "input_min",
+          "name_ua": "Вхідний мінімум",
+          "type": "float",
+          "default": 0,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Мінімум вихідного діапазону"
+        },
+        {
+          "id": "input_max",
+          "name_ua": "Вхідний максимум",
+          "type": "float",
+          "default": 100,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Максимум вихідного діапазону"
+        },
+        {
+          "id": "output_min",
+          "name_ua": "Вихідний мінімум",
+          "type": "float",
+          "default": 0,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Мінімум цільового діапазону"
+        },
+        {
+          "id": "output_max",
+          "name_ua": "Вихідний максимум",
+          "type": "float",
+          "default": 1,
+          "min": -1000,
+          "max": 1000,
+          "step": 0.1,
+          "description_ua": "Максимум цільового діапазону"
+        }
+      ]
+    },
+    {
+      "id": "conditional-animation",
+      "category_en": "Math & Transform",
+      "category_ua": "Математика та Перетворення",
+      "name_en": "Conditional Animation",
+      "name_ua": "Умовна Анімація",
+      "icon": "❓",
+      "description_ua": "Виконує різну анімацію залежно від умов. Основа для складних інтерактивних систем.",
+      "purpose_ua": "Для анімацій, що реагують на події, інтерактивних елементів, складних логічних систем.",
+      "expression_template": "condition = {input_value} {condition_operator} {threshold_value};\n\nif (condition) {\n  // Якщо умова виконується\n  {true_expression};\n} else {\n  // Якщо умова не виконується\n  {false_expression};\n}",
+      "target_properties": ["slider", "position", "rotation", "opacity"],
+      "parameters": [
+        {
+          "id": "input_value",
+          "name_ua": "Вхідне значення",
+          "type": "float",
+          "default": 50,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Значення для перевірки умови"
+        },
+        {
+          "id": "condition_operator",
+          "name_ua": "Умова",
+          "type": "enum",
+          "options": [">", "<", ">=", "<=", "=="],
+          "default": ">",
+          "description_ua": "Тип порівняння: більше, менше, дорівнює тощо"
+        },
+        {
+          "id": "threshold_value",
+          "name_ua": "Порогове значення",
+          "type": "float",
+          "default": 50,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Значення, з яким порівнювати"
+        },
+        {
+          "id": "true_expression",
+          "name_ua": "Якщо ІСТИНА",
+          "type": "string",
+          "default": "value + 100",
+          "description_ua": "Вираз, який виконується, коли умова правдива"
+        },
+        {
+          "id": "false_expression",
+          "name_ua": "Якщо ХИБНІСТЬ",
+          "type": "string",
+          "default": "value",
+          "description_ua": "Вираз, який виконується, коли умова хибна"
+        }
+      ]
+    },
+    {
+      "id": "exponential-smooth",
+      "category_en": "Math & Transform",
+      "category_ua": "Математика та Перетворення",
+      "name_en": "Exponential Smoothing",
+      "name_ua": "Експоненційне Згладжування",
+      "icon": "📈",
+      "description_ua": "Плавно згладжує різкі зміни значень. Ідеально для відстеження руху та аудіо-реактивних систем.",
+      "purpose_ua": "Для плавного відстеження миші, згладжування аудіо-сигналів, стабілізації анімацій.",
+      "expression_template": "targetValue = {target_value};\nsmoothFactor = {smoothing};\n\n// Експоненційне згладжування\ncurrentValue = value;\ncurrentValue + (targetValue - currentValue) * smoothFactor",
+      "target_properties": ["slider", "position", "rotation"],
+      "parameters": [
+        {
+          "id": "target_value",
+          "name_ua": "Цільове значення",
+          "type": "float",
+          "default": 100,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Значення, до якого потрібно плавно прийти"
+        },
+        {
+          "id": "smoothing",
+          "name_ua": "Сила згладжування",
+          "type": "float",
+          "default": 0.1,
+          "min": 0.01,
+          "max": 0.5,
+          "step": 0.01,
+          "description_ua": "Як швидко відбувається згладжування. 0.02 = повільно, 0.3 = швидко"
+        }
+      ]
+    },
+    {
+      "id": "random-color-cycle",
+      "category_en": "Visual Effects",
+      "category_ua": "Візуальні Ефекти",
+      "name_en": "Random Color Cycle",
+      "name_ua": "Випадкова Зміна Кольорів",
+      "icon": "🎨",
+      "description_ua": "Плавна зміна кольорів через випадкові переходи. Створює динамічні градієнтні ефекти.",
+      "purpose_ua": "Для абстрактних фонів, світлових ефектів, музичних візуалізацій, креативних переходів.",
+      "expression_template": "seedRandom({seed}, timeless = true);\ncolorSpeed = {color_speed};\n\nhue = (time * colorSpeed * 360 + random(0, 360)) % 360;\nsaturation = random({min_saturation}, {max_saturation});\nlightness = random({min_lightness}, {max_lightness});\n\n// Конвертація HSL to RGB (спрощено)\n[ hue/360, saturation/100, lightness/100, {alpha} ]",
+      "target_properties": ["color"],
+      "parameters": [
+        {
+          "id": "color_speed",
+          "name_ua": "Швидкість зміни",
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Як швидко змінюються кольори. 0.5 = повільно, 3 = швидко"
+        },
+        {
+          "id": "min_saturation",
+          "name_ua": "Мін. насиченість",
+          "type": "float",
+          "default": 80,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Мінімальна яскравість кольору. 0 = сірий, 50 = помірно"
+        },
+        {
+          "id": "max_saturation",
+          "name_ua": "Макс. насиченість",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Максимальна яскравість кольору"
+        },
+        {
+          "id": "min_lightness",
+          "name_ua": "Мін. світлість",
+          "type": "float",
+          "default": 40,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Мінімальна світлість. 0 = чорний, 50 = нормально"
+        },
+        {
+          "id": "max_lightness",
+          "name_ua": "Макс. світлість",
+          "type": "float",
+          "default": 60,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Максимальна світлість. 100 = білий"
+        }
+      ]
+    },
+    {
+      "id": "pulse-effect",
+      "category_en": "Visual Effects",
+      "category_ua": "Візуальні Ефекти",
+      "name_en": "Pulse Effect",
+      "name_ua": "Ефект Пульсації",
+      "icon": "💓",
+      "description_ua": "Регулярні імпульси масштабу або прозорості. Нагадує серцебиття або енергетичні хвилі.",
+      "purpose_ua": "Для індикаторів життя, енергетичних полів, анімації уваги, ритмічних ефектів.",
+      "expression_template": "pulseRate = {pulse_rate};\npulseStrength = {pulse_strength};\nbaseValue = {base_value};\n\npulse = Math.sin(time * pulseRate * 2 * Math.PI) * pulseStrength;\nbaseValue + pulse",
+      "target_properties": ["scale", "opacity"],
+      "parameters": [
+        {
+          "id": "pulse_rate",
+          "name_ua": "Частота пульсації",
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Скільки пульсацій в секунду. 0.5 = повільно, 3 = швидко"
+        },
+        {
+          "id": "pulse_strength",
+          "name_ua": "Сила пульсації",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "description_ua": "Наскільки сильна пульсація. 5 = ледь помітно, 30 = сильно"
+        },
+        {
+          "id": "base_value",
+          "name_ua": "Базове значення",
+          "type": "float",
+          "default": 100,
+          "min": 0,
+          "max": 500,
+          "step": 1,
+          "description_ua": "Значення, навколо якого відбувається пульсація"
+        }
+      ]
+    },
+    {
+      "id": "wave-distortion",
+      "category_en": "Visual Effects",
+      "category_ua": "Візуальні Ефекти",
+      "name_en": "Wave Distortion",
+      "name_ua": "Хвильова Деформація",
+      "icon": "🌊",
+      "description_ua": "Створює хвилеподібні спотворення позиції. Ідеально для ефектів води, жару, магії.",
+      "purpose_ua": "Для емуляції води, теплового спотворення, магічних ефектів, абстрактних деформацій.",
+      "expression_template": "waveFrequency = {wave_frequency};\nwaveAmplitude = {wave_amplitude};\nwaveSpeed = {wave_speed};\n\nx = value[0] + Math.sin(time * waveSpeed + value[1] * waveFrequency) * waveAmplitude;\ny = value[1] + Math.cos(time * waveSpeed + value[0] * waveFrequency) * waveAmplitude;\n\n[x, y]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "wave_frequency",
+          "name_ua": "Частота хвиль",
+          "type": "float",
+          "default": 0.01,
+          "min": 0.001,
+          "max": 0.1,
+          "step": 0.001,
+          "description_ua": "Як часто розташовані хвилі. 0.005 = рідко, 0.05 = часто"
+        },
+        {
+          "id": "wave_amplitude",
+          "name_ua": "Висота хвиль",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Наскільки високі хвилі. 5 = низькі, 50 = високі"
+        },
+        {
+          "id": "wave_speed",
+          "name_ua": "Швидкість хвиль",
+          "type": "float",
+          "default": 2,
+          "min": 0.1,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Як швидко рухаються хвилі"
+        }
+      ]
+    },
+    {
+      "id": "morph-targets",
+      "category_en": "Advanced Animation",
+      "category_ua": "Розширена Анімація",
+      "name_en": "Morph Between Targets",
+      "name_ua": "Морфінг між Цілями",
+      "icon": "🔀",
+      "description_ua": "Плавний перехід між кількома цільовими позиціями або значеннями. Професійний інструмент для складних анімацій.",
+      "purpose_ua": "Для складних шляхів анімації, перемикання між станами, інтерактивних систем.",
+      "expression_template": "targets = [\n  {target_1},\n  {target_2}, \n  {target_3},\n  {target_4}\n];\nswitchTime = {switch_interval};\n\ncurrentTargetIndex = Math.floor(time / switchTime) % targets.length;\nnextTargetIndex = (currentTargetIndex + 1) % targets.length;\n\nblend = (time % switchTime) / switchTime;\n\n// Плавний перехід між цілями\nlinear(blend, 0, 1, targets[currentTargetIndex], targets[nextTargetIndex])",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "target_1",
+          "name_ua": "Ціль 1",
+          "type": "float",
+          "default": 0,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Перше цільове значення"
+        },
+        {
+          "id": "target_2",
+          "name_ua": "Ціль 2",
+          "type": "float",
+          "default": 100,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Друге цільове значення"
+        },
+        {
+          "id": "target_3",
+          "name_ua": "Ціль 3",
+          "type": "float",
+          "default": 50,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Третє цільове значення"
+        },
+        {
+          "id": "target_4",
+          "name_ua": "Ціль 4",
+          "type": "float",
+          "default": 200,
+          "min": -1000,
+          "max": 1000,
+          "step": 1,
+          "description_ua": "Четверте цільове значення"
+        },
+        {
+          "id": "switch_interval",
+          "name_ua": "Інтервал перемикання",
+          "type": "float",
+          "default": 2,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Скільки секунд на кожну ціль"
+        }
+      ]
+    },
+    {
+      "id": "game-health-bar",
+      "category_en": "Interactive & Games",
+      "category_ua": "Інтерактивні та Ігри",
+      "name_en": "Game Health Bar",
+      "name_ua": "Шкала Здоров'я",
+      "icon": "❤️",
+      "description_ua": "Динамічна шкала здоров'я, що реагує на пошкодження та відновлення. Готовий елемент UI для ігор.",
+      "purpose_ua": "Для ігрових інтерфейсів, індикаторів прогресу, систем здоров'я та енергії.",
+      "expression_template": "currentHealth = {current_health};\nmaxHealth = {max_health};\ndamageEffect = {damage_effect};\n\nhealthPercent = (currentHealth / maxHealth) * 100;\n\n// Ефект пошкодження (червоний спалах)\nif (damageEffect > 0) {\n  healthPercent + Math.sin(time * 30) * damageEffect;\n} else {\n  healthPercent;\n}",
+      "target_properties": ["scale"],
+      "parameters": [
+        {
+          "id": "current_health",
+          "name_ua": "Поточне здоров'я",
+          "type": "float",
+          "default": 75,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Поточний рівень здоров'я (0-100)"
+        },
+        {
+          "id": "max_health",
+          "name_ua": "Макс. здоров'я",
+          "type": "float",
+          "default": 100,
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Максимальний рівень здоров'я"
+        },
+        {
+          "id": "damage_effect",
+          "name_ua": "Ефект пошкодження",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "description_ua": "Сила візуального ефекту при отриманні пошкодження"
+        }
+      ]
+    },
+    {
+      "id": "button-interaction",
+      "category_en": "Interactive & Games",
+      "category_ua": "Інтерактивні та Ігри",
+      "name_en": "Button Interaction",
+      "name_ua": "Інтерактивна Кнопка",
+      "icon": "🔘",
+      "description_ua": "Повний цикл анімації кнопки: наведення, натискання, активація. Готовий компонент для UI.",
+      "purpose_ua": "Для інтерактивних інтерфейсів, кнопок, перемикачів, інтерактивних презентацій.",
+      "expression_template": "isHovered = {is_hovered};\nisPressed = {is_pressed};\nisActive = {is_active};\n\nbaseScale = 100;\n\n// Анімація наведення\nif (isHovered) {\n  baseScale += {hover_scale};\n}\n\n// Анімація натискання\nif (isPressed) {\n  baseScale -= {press_scale};\n}\n\n// Стан активності\nif (isActive) {\n  baseScale += {active_scale};\n}\n\nbaseScale",
+      "target_properties": ["scale"],
+      "parameters": [
+        {
+          "id": "is_hovered",
+          "name_ua": "Наведення",
+          "type": "bool",
+          "default": false,
+          "description_ua": "Чи наведено мишу на кнопку"
+        },
+        {
+          "id": "is_pressed",
+          "name_ua": "Натиснуто",
+          "type": "bool",
+          "default": false,
+          "description_ua": "Чи натиснута кнопка"
+        },
+        {
+          "id": "is_active",
+          "name_ua": "Активна",
+          "type": "bool",
+          "default": false,
+          "description_ua": "Чи активна кнопка (toggle state)"
+        },
+        {
+          "id": "hover_scale",
+          "name_ua": "Збільшення при наведенні",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "description_ua": "Наскільки збільшується кнопка при наведенні"
+        },
+        {
+          "id": "press_scale",
+          "name_ua": "Стиснення при натисканні",
+          "type": "float",
+          "default": 5,
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "description_ua": "Наскільки стискається кнопка при натисканні"
+        }
+      ]
+    },
+    {
+      "id": "score-counter",
+      "category_en": "Interactive & Games",
+      "category_ua": "Інтерактивні та Ігри",
+      "name_en": "Animated Score Counter",
+      "name_ua": "Анімований Лічильник Очок",
+      "icon": "🏆",
+      "description_ua": "Лічильник, що плавно збільшується до цільового значення з ефектами анімації.",
+      "purpose_ua": "Для ігрових рахунків, лічильників, статистики, будь-яких числових відліків.",
+      "expression_template": "targetScore = {target_score};\ncurrentScore = {current_score};\nanimationSpeed = {animation_speed};\n\n// Плавне наближення до цільового значення\nif (currentScore < targetScore) {\n  currentScore + (targetScore - currentScore) * animationSpeed;\n} else if (currentScore > targetScore) {\n  currentScore - (currentScore - targetScore) * animationSpeed;\n} else {\n  currentScore;\n}",
+      "target_properties": ["slider"],
+      "parameters": [
+        {
+          "id": "target_score",
+          "name_ua": "Цільовий рахунок",
+          "type": "float",
+          "default": 1000,
+          "min": 0,
+          "max": 10000,
+          "step": 10,
+          "description_ua": "До якого значення має дійти лічильник"
+        },
+        {
+          "id": "current_score",
+          "name_ua": "Поточний рахунок",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 10000,
+          "step": 10,
+          "description_ua": "Поточне значення лічильника"
+        },
+        {
+          "id": "animation_speed",
+          "name_ua": "Швидкість анімації",
+          "type": "float",
+          "default": 0.1,
+          "min": 0.01,
+          "max": 0.5,
+          "step": 0.01,
+          "description_ua": "Як швидко лічильник досягає цільового значення"
+        }
+      ]
+    },
+    {
+      "id": "neon-glow-pulse",
+      "category_en": "Specialized Effects",
+      "category_ua": "Спеціалізовані Ефекти",
+      "name_en": "Neon Glow Pulse",
+      "name_ua": "Неонове Сяйво",
+      "icon": "💡",
+      "description_ua": "Ефект неонового сяйва, що пульсує з випадковими спалахами. Імітує неонові вивіски.",
+      "purpose_ua": "Для неонових текстів, науково-фантастичних інтерфейсів, нічних сцен, кіберпанку.",
+      "expression_template": "seedRandom({seed}, timeless = false);\nbaseGlow = {base_glow};\npulseAmount = {pulse_amount};\nflickerChance = {flicker_chance};\n\n// Базова пульсація\npulse = Math.sin(time * {pulse_speed}) * pulseAmount;\n\n// Випадкові спалахи\nflicker = random() < flickerChance ? {flicker_intensity} : 0;\n\nbaseGlow + pulse + flicker",
+      "target_properties": ["glow intensity", "opacity"],
+      "parameters": [
+        {
+          "id": "base_glow",
+          "name_ua": "Базове сяйво",
+          "type": "float",
+          "default": 10,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "description_ua": "Постійний рівень сяйва"
+        },
+        {
+          "id": "pulse_amount",
+          "name_ua": "Сила пульсації",
+          "type": "float",
+          "default": 5,
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "description_ua": "Наскільки сильно пульсує сяйво"
+        },
+        {
+          "id": "pulse_speed",
+          "name_ua": "Швидкість пульсації",
+          "type": "float",
+          "default": 2,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Як швидко відбувається пульсація"
+        },
+        {
+          "id": "flicker_chance",
+          "name_ua": "Ймовірність спалаху",
+          "type": "float",
+          "default": 0.05,
+          "min": 0,
+          "max": 0.2,
+          "step": 0.01,
+          "description_ua": "Як часто трапляються випадкові спалахи"
+        }
+      ]
+    },
+    {
+      "id": "data-stream",
+      "category_en": "Specialized Effects",
+      "category_ua": "Спеціалізовані Ефекти",
+      "name_en": "Data Stream Effect",
+      "name_ua": "Ефект Потоку Даних",
+      "icon": "💾",
+      "description_ua": "Імітує потік цифрових даних, що опускаються вниз (як у Матриці). Класичний кіберпанк ефект.",
+      "purpose_ua": "Для технологічних інтерфейсів, хакерських сцен, футуристичних дисплеїв, ефектів матриці.",
+      "expression_template": "streamSpeed = {stream_speed};\ncharacterSet = \"{characters}\";\ndensity = {stream_density};\n\nseedRandom({seed}, timeless = false);\n\n// Генерація випадкових символів, що рухаються\nresult = \"\";\nfor (i = 0; i < density; i++) {\n  charIndex = Math.floor(random() * characterSet.length);\n  result += characterSet[charIndex];\n}\nresult",
+      "target_properties": ["text"],
+      "parameters": [
+        {
+          "id": "stream_speed",
+          "name_ua": "Швидкість потоку",
+          "type": "float",
+          "default": 2,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Як швидко рухаються символи"
+        },
+        {
+          "id": "characters",
+          "name_ua": "Набір символів",
+          "type": "string",
+          "default": "01",
+          "description_ua": "Символи для відображення (наприклад: 01, ABC, アイウ)"
+        },
+        {
+          "id": "stream_density",
+          "name_ua": "Густота потоку",
+          "type": "int",
+          "default": 20,
+          "min": 5,
+          "max": 50,
+          "step": 1,
+          "description_ua": "Скільки символів показувати одночасно"
+        }
+      ]
+    },
+    {
+      "id": "hologram-flicker",
+      "category_en": "Specialized Effects",
+      "category_ua": "Спеціалізовані Ефекти",
+      "name_en": "Hologram Flicker",
+      "name_ua": "Мерехтіння Голограми",
+      "icon": "👁️",
+      "description_ua": "Ефект нестабільної голограми з мерехтінням, шумом та спотвореннями. Дуже реалістично для Sci-Fi.",
+      "purpose_ua": "Для голографічних проекцій, технологічних пристроїв, науково-фантастичних ефектів.",
+      "expression_template": "flickerIntensity = {flicker_intensity};\nnoiseAmount = {noise_amount};\ndistortion = {distortion_strength};\n\nseedRandom({seed}, timeless = false);\n\n// Мерехтіння прозорості\nflicker = random() > 0.7 ? random(0.3, 1) : 1;\n\n// Шум позиції\nnoiseX = random(-noiseAmount, noiseAmount);\nnoiseY = random(-noiseAmount, noiseAmount);\n\n// Спотворення масштабу\nscaleDistortion = 1 + random(-distortion, distortion);\n\n// Комбінуємо всі ефекти\nvalue * flicker * scaleDistortion + [noiseX, noiseY]",
+      "target_properties": ["opacity", "position", "scale"],
+      "parameters": [
+        {
+          "id": "flicker_intensity",
+          "name_ua": "Сила мерехтіння",
+          "type": "float",
+          "default": 0.3,
+          "min": 0,
+          "max": 1,
+          "step": 0.05,
+          "description_ua": "Наскільки сильно мерехтить голограма"
+        },
+        {
+          "id": "noise_amount",
+          "name_ua": "Кількість шуму",
+          "type": "float",
+          "default": 2,
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "description_ua": "Скільки випадкового руху додати"
+        },
+        {
+          "id": "distortion_strength",
+          "name_ua": "Сила спотворення",
+          "type": "float",
+          "default": 0.1,
+          "min": 0,
+          "max": 0.5,
+          "step": 0.01,
+          "description_ua": "Наскільки сильно спотворюється форма"
+        }
+      ]
+    },
+    {
+      "id": "time-rewind",
+      "category_en": "Time Effects",
+      "category_ua": "Часові Ефекти",
+      "name_en": "Time Rewind Effect",
+      "name_ua": "Ефект Перемотування Часу",
+      "icon": "⏪",
+      "description_ua": "Створює ефект зворотного відтворення часу. Об'єкт рухається назад по своїй траєкторії.",
+      "purpose_ua": "Для креативних переходів, флешбеків, магічних ефектів, науково-фантастичних сцен.",
+      "expression_template": "rewindSpeed = {rewind_speed};\nstartTime = {start_time};\nrewindDuration = {rewind_duration};\n\n// Розрахунок часу для перемотування\nif (time >= startTime && time < startTime + rewindDuration) {\n  rewindTime = startTime + (startTime + rewindDuration - time) * rewindSpeed;\n  valueAtTime(rewindTime);\n} else {\n  value;\n}",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "rewind_speed",
+          "name_ua": "Швидкість перемотування",
+          "type": "float",
+          "default": 1,
+          "min": 0.5,
+          "max": 3,
+          "step": 0.1,
+          "description_ua": "Як швидко відтворюється зворотна анімація"
+        },
+        {
+          "id": "start_time",
+          "name_ua": "Час початку",
+          "type": "float",
+          "default": 2,
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Коли починати ефект перемотування"
+        },
+        {
+          "id": "rewind_duration",
+          "name_ua": "Тривалість перемотування",
+          "type": "float",
+          "default": 3,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Скільки секунд триває ефект"
+        }
+      ]
+    },
+    {
+      "id": "particle-system",
+      "category_en": "Particle Systems",
+      "category_ua": "Партикльні Системи",
+      "name_en": "Basic Particle System",
+      "name_ua": "Базова Партикльна Система",
+      "icon": "✨",
+      "description_ua": "Створює систему частинок, що рухаються з випадковими швидкостями та прискоренням. Ідеально для ефектів магії, іскор, пилу.",
+      "purpose_ua": "Для ефектів магії, іскор, пилу, дощу, снігу, будь-яких частинок, що рухаються випадково.",
+      "expression_template": "seedRandom({seed}, timeless = false);\nparticleSpeed = {particle_speed};\nspread = {spread_amount};\ngravity = {gravity_strength};\nlifeTime = {particle_lifetime};\n\n// Випадкова початкова швидкість\ninitialX = random(-spread, spread);\ninitialY = random(-spread, spread);\n\n// Рух з гравітацією\ncurrentX = initialX * particleSpeed * time;\ncurrentY = initialY * particleSpeed * time + 0.5 * gravity * time * time;\n\n// Обмеження часу життя\nif (time > lifeTime) {\n  [0, 0]; // Повертаємо в початок\n} else {\n  [currentX, currentY];\n}",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "particle_speed",
+          "name_ua": "Швидкість частинок",
+          "type": "float",
+          "default": 100,
+          "min": 10,
+          "max": 500,
+          "step": 10,
+          "description_ua": "Як швидко рухаються частинки"
+        },
+        {
+          "id": "spread_amount",
+          "name_ua": "Розкид",
+          "type": "float",
+          "default": 50,
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "description_ua": "Наскільки широко розлітаються частинки"
+        },
+        {
+          "id": "gravity_strength",
+          "name_ua": "Сила гравітації",
+          "type": "float",
+          "default": 100,
+          "min": -200,
+          "max": 200,
+          "step": 10,
+          "description_ua": "Сила тяжіння (від'ємна = вгору)"
+        },
+        {
+          "id": "particle_lifetime",
+          "name_ua": "Час життя",
+          "type": "float",
+          "default": 3,
+          "min": 0.5,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Скільки секунд живе частинка"
+        }
+      ]
+    },
+    {
+      "id": "magnetic-field",
+      "category_en": "Physics",
+      "category_ua": "Фізика",
+      "name_en": "Magnetic Field",
+      "name_ua": "Магнітне Поле",
+      "icon": "🧲",
+      "description_ua": "Емулює магнітне поле - об'єкти притягуються або відштовхуються від магнітів.",
+      "purpose_ua": "Для наукових симуляцій, магнітних ефектів, футуристичних інтерфейсів, ігрової фізики.",
+      "expression_template": "magnetPos = thisComp.layer(\"{magnet_layer}\").transform.position;\nmyPos = transform.position;\nfieldStrength = {field_strength};\npolarity = {magnet_polarity};\n\n// Вектор до магніту\ndir = magnetPos - myPos;\ndistance = length(dir);\n\n// Сила поля (обернено пропорційна квадрату відстані)\nforce = (fieldStrength * polarity) / (distance * distance + 1);\n\n// Застосовуємо силу\nmyPos + normalize(dir) * force",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "magnet_layer",
+          "name_ua": "Магнітний шар",
+          "type": "string",
+          "default": "Magnet",
+          "description_ua": "Шар, що виступає магнітом"
+        },
+        {
+          "id": "field_strength",
+          "name_ua": "Сила поля",
+          "type": "float",
+          "default": 1000,
+          "min": 100,
+          "max": 5000,
+          "step": 100,
+          "description_ua": "Наскільки сильне магнітне поле"
+        },
+        {
+          "id": "magnet_polarity",
+          "name_ua": "Полярність",
+          "type": "float",
+          "default": 1,
+          "min": -1,
+          "max": 1,
+          "step": 0.1,
+          "description_ua": "1 = притягування, -1 = відштовхування"
+        }
+      ]
+    },
+    {
+      "id": "liquid-simulation",
+      "category_en": "Physics",
+      "category_ua": "Фізика",
+      "name_en": "Liquid Simulation",
+      "name_ua": "Симуляція Рідини",
+      "icon": "💧",
+      "description_ua": "Спрощена симуляція рідини з хвилями, поверхневим натягом та в'язкістю.",
+      "purpose_ua": "Для ефектів води, рідин, желе, плазмових куль, органічних матеріалів.",
+      "expression_template": "waveHeight = {wave_height};\nwaveFrequency = {wave_frequency};\nviscosity = {viscosity};\nsurfaceTension = {surface_tension};\n\n// Основний хвильовий рух\nbaseWave = Math.sin(time * waveFrequency + value[0] * 0.01) * waveHeight;\n\n// Ефект в'язкості (заспокоєння)\ndamping = Math.exp(-time * viscosity);\n\n// Поверхневий натяг (швидкі коливання)\ntension = Math.sin(time * surfaceTension * 10) * 2;\n\nvalue + [0, baseWave * damping + tension]",
+      "target_properties": ["position"],
+      "parameters": [
+        {
+          "id": "wave_height",
+          "name_ua": "Висота хвиль",
+          "type": "float",
+          "default": 20,
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "description_ua": "Наскільки високі хвилі"
+        },
+        {
+          "id": "wave_frequency",
+          "name_ua": "Частота хвиль",
+          "type": "float",
+          "default": 2,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Як часто з'являються хвилі"
+        },
+        {
+          "id": "viscosity",
+          "name_ua": "В'язкість",
+          "type": "float",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 2,
+          "step": 0.1,
+          "description_ua": "Як швидко заспокоюються хвилі"
+        },
+        {
+          "id": "surface_tension",
+          "name_ua": "Поверхневий натяг",
+          "type": "float",
+          "default": 1,
+          "min": 0,
+          "max": 3,
+          "step": 0.1,
+          "description_ua": "Сила поверхневого натягу"
+        }
+      ]
+    },
+    {
+      "id": "audio-spectrum",
+      "category_en": "Audio Visualization",
+      "category_ua": "Аудіо-візуалізація",
+      "name_en": "Audio Spectrum Analyzer",
+      "name_ua": "Спектральний Аналізатор",
+      "icon": "📊",
+      "description_ua": "Створює спектр аналізатор, що візуалізує різні частотні діапазони аудіо. Професійний інструмент для музичних відео.",
+      "purpose_ua": "Для музичних візуалізацій, аналізу аудіо, інтерактивних еквалайзерів, клубних ефектів.",
+      "expression_template": "audioLayer = thisComp.layer(\"{audio_layer}\");\nbandIndex = {frequency_band};\nnumBands = {total_bands};\nsensitivity = {band_sensitivity};\n\nif (audioLayer != null) {\n  // Спрощена емуляція частотних смуг\n  baseAmp = audioLayer.sampleImage([0.5, 0.5], [time, 0.5])[0] * 100;\n  \n  // Різні смуги реагують по-різному\n  bandMultiplier = 1 + (bandIndex / numBands) * sensitivity;\n  \n  baseAmp * bandMultiplier;\n} else {\n  0;\n}",
+      "target_properties": ["scale", "position"],
+      "parameters": [
+        {
+          "id": "frequency_band",
+          "name_ua": "Частотна смуга",
+          "type": "int",
+          "default": 1,
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "description_ua": "Яку частотну смугу візуалізувати (1 = низькі, 10 = високі)"
+        },
+        {
+          "id": "total_bands",
+          "name_ua": "Всього смуг",
+          "type": "int",
+          "default": 8,
+          "min": 3,
+          "max": 16,
+          "step": 1,
+          "description_ua": "Загальна кількість частотних смуг"
+        },
+        {
+          "id": "band_sensitivity",
+          "name_ua": "Чутливість смуги",
+          "type": "float",
+          "default": 2,
+          "min": 0.5,
+          "max": 5,
+          "step": 0.1,
+          "description_ua": "Наскільки чутливо реагує смуга"
+        }
+      ]
+    },
+    {
+      "id": "beat-reactive",
+      "category_en": "Audio Visualization",
+      "category_ua": "Аудіо-візуалізація",
+      "name_en": "Beat Reactive Animation",
+      "name_ua": "Біт-реактивна Анімація",
+      "icon": "🎶",
+      "description_ua": "Анімація, що сильно реагує на бити в музиці - стрибає, масштабується, змінює колір.",
+      "purpose_ua": "Для музичних кліпів, танцювальних сцен, клубних візуалізацій, ритмічних анімацій.",
+      "expression_template": "audioLayer = thisComp.layer(\"{audio_layer}\");\nbeatThreshold = {beat_threshold};\nreactionStrength = {reaction_strength};\nreactionDuration = {reaction_duration};\n\nif (audioLayer != null) {\n  currentAmp = audioLayer.sampleImage([0.5, 0.5], [time, 0.5])[0] * 100;\n  previousAmp = audioLayer.sampleImage([0.5, 0.5], [time - thisComp.frameDuration, 0.5])[0] * 100;\n  \n  // Детекція битів\n  if (currentAmp > previousAmp + beatThreshold) {\n    // Сильна реакція на бит\n    value + reactionStrength;\n  } else {\n    // Плавне повернення\n    value + (reactionStrength * Math.exp(-time / reactionDuration));\n  }\n} else {\n  value;\n}",
+      "target_properties": ["scale", "position", "rotation"],
+      "parameters": [
+        {
+          "id": "beat_threshold",
+          "name_ua": "Поріг бита",
+          "type": "float",
+          "default": 5,
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "description_ua": "Наскільки різкою має бути зміна гучності для виявлення бита"
+        },
+        {
+          "id": "reaction_strength",
+          "name_ua": "Сила реакції",
+          "type": "float",
+          "default": 50,
+          "min": 10,
+          "max": 200,
+          "step": 5,
+          "description_ua": "Наскільки сильно реагує анімація на бити"
+        },
+        {
+          "id": "reaction_duration",
+          "name_ua": "Тривалість реакції",
+          "type": "float",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 2,
+          "step": 0.1,
+          "description_ua": "Як довго триває реакція на бит"
+        }
+      ]
+    },
+    {
+      "id": "text-reveal-mask",
+      "category_en": "Text & Typography",
+      "category_ua": "Текст та Типографіка",
+      "name_en": "Text Reveal Mask",
+      "name_ua": "Маска Поступового Показу",
+      "icon": "🎭",
+      "description_ua": "Текст поступово відкривається через маску, що рухається з різними ефектами.",
+      "purpose_ua": "Для драматичних відкриттів тексту, титрів, креативних заголовків, анімаційних переходів.",
+      "expression_template": "revealType = \"{reveal_type}\";\nrevealSpeed = {reveal_speed};\nstartTime = {start_time};\n\nprogress = (time - startTime) * revealSpeed;\n\nif (revealType == \"left_to_right\") {\n  // Зліва направо\n  [progress * {comp_width}, 0];\n} else if (revealType == \"top_to_bottom\") {\n  // Зверху вниз\n  [0, progress * {comp_height}];\n} else if (revealType == \"center\") {\n  // З центру\n  radius = progress * Math.max({comp_width}, {comp_height});\n  [radius, radius];\n} else {\n  // Діагональ\n  [progress * {comp_width}, progress * {comp_height}];\n}",
+      "target_properties": ["mask position"],
+      "parameters": [
+        {
+          "id": "reveal_type",
+          "name_ua": "Тип відкриття",
+          "type": "enum",
+          "options": ["left_to_right", "top_to_bottom", "center", "diagonal"],
+          "default": "left_to_right",
+          "description_ua": "Як відкривається текст"
+        },
+        {
+          "id": "reveal_speed",
+          "name_ua": "Швидкість відкриття",
+          "type": "float",
+          "default": 100,
+          "min": 10,
+          "max": 500,
+          "step": 10,
+          "description_ua": "Як швидко відкривається текст"
+        },
+        {
+          "id": "start_time",
+          "name_ua": "Час початку",
+          "type": "float",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "description_ua": "Коли починати відкриття"
+        }
+      ]
+    },
+    {
+      "id": "character-stagger",
+      "category_en": "Text & Typography",
+      "category_ua": "Текст та Типографіка",
+      "name_en": "Character Stagger Animation",
+      "name_ua": "Послідовна Анімація Символів",
+      "icon": "🔤",
+      "description_ua": "Кожен символ тексту анімується з затримкою, створюючи ефект \"хвилі\" або \"ланцюга\".",
+      "purpose_ua": "Для динамічних заголовків, креативної типографіки, ефектів появи тексту, ритмічних анімацій.",
+      "expression_template": "charIndex = {character_index};\nstaggerDelay = {stagger_delay};\nanimationType = \"{animation_type}\";\n\n// Затримка для кожного символу\ncharTime = time - (charIndex * staggerDelay);\n\nif (charTime >= 0) {\n  if (animationType == \"bounce\") {\n    // Стрибок\n    Math.sin(charTime * {bounce_speed}) * {bounce_height};\n  } else if (animationType == \"fade\") {\n    // Поступове з'явлення\n    linear(charTime, 0, {fade_duration}, 0, 100);\n  } else if (animationType == \"scale\") {\n    // Масштабування\n    ease(charTime, 0, {scale_duration}, 0, 100);\n  } else {\n    // Простий рух\n    charTime * {move_speed};\n  }\n} else {\n  0;\n}",
+      "target_properties": ["position", "scale", "opacity"],
+      "parameters": [
+        {
+          "id": "stagger_delay",
+          "name_ua": "Затримка між символами",
+          "type": "float",
+          "default": 0.1,
+          "min": 0.01,
+          "max": 0.5,
+          "step": 0.01,
+          "description_ua": "Скільки чекати між анімацією кожного символу"
+        },
+        {
+          "id": "animation_type",
+          "name_ua": "Тип анімації",
+          "type": "enum",
+          "options": ["bounce", "fade", "scale", "move"],
+          "default": "bounce",
+          "description_ua": "Яку анімацію виконувати для символів"
+        },
+        {
+          "id": "bounce_speed",
+          "name_ua": "Швидкість стрибка",
+          "type": "float",
+          "default": 5,
+          "min": 1,
+          "max": 10,
+          "step": 0.5,
+          "description_ua": "Як швидко відбувається стрибок"
+        }
+      ]
+    },
+    {
+      "id": "master-controller",
+      "category_en": "Utility",
+      "category_ua": "Утиліти",
+      "name_en": "Master Expression Controller",
+      "name_ua": "Головний Контролер Експрешенів",
+      "icon": "🎛️",
+      "description_ua": "Централізований контролер для керування всіма експрешенами в композиції. Значно покращує організацію та продуктивність.",
+      "purpose_ua": "Для складних проектів, де потрібно централізовано керувати багатьма анімаціями, швидкого налаштування.",
+      "expression_template": "controller = thisComp.layer(\"{controller_layer}\");\nparameter = \"{controlled_parameter}\";\n\nif (controller != null) {\n  // Отримуємо значення з контролера\n  masterValue = controller.effect(\"Master Control\")(\"Slider\");\n  \n  // Застосовуємо до різних параметрів\n  if (parameter == \"scale\") {\n    masterValue;\n  } else if (parameter == \"position\") {\n    [masterValue, masterValue];\n  } else if (parameter == \"rotation\") {\n    masterValue * 3.6; // Для градусів\n  } else if (parameter == \"opacity\") {\n    masterValue;\n  }\n} else {\n  value;\n}",
+      "target_properties": ["scale", "position", "rotation", "opacity"],
+      "parameters": [
+        {
+          "id": "controller_layer",
+          "name_ua": "Шар-контролер",
+          "type": "string",
+          "default": "Master Controller",
+          "description_ua": "Назва шару, що містить контролери"
+        },
+        {
+          "id": "controlled_parameter",
+          "name_ua": "Контрольований параметр",
+          "type": "enum",
+          "options": ["scale", "position", "rotation", "opacity"],
+          "default": "scale",
+          "description_ua": "Який параметр контролювати"
+        }
+      ]
+    },
+    {
+      "id": "expression-switcher",
+      "category_en": "Utility",
+      "category_ua": "Утиліти",
+      "name_en": "Expression Switcher",
+      "name_ua": "Перемикач Експрешенів",
+      "icon": "🔀",
+      "description_ua": "Дозволяє перемикатися між різними експрешенами на льоту. Ідеально для A/B тестування анімацій.",
+      "purpose_ua": "Для швидкого порівняння різних анімацій, інтерактивного вибору ефектів, динамічного перемикання стилів.",
+      "expression_template": "currentMode = {current_mode};\n\nif (currentMode == \"mode_1\") {\n  // Перший режим - плавна анімація\n  {expression_1};\n} else if (currentMode == \"mode_2\") {\n  // Другий режим - різка анімація\n  {expression_2};\n} else if (currentMode == \"mode_3\") {\n  // Третій режим - випадкова анімація\n  {expression_3};\n} else {\n  // Режим за замовчуванням\n  value;\n}",
+      "target_properties": ["position", "rotation", "scale"],
+      "parameters": [
+        {
+          "id": "current_mode",
+          "name_ua": "Поточний режим",
+          "type": "enum",
+          "options": ["mode_1", "mode_2", "mode_3"],
+          "default": "mode_1",
+          "description_ua": "Який режим анімації використовувати"
+        },
+        {
+          "id": "expression_1",
+          "name_ua": "Вираз 1",
+          "type": "string",
+          "default": "wiggle(2, 30)",
+          "description_ua": "Перший варіант експрешена"
+        },
+        {
+          "id": "expression_2",
+          "name_ua": "Вираз 2",
+          "type": "string",
+          "default": "time * 100",
+          "description_ua": "Другий варіант експрешена"
+        },
+        {
+          "id": "expression_3",
+          "name_ua": "Вираз 3",
+          "type": "string",
+          "default": "random(0, 100)",
+          "description_ua": "Третій варіант експрешена"
+        }
+      ]
+    },
+    {
+      "id": "performance-optimizer",
+      "category_en": "Utility",
+      "category_ua": "Утиліти",
+      "name_en": "Performance Optimizer",
+      "name_ua": "Оптимізатор Продуктивності",
+      "icon": "⚡",
+      "description_ua": "Оптимізує складні експрешени для покращення продуктивності рендерингу. Критично важливо для великих проектів.",
+      "purpose_ua": "Для прискорення роботи з складними експрешенами, зменшення часу рендерингу, оптимізації великих сцен.",
+      "expression_template": "originalExpression = {original_expression};\nupdateRate = {update_frequency};\n\n// Оновлюємо значення тільки кожні N кадрів\nif (Math.floor(time / thisComp.frameDuration) % updateRate == 0) {\n  eval(originalExpression);\n} else {\n  value;\n}",
+      "target_properties": ["slider", "position", "rotation"],
+      "parameters": [
+        {
+          "id": "original_expression",
+          "name_ua": "Оригінальний вираз",
+          "type": "string",
+          "default": "wiggle(5, 50)",
+          "description_ua": "Експрешен, який потрібно оптимізувати"
+        },
+        {
+          "id": "update_frequency",
+          "name_ua": "Частота оновлення",
+          "type": "int",
+          "default": 3,
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "description_ua": "Кожні скільки кадрів оновлювати значення (1 = кожен кадр)"
+        }
+      ]
+    }
+  ]
+}
