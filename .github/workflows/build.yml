@@ -31,27 +31,22 @@ jobs:
       
       - name: Verify project structure
         run: |
-          echo "=== Project structure ==="
+          echo "=== Root directory ==="
           ls -la
-          echo "=== src-tauri structure ==="
-          ls -la src-tauri || echo "src-tauri not found"
-          echo "=== src structure ==="
-          ls -la src || echo "src not found"
+          echo "=== package.json location ==="
+          find . -name "package.json" -type f
       
       - name: Install dependencies
-        run: npm install
-      
-      - name: Verify Tauri CLI
-        run: npx tauri --version
-      
-      - name: Build Tauri app for macOS (verbose)
-        run: npx tauri build --target universal-apple-darwin --verbose
-      
-      - name: Check build output
-        if: always()
         run: |
-          echo "=== Checking build outputs ==="
-          ls -R src-tauri/target/ || echo "No target directory"
+          if [ -f "package.json" ]; then
+            npm install
+          else
+            echo "package.json not found in root, checking subdirectories..."
+            exit 1
+          fi
+      
+      - name: Build Tauri app for macOS
+        run: npx tauri build --target universal-apple-darwin --verbose
       
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
